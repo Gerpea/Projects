@@ -9,9 +9,9 @@ npm install
 ```
 
 ```
-node index.js -d <number of digit> -o [<where to save pi>]
+node index.js -d <number of digit to calculate> -o [<where to save calculated pi>]
 
 or
 
-npm run start -- --digit <number of digit> [--out <where to save pi>]
+npm run start -- --digits <number of digit to calculate> [--out <where to save calculated pi>]
 ```
