@@ -1,6 +1,6 @@
 # Find PI to nth digit
 
-**Calculates PI using Chudnovcky series**
+**Calculates PI using [Chudnovsky series](https://en.wikipedia.org/wiki/Chudnovsky_algorithm)**
 
 ## Run
 
@@ -9,9 +9,22 @@ npm install
 ```
 
 ```
-node index.js -d <number of digit to calculate> -o [<where to save calculated pi>]
+node index.js [options]
+```
 
 or
 
-npm run start -- --digits <number of digit to calculate> [--out <where to save calculated pi>]
 ```
+npm run start -- [options]
+```
+
+### Options
+
+- **-d**, **--digits**
+
+    <pre>[<em><b>required</b></em>] Number of digits to calculate</pre>
+
+- **-o**, **--out**
+
+    <pre>[<em><b>optional</b></em>] Path to save calculated pi
+    <em>if not specified the calculated</em> <b>PI</b> <em>will be output in console</em></pre>
