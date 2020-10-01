@@ -1,0 +1,15 @@
+{
+  "name": "fibonacci",
+  "version": "0.0.1",
+  "description": "Generate fibonacci sequence to the nth number",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "commander": "^6.1.0",
+    "is-valid-path": "^0.1.1"
+  }
+}
