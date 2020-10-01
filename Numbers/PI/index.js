@@ -4,7 +4,7 @@
 const program = require('commander')
 const path = require('path')
 
-const compute_PI = require('./pi.js')
+const computePI = require('./pi.js')
 const { parseDigits, parsePath, savePIToFile } = require('./utils.js')
 
 program
@@ -17,7 +17,7 @@ program.parse(process.argv)
   const outPath = parsePath(program.out)
 
   const hrstart = process.hrtime()
-  const PI = await compute_PI(digits)
+  const PI = await computePI(digits)
   const hrend = process.hrtime(hrstart)
 
   if (outPath) {
