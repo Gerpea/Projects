@@ -23,6 +23,8 @@ program.parse(process.argv)
   if (outPath) {
     await savePIToFile(outPath, PI)
     console.log(`Saved pi to ${path.resolve(outPath)}`)
+  } else {
+    console.log(PI.toString())
   }
 
   console.info(`Execution time (hr): ${hrend[0]}s ${hrend[1] / 1000000}ms`)

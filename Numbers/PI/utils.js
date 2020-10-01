@@ -12,6 +12,10 @@ exports.parseDigits = function (d) {
 }
 
 exports.parsePath = function (o) {
+  if (!o) {
+    return o
+  }
+
   if (!isValid(o)) {
     console.log('Error: you should specify a correct file path')
     process.exit(1)
