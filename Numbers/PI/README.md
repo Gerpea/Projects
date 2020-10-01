@@ -6,7 +6,7 @@
 
 1. [Run](#run)
 2. [Options](#options)
-3. [Example](#example)
+3. [Example](#examples)
 
 ## Run
 
@@ -35,7 +35,7 @@ npm run start -- [options]
     <pre>[<em><b>optional</b></em>] Path to save calculated pi
     <em>if not specified the calculated</em> <b>PI</b> <em>will be output in console</em></pre>
 
-### Example
+### Examples
 
 ```
 $ node index.js -d 100
