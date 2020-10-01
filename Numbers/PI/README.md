@@ -6,7 +6,7 @@
 
 1. [Run](#run)
 2. [Options](#options)
-3. [Example](#examples)
+3. [Examples](#examples)
 
 ## Run
 
