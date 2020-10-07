@@ -1,6 +1,6 @@
 # Prime Number
 
-**Find Cost of Tile to Cover W x H Floor **
+**Find Cost of Tile to Cover W x H Floor**
 
 ## Table of Contents
 
