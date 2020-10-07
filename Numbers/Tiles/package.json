@@ -1,0 +1,13 @@
+{
+  "name": "tiles",
+  "version": "0.0.1",
+  "description": "Calculate the total cost of tile it would take to cover a floor plan of width and height",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.1.0"
+  }
+}
