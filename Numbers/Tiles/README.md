@@ -10,17 +10,17 @@
 
 ## Run
 
-```
+```bash
 npm install
 ```
 
-```
+```bash
 node index.js [options]
 ```
 
 or
 
-```
+```bash
 npm run start -- [options]
 ```
 
@@ -49,7 +49,7 @@ npm run start -- [options]
 
 ### Examples
 
-```
+```bash
 $ node index.js -c 100 -w 1.5 -h 2 -tw 1 -th 1
 Calculated cost is: 400
 $ node index.js -c 100 -w 1.5 -h 2 -tw 1 -th 1 -uc

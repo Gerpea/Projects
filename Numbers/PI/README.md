@@ -10,17 +10,17 @@
 
 ## Run
 
-```
+```bash
 npm install
 ```
 
-```
+```bash
 node index.js [options]
 ```
 
 or
 
-```
+```bash
 npm run start -- [options]
 ```
 
@@ -37,7 +37,7 @@ npm run start -- [options]
 
 ### Examples
 
-```
+```bash
 $ node index.js -d 100
 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170680
 Execution time (hr): 0s 8.00646ms

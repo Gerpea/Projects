@@ -12,17 +12,17 @@ _Uses [AKS](https://www.cse.iitk.ac.in/users/manindra/algebra/primality_v6.pdf/)
 
 ## Run
 
-```
+```bash
 npm install
 ```
 
-```
+```bash
 node index.js [options]
 ```
 
 or
 
-```
+```bash
 npm run start -- [options]
 ```
 
@@ -34,7 +34,7 @@ npm run start -- [options]
 
 ### Examples
 
-```
+```bash
 $ node index.js -n 1000
 Prime is: 1009
 Execution time (hr): 7s 972.201189ms
