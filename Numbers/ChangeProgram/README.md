@@ -10,17 +10,17 @@
 
 ## Run
 
-```
+```bash
 npm install
 ```
 
-```
+```bash
 node index.js [options]
 ```
 
 or
 
-```
+```bash
 npm run start -- [options]
 ```
 
