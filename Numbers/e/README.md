@@ -1,6 +1,6 @@
 # Find e to nth digit
 
-**Calculates e using [this](<http://www.brotherstechnology.com/docs/icnsae_(cmj0104-300dpi).pdf>)** paper
+**Calculates e using series from [this](<http://www.brotherstechnology.com/docs/icnsae_(cmj0104-300dpi).pdf>)** paper
 
 ## Table of Contents
 
