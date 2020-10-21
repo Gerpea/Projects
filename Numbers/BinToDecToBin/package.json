@@ -1,0 +1,14 @@
+{
+  "name": "bintodectobin",
+  "version": "0.0.1",
+  "description": "Program to convert a decimal to binary or a binary number to a decimal equivalent",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "commander": "^6.1.0"
+  }
+}
