@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A calculator",
   "scripts": {
-    "start": "babel-node calculator.js",
+    "start": "babel-node index.js",
     "test": "mocha"
   },
   "author": "gerpea",

@@ -1,4 +1,7 @@
 const SyntaxKind = Object.freeze({
+  BadToken: 'BadToken',
+  EndOfFileToken: 'EndOfFileToken',
+
   NumberToken: 'NumberToken',
   WhitespaceToken: 'WhitespaceToken',
   PlusToken: 'PlusToken',
@@ -7,8 +10,7 @@ const SyntaxKind = Object.freeze({
   DivideToken: 'DivideToken',
   OpenParenthesisToken: 'OpenParenthesisToken',
   CloseParenthesisToken: 'CloseParenthesisToken',
-  BadToken: 'BadToken',
-  EndOfFileToken: 'EndOfFileToken',
+
   BinaryExpression: 'BinaryExpression',
   NumberExpression: 'NumberExpression',
   ParenthesizedExpression: 'ParenthesizedExpression',

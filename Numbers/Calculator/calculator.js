@@ -14,4 +14,4 @@ function calculate(text) {
   }
 }
 
-console.log(calculate('1 + 1 * 2 / (1/5)'))
+export default calculate

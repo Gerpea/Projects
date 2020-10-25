@@ -17,7 +17,6 @@ class Parser {
     const lexer = new Lexer(text)
     let token
 
-    console.log(SyntaxKind.WhitespaceToken)
     do {
       token = lexer.nextToken()
       if (token.kind !== SyntaxKind.WhitespaceToken && token.kind !== SyntaxKind.BadToken) {
@@ -46,7 +45,7 @@ class Parser {
     return current
   }
 
-  match(kind) {
+  matchToken(kind) {
     if (this.current.kind === kind) {
       return this.nextToken()
     }
@@ -56,8 +55,8 @@ class Parser {
   }
 
   parse() {
-    const expression = this.parseTerm()
-    const endOfFileToken = this.match(SyntaxKind.EndOfFileToken)
+    const expression = this.parseExpression()
+    const endOfFileToken = this.matchToken(SyntaxKind.EndOfFileToken)
 
     return new SyntaxTree(this.diagnostics, expression, endOfFileToken)
   }
@@ -96,12 +95,12 @@ class Parser {
     if (this.current.kind === SyntaxKind.OpenParenthesisToken) {
       const left = this.nextToken()
       const expression = this.parseExpression()
-      const right = this.match(SyntaxKind.CloseParenthesisToken)
+      const right = this.matchToken(SyntaxKind.CloseParenthesisToken)
 
       return new ParenthesizedExpressionSyntax(left, expression, right)
     }
 
-    const numberToken = this.match(SyntaxKind.NumberToken)
+    const numberToken = this.matchToken(SyntaxKind.NumberToken)
     return new NumberExpressionSyntax(numberToken)
   }
 
