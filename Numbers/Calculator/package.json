@@ -1,0 +1,22 @@
+{
+  "name": "calculator",
+  "version": "0.0.1",
+  "description": "A calculator",
+  "scripts": {
+    "start": "babel-node calculator.js",
+    "test": "mocha"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "babel-register": "^6.26.0",
+    "mocha": "^8.2.0"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "chai": "^4.2.0"
+  }
+}
