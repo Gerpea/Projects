@@ -2,6 +2,7 @@ import {
   NumberExpressionSyntax,
   BinaryExpressionSyntax,
   ParenthesizedExpressionSyntax,
+  UnaryExpressionSyntax,
 } from './expressionSyntax'
 import SyntaxKind from './syntaxKind'
 
@@ -17,6 +18,18 @@ class Evaluator {
   evaluateExpression(root) {
     if (root instanceof NumberExpressionSyntax) {
       return root.numberToken.value
+    }
+
+    if (root instanceof UnaryExpressionSyntax) {
+      const operand = this.evaluateExpression(root.operand)
+
+      if (root.operatorToken.kind == SyntaxKind.PlusToken) {
+        return operand
+      }
+
+      if (root.operatorToken.kind == SyntaxKind.MinusToken) {
+        return operand.negated()
+      }
     }
 
     if (root instanceof BinaryExpressionSyntax) {

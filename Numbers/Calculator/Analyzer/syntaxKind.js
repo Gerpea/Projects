@@ -14,6 +14,7 @@ const SyntaxKind = Object.freeze({
   BinaryExpression: 'BinaryExpression',
   NumberExpression: 'NumberExpression',
   ParenthesizedExpression: 'ParenthesizedExpression',
+  UnaryExpression: 'UnaryExpression',
 })
 
 export default SyntaxKind

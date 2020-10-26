@@ -61,4 +61,27 @@ class ParenthesizedExpressionSyntax extends ExpressionSyntax {
   }
 }
 
-export { BinaryExpressionSyntax, NumberExpressionSyntax, ParenthesizedExpressionSyntax }
+class UnaryExpressionSyntax extends ExpressionSyntax {
+  constructor(operatorToken, operand) {
+    super(operatorToken, operand)
+
+    this.operatorToken = operatorToken
+    this.operand = operand
+  }
+
+  kind() {
+    return SyntaxKind.UnaryExpression
+  }
+
+  *getChildren() {
+    yield this.operatorToken
+    yield this.operand
+  }
+}
+
+export {
+  BinaryExpressionSyntax,
+  NumberExpressionSyntax,
+  ParenthesizedExpressionSyntax,
+  UnaryExpressionSyntax,
+}

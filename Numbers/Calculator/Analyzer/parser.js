@@ -6,7 +6,9 @@ import {
   NumberExpressionSyntax,
   ParenthesizedExpressionSyntax,
   BinaryExpressionSyntax,
+  UnaryExpressionSyntax,
 } from './expressionSyntax'
+import { getBinaryOperatorPrecedence, getUnaryOperatorPrecedence } from './precedence'
 
 class Parser {
   constructor(text) {
@@ -61,30 +63,26 @@ class Parser {
     return new SyntaxTree(this.diagnostics, expression, endOfFileToken)
   }
 
-  parseTerm() {
-    let left = this.parseFactor()
+  parseExpression(parentPrecedence = 0) {
+    let left
 
-    while (
-      this.current.kind == SyntaxKind.PlusToken ||
-      this.current.kind == SyntaxKind.MinusToken
-    ) {
+    const unaryOperatorPrecedence = getUnaryOperatorPrecedence(this.current.kind)
+    if (unaryOperatorPrecedence !== 0 && unaryOperatorPrecedence >= parentPrecedence) {
       const operatorToken = this.nextToken()
-      const right = this.parseFactor()
-      left = new BinaryExpressionSyntax(left, operatorToken, right)
+      const operand = this.parseExpression(unaryOperatorPrecedence)
+      left = new UnaryExpressionSyntax(operatorToken, operand)
+    } else {
+      left = this.parsePrimaryExpression()
     }
 
-    return left
-  }
+    while (true) {
+      const precedence = getBinaryOperatorPrecedence(this.current.kind)
+      if (precedence === 0 || precedence <= parentPrecedence) {
+        break
+      }
 
-  parseFactor() {
-    let left = this.parsePrimaryExpression()
-
-    while (
-      this.current.kind == SyntaxKind.TimesToken ||
-      this.current.kind == SyntaxKind.DivideToken
-    ) {
       const operatorToken = this.nextToken()
-      const right = this.parsePrimaryExpression()
+      const right = this.parseExpression(precedence)
       left = new BinaryExpressionSyntax(left, operatorToken, right)
     }
 
@@ -102,10 +100,6 @@ class Parser {
 
     const numberToken = this.matchToken(SyntaxKind.NumberToken)
     return new NumberExpressionSyntax(numberToken)
-  }
-
-  parseExpression() {
-    return this.parseTerm()
   }
 }
 
