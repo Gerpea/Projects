@@ -1,0 +1,15 @@
+{
+  "name": "factorial",
+  "version": "0.0.1",
+  "description": "Find factorial of a positive integer",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "commander": "^6.2.0",
+    "is-valid-path": "^0.1.1"
+  }
+}
