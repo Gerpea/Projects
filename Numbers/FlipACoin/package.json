@@ -1,0 +1,15 @@
+{
+  "name": "flipacoin",
+  "version": "0.0.1",
+  "description": "Coin flip simulator",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "commander": "^6.2.0",
+    "is-valid-path": "^0.1.1"
+  }
+}
