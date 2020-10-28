@@ -77,7 +77,7 @@ Problems are motivated by the ones shared at:
 
 **Number Names** - Show how to spell out a number in English. You can use a preexisting implementation or roll your own, but you should support inputs up to at least one million (or the maximum value of your language's default bounded integer type, if that's less). _Optional: Support for inputs other than positive integers (like zero, negative integers, and floating-point numbers)._
 
-**Coin Flip Simulation** - Write some code that simulates flipping a single coin however many times the user decides. The code should record the outcomes and count the number of tails and heads.
+[**Coin Flip Simulation**](https://github.com/Gerpea/Projects/tree/master/Numbers/FlipACoin) - Write some code that simulates flipping a single coin however many times the user decides. The code should record the outcomes and count the number of tails and heads.
 
 **Limit Calculator** - Ask the user to enter f(x) and the limit value, then return the value of the limit statement _Optional: Make the calculator capable of supporting infinite limits._
 
