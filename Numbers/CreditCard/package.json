@@ -1,0 +1,13 @@
+{
+  "name": "creditcard",
+  "version": "0.0.1",
+  "description": "Credit Card Validator",
+  "scripts": {
+    "start": "node index.j"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.0"
+  }
+}
