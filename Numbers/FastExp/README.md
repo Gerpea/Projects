@@ -32,7 +32,7 @@ npm run start -- [options]
 
 - **-b**
 
-    <pre>[<em><b>optional</b></em>] The exponent</pre>
+    <pre>[<em><b>required</b></em>] The exponent</pre>
 
 ### Examples
 
