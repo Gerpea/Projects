@@ -1,0 +1,14 @@
+{
+  "name": "fastexp",
+  "version": "0.0.1",
+  "description": "Power in O(lg n) time complexity.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "commander": "^6.2.0"
+  }
+}
