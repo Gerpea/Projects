@@ -91,7 +91,7 @@ Problems are motivated by the ones shared at:
 
 **Closest pair problem** - The closest pair of points problem or closest pair problem is a problem of computational geometry: given _n_ points in metric space, find a pair of points with the smallest distance between them.
 
-**Sieve of Eratosthenes** - The sieve of Eratosthenes is one of the most efficient ways to find all of the smaller primes (below 10 million or so).
+[**Sieve of Eratosthenes**](https://github.com/Gerpea/Projects/tree/master/ClassicAlgorithms/SieveOfEratosthenes) - The sieve of Eratosthenes is one of the most efficient ways to find all of the smaller primes (below 10 million or so).
 
 ## Graph
 
