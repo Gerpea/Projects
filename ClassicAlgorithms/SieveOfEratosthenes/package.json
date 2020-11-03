@@ -1,0 +1,14 @@
+{
+  "name": "sieveoferatosthenes",
+  "version": "0.0.1",
+  "description": "The sieve of Eratosthenes is one of the most efficient ways to find all of the smaller primes (below 10 million or so)",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.0",
+    "is-valid-path": "^0.1.1"
+  }
+}
