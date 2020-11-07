@@ -85,7 +85,7 @@ Problems are motivated by the ones shared at:
 
 ## Classic Algorithms
 
-**Collatz Conjecture** - Start with a number _n > 1_. Find the number of steps it takes to reach one using the following process: If _n_ is even, divide it by 2. If _n_ is odd, multiply it by 3 and add 1.
+[**Collatz Conjecture**](https://github.com/Gerpea/Projects/tree/master/ClassicAlgorithms/CollatzConj) - Start with a number _n > 1_. Find the number of steps it takes to reach one using the following process: If _n_ is even, divide it by 2. If _n_ is odd, multiply it by 3 and add 1.
 
 [**Sorting**](https://github.com/Gerpea/Projects/tree/master/ClassicAlgorithms/Sorting) - Implement two types of sorting algorithms: Merge sort and bubble sort.
 
