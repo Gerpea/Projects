@@ -87,7 +87,7 @@ Problems are motivated by the ones shared at:
 
 **Collatz Conjecture** - Start with a number _n > 1_. Find the number of steps it takes to reach one using the following process: If _n_ is even, divide it by 2. If _n_ is odd, multiply it by 3 and add 1.
 
-**Sorting** - Implement two types of sorting algorithms: Merge sort and bubble sort.
+[**Sorting**](https://github.com/Gerpea/Projects/tree/master/ClassicAlgorithms/Sorting) - Implement two types of sorting algorithms: Merge sort and bubble sort.
 
 **Closest pair problem** - The closest pair of points problem or closest pair problem is a problem of computational geometry: given _n_ points in metric space, find a pair of points with the smallest distance between them.
 
