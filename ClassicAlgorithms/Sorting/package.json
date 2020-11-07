@@ -1,0 +1,13 @@
+{
+  "name": "sorting",
+  "version": "0.0.1",
+  "description": "Merge sort and bubble sort",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.0"
+  }
+}
