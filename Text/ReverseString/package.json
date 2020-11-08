@@ -1,0 +1,13 @@
+{
+  "name": "reversestring",
+  "version": "0.0.1",
+  "description": "Enter a string and the program will reverse it and print it out.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.0"
+  }
+}
