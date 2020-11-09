@@ -1,0 +1,15 @@
+{
+  "name": "countwords",
+  "version": "0.0.1",
+  "description": "Counts the number of individual words in a string. For added complexity read these strings in from a text file and generate a summary.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.0",
+    "is-valid-path": "^0.1.1"
+  }
+}

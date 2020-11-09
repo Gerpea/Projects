@@ -1,4 +1,4 @@
-# Mega Project List [**21**/100]
+# Mega Project List [**22**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -122,7 +122,7 @@ subgraph that is a tree, contains all the vertices, and the sum of its weights i
 
 [**Check if Palindrome**](https://github.com/Gerpea/Projects/tree/master/Text/Palindrome) - Checks if the string entered by the user is a palindrome. That is that it reads the same forwards as backwards like “racecar”
 
-**Count Words in a String** - Counts the number of individual words in a string. For added complexity read these strings in from a text file and generate a summary.
+[**Count Words in a String**](https://github.com/Gerpea/Projects/tree/master/Text/CountWords) - Counts the number of individual words in a string. For added complexity read these strings in from a text file and generate a summary.
 
 **Text Editor** - Notepad style application that can open, edit, and save text documents. _Optional: Add syntax highlighting and other features._
 
