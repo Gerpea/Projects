@@ -1,0 +1,14 @@
+{
+  "name": "palindrome",
+  "version": "0.0.1",
+  "description": "Checks if the string entered by the user is a palindrome. That is that it reads the same forwards as backwards like “racecar”",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.0"
+  }
+}
