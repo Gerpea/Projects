@@ -1,0 +1,15 @@
+{
+  "name": "numbernames",
+  "version": "0.0.1",
+  "description": "Show how to spell out a number in English. You can use a preexisting implementation or roll your own, but you should support inputs up to at least one million (or the maximum value of your language's default bounded integer type, if that's less). Optional: Support for inputs other than positive integers (like zero, negative integers, and floating-point numbers).",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
