@@ -1,6 +1,37 @@
 const { ones, powers, operations } = require('./const')
 
 function convert(number) {
+  number = number.replace(/^0+/, '')
+  if (number.length <= 0) {
+    return ''
+  }
+
+  if (number.length <= 2) {
+    if (ones.hasOwnProperty(number)) {
+      return ones[number]
+    } else {
+      return ones[number.substr(0, 1) + '0'] + ' ' + ones[number.substr(1, 1)]
+    }
+  } else {
+    let result = ''
+    let det = ''
+    for (let i = 0; i < number.length; i++) {
+      det += number[i]
+      if (det.match(/[^0+]/)) {
+        det = det.replace(/^0+/, '')
+        if (powers.hasOwnProperty(number.length - (i + 1))) {
+          result += `${convert(det)} ${powers[number.length - (i + 1)]} ${convert(
+            number.substr(det.length)
+          )}`
+          break
+        }
+      }
+    }
+    return result.trim()
+  }
+}
+
+function converto(number) {
   let result = ''
 
   const length = number.length
@@ -12,28 +43,58 @@ function convert(number) {
     do {
       subNumber = number.substr(i, length - j - i)
       j++
-    } while (!ones.hasOwnProperty(subNumber))
+    } while (
+      j < length - i &&
+      (!ones.hasOwnProperty(subNumber) ||
+        (subNumber[subNumber.length - 1] == '0' && j >= Math.min(...Object.keys(powers))) ||
+        (subNumber.length >= j - 1 && j >= Math.min(...Object.keys(powers))))
+    )
 
     subNumber += new Array(j - 1).fill('0').join('')
     if (ones.hasOwnProperty(subNumber)) {
       result += ones[subNumber]
       i += number.substr(i).length - (j - 1)
     } else {
-      if (ones.hasOwnProperty(number.substr(i, length - j))) {
-        result += ones[number.substr(i, length - j)]
-        result += ' '
-        result += powers[j - i]
-      } else {
-        result += ones[number.substr(i, length - (j - 1))]
+      let fnzi = -1
+
+      if (ones.hasOwnProperty(number.substr(i, length - i - (j - 1)))) {
+        result += ones[number.substr(i, length - i - (j - 1))]
         result += ' '
         result += powers[j - 1]
-      }
-      const fnzi = number.substr(i + 1).search(/[^0]/)
-      if (fnzi !== -1) {
-        i += fnzi + 1
+
+        const a = number.substr(i + (length - i - (j - 1)))
+        fnzi = number.substr(i + (length - i - (j - 1))).search(/[^0]/)
+        if (fnzi !== -1) {
+          i += fnzi + (length - i - (j - 1))
+        } else {
+          i += j + 1
+        }
       } else {
-        i += j + 1
+        result += ones[number.substr(i, length - i - j)]
+        result += ' '
+        result += powers[j]
+        const a = number.substr(i + (length - i - j))
+        fnzi = number.substr(i + (length - i - j)).search(/[^0]/)
+        if (fnzi !== -1) {
+          i += fnzi + (length - i - j)
+        } else {
+          i += j + 1
+        }
       }
+      // if (ones.hasOwnProperty(number.substr(i, length - i - (j - 1)))) {
+      //   result += ones[number.substr(i, length - i - (j - 1))]
+      //   result += ' '
+      //   result += powers[j - 1]
+      // } else {
+      //   result += ones[number.substr(i, length - (j - 1))]
+      //   result += ' '
+      //   result += powers[j - 1]
+      // }
+      // if (fnzi !== -1) {
+      //   i += fnzi + (length - i - (j - 1))
+      // } else {
+      //   i += j + 1
+      // }
     }
 
     if (i <= number.length - 1) {

@@ -1,3 +1,3 @@
 const { convert } = require('./names')
 
-console.log(convert('11498'))
+console.log(convert('5498'))

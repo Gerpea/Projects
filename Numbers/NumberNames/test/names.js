@@ -25,10 +25,6 @@ describe('names', function () {
       it('should return twenty one when value is 21', function () {
         assert.strictEqual(convert('21'), 'twenty one')
       })
-
-      it('should return ninety nine one when value is 99', function () {
-        assert.strictEqual(convert('99'), 'ninety nine')
-      })
     })
 
     describe('three digits', function () {
@@ -57,7 +53,7 @@ describe('names', function () {
       })
     })
 
-    describe.only('four digit', function () {
+    describe('four digit', function () {
       it('should return one thousand when value is 1000', function () {
         assert.strictEqual(convert('1000'), 'one thousand')
       })
@@ -85,9 +81,15 @@ describe('names', function () {
       it('should return five thousand four hundred ninety eight when value is 5498', function () {
         assert.strictEqual(convert('5498'), 'five thousand four hundred ninety eight')
       })
+    })
 
+    describe('five digits', function () {
       it('should return eleven thousand four hundred ninety eight when value is 11498', function () {
         assert.strictEqual(convert('11498'), 'eleven thousand four hundred ninety eight')
+      })
+
+      it('should return ninety eight thousand eight hundred ninety seven when value is 98897', function () {
+        assert.strictEqual(convert('98897'), 'ninety eight thousand eight hundred ninety seven')
       })
     })
   })
