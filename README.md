@@ -1,4 +1,4 @@
-# Mega Project List [**22**/100]
+# Mega Project List [**23**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -75,7 +75,7 @@ Problems are motivated by the ones shared at:
 
 **Happy Numbers** - A happy number is defined by the following process. Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers, while those that do not end in 1 are unhappy numbers. Display an example of your output here. Find first 8 happy numbers.
 
-**Number Names** - Show how to spell out a number in English. You can use a preexisting implementation or roll your own, but you should support inputs up to at least one million (or the maximum value of your language's default bounded integer type, if that's less). _Optional: Support for inputs other than positive integers (like zero, negative integers, and floating-point numbers)._
+[**Number Names**](https://github.com/Gerpea/Projects/tree/master/Numbers/NumberNames) - Show how to spell out a number in English. You can use a preexisting implementation or roll your own, but you should support inputs up to at least one million (or the maximum value of your language's default bounded integer type, if that's less). _Optional: Support for inputs other than positive integers (like zero, negative integers, and floating-point numbers)._
 
 [**Coin Flip Simulation**](https://github.com/Gerpea/Projects/tree/master/Numbers/FlipACoin) - Write some code that simulates flipping a single coin however many times the user decides. The code should record the outcomes and count the number of tails and heads.
 
