@@ -92,5 +92,27 @@ describe('names', function () {
         assert.strictEqual(convert('98897'), 'ninety eight thousand eight hundred ninety seven')
       })
     })
+
+    describe('six digits', function () {
+      it('should return one hundred eleven thousand four hundred ninety eight when value is 111498', function () {
+        assert.strictEqual(
+          convert('111498'),
+          'one hundred eleven thousand four hundred ninety eight'
+        )
+      })
+
+      it('should return nine hundred ninety eight thousand eight hundred ninety seven when value is 998897', function () {
+        assert.strictEqual(
+          convert('998897'),
+          'nine hundred ninety eight thousand eight hundred ninety seven'
+        )
+      })
+    })
+
+    describe('seven digits', function () {
+      it('should return one thousand thousand when value is 1000000', function () {
+        assert.strictEqual(convert('1000000'), 'one thousand thousand')
+      })
+    })
   })
 })

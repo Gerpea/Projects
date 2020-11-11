@@ -32,8 +32,6 @@ const ones = Object.freeze({
 const powers = Object.freeze({
   2: 'hundred',
   3: 'thousand',
-  6: 'million',
-  9: 'billion',
 })
 
 const operations = Object.freeze({
