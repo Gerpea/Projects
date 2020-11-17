@@ -1,0 +1,14 @@
+{
+  "name": "alarmclock",
+  "version": "0.0.1",
+  "description": "A simple clock where it plays a sound after X number of minutes/seconds or at a particular time.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "speaker": "^0.5.2"
+  }
+}
