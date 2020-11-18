@@ -1,4 +1,4 @@
-# Mega Project List [**25**/100]
+# Mega Project List [**26**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -61,7 +61,7 @@ Problems are motivated by the ones shared at:
 
 **Unit Converter (temp, currency, volume, mass and more)** - Converts various units between one another. The user enters the type of unit being entered, the type of unit they want to convert to and then the value. The program will then make the conversion.
 
-**Alarm Clock** - A simple clock where it plays a sound after X number of minutes/seconds or at a particular time.
+[**Alarm Clock**](https://github.com/Gerpea/Projects/tree/master/Numbers/AlarmClock) - A simple clock where it plays a sound after X number of minutes/seconds or at a particular time.
 
 **Distance Between Two Cities** - Calculates the distance between two cities and allows the user to specify a unit of distance. This program may require finding coordinates for the cities like latitude and longitude.
 

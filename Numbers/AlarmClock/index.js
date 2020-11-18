@@ -1,11 +1,10 @@
-const { setAlarm } = require('./alarm')
-const { playSound } = require('./sound')
+const { Alarm } = require('./Alarm')
 const { parseDate } = require('./utils')
 
-setAlarm(parseDate(process.argv.slice(2).join(' ')))
-  .then(function () {
-    playSound()
-  })
-  .catch(function (e) {
-    console.log(e)
-  })
+const alarmTime = parseDate(process.argv.slice(2).join(' '))
+const alarm = new Alarm()
+try {
+  alarm.start(alarmTime)
+} catch (e) {
+  console.log(`Error: ${e.message}`)
+}
