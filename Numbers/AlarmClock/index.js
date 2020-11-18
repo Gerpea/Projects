@@ -1,9 +1,10 @@
 const { setAlarm } = require('./alarm')
 const { playSound } = require('./sound')
+const { parseDate } = require('./utils')
 
-setAlarm(new Date(Date.now() + 1000 * 1))
+setAlarm(parseDate(process.argv.slice(2).join(' ')))
   .then(function () {
-    console.log('Alarm')
+    playSound()
   })
   .catch(function (e) {
     console.log(e)
