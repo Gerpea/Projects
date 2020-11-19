@@ -1,0 +1,14 @@
+{
+  "name": "distances",
+  "version": "0.0.1",
+  "description": "Calculates the distance between two cities and allows the user to specify a unit of distance. This program may require finding coordinates for the cities like latitude and longitude.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "parse-dms": "^0.0.3"
+  }
+}
