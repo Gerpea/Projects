@@ -1,40 +1,11 @@
-const inquirer = require('inquirer')
-const parseDMS = require('parse-dms')
-
+const { getPoint, getUnit } = require('./prompt')
 const { distance } = require('./distance')
+const { convertMeters } = require('./convert')
 
 ;(async () => {
   const fP = await getPoint()
   const sP = await getPoint()
+  const unit = await getUnit()
 
-  console.log(distance(fP, sP))
+  console.log(`${convertMeters(distance(fP, sP), unit)} ${unit}`)
 })()
-
-async function getPoint() {
-  const answers = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'point',
-      message: 'Select point',
-      choices: [
-        {
-          name: 'Enter DMS',
-          value: 'dms',
-        },
-        {
-          name: 'Select from list',
-          value: 'list',
-        },
-      ],
-    },
-    {
-      name: 'dms',
-      when: function (answers) {
-        return answers.first === 'dms'
-      },
-      message: 'Enter DMS',
-    },
-  ])
-
-  return parseDMS(answers.dms)
-}
