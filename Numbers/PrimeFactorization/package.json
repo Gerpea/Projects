@@ -1,0 +1,16 @@
+{
+  "name": "primefactorization",
+  "version": "0.0.1",
+  "description": "Have the user enter a number and find all Prime Factors (if there are any) and display them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "commander": "^6.2.0",
+    "is-valid-path": "^0.1.1"
+  }
+}

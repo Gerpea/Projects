@@ -1,4 +1,4 @@
-# Mega Project List [**27**/100]
+# Mega Project List [**28**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -45,7 +45,7 @@ Problems are motivated by the ones shared at:
 
 [**Fibonacci Sequence**](https://github.com/Gerpea/Projects/tree/master/Numbers/Fibonacci) - Enter a number and have the program generate the Fibonacci sequence to that number or to the Nth number.
 
-**Prime Factorization** - Have the user enter a number and find all Prime Factors (if there are any) and display them.
+[**Prime Factorization**](https://github.com/Gerpea/Projects/tree/master/Numbers/PrimeFactorization) - Have the user enter a number and find all Prime Factors (if there are any) and display them.
 
 [**Next Prime Number**](https://github.com/Gerpea/Projects/tree/master/Numbers/NextPrime) - Have the program find prime numbers until the user chooses to stop asking for the next one.
 
