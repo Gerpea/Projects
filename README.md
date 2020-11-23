@@ -1,4 +1,4 @@
-# Mega Project List [**28**/100]
+# Mega Project List [**29**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -89,7 +89,7 @@ Problems are motivated by the ones shared at:
 
 [**Sorting**](https://github.com/Gerpea/Projects/tree/master/ClassicAlgorithms/Sorting) - Implement two types of sorting algorithms: Merge sort and bubble sort.
 
-**Closest pair problem** - The closest pair of points problem or closest pair problem is a problem of computational geometry: given _n_ points in metric space, find a pair of points with the smallest distance between them.
+[**Closest pair problem**](https://github.com/Gerpea/Projects/tree/master/ClassicAlgorithms/ClosestPair) - The closest pair of points problem or closest pair problem is a problem of computational geometry: given _n_ points in metric space, find a pair of points with the smallest distance between them.
 
 [**Sieve of Eratosthenes**](https://github.com/Gerpea/Projects/tree/master/ClassicAlgorithms/SieveOfEratosthenes) - The sieve of Eratosthenes is one of the most efficient ways to find all of the smaller primes (below 10 million or so).
 
