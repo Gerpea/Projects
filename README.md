@@ -1,4 +1,4 @@
-# Mega Project List [**29**/100]
+# Mega Project List [**30**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -79,7 +79,7 @@ Problems are motivated by the ones shared at:
 
 [**Coin Flip Simulation**](https://github.com/Gerpea/Projects/tree/master/Numbers/FlipACoin) - Write some code that simulates flipping a single coin however many times the user decides. The code should record the outcomes and count the number of tails and heads.
 
-**Limit Calculator** - Ask the user to enter f(x) and the limit value, then return the value of the limit statement _Optional: Make the calculator capable of supporting infinite limits._
+[**Limit Calculator**](https://github.com/Gerpea/Projects/tree/master/Numbers/Limit) - Ask the user to enter f(x) and the limit value, then return the value of the limit statement _Optional: Make the calculator capable of supporting infinite limits._
 
 [**Fast Exponentiation**](https://github.com/Gerpea/Projects/tree/master/Numbers/FastExp) - Ask the user to enter 2 integers a and b and output a^b (i.e. pow(a,b)) in O(lg n) time complexity.
 

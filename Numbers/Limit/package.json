@@ -1,0 +1,14 @@
+{
+  "name": "limit",
+  "version": "0.0.1",
+  "description": "Ask the user to enter f(x) and the limit value, then return the value of the limit statementMake the calculator capable of supporting infinite limits.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.0",
+    "mathjs": "^8.0.1"
+  }
+}
