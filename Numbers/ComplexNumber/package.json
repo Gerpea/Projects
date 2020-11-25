@@ -1,0 +1,19 @@
+{
+  "name": "complexnumber",
+  "version": "0.0.1",
+  "description": "Show addition, multiplication, negation, and inversion of complex numbers in separate functions. (Subtraction and division operations can be made with pairs of these operations.) Print the results for each operation tested.",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc -p ."
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.14.9",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "g": "^2.0.1"
+  }
+}
