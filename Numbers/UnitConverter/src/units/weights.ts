@@ -1,14 +1,26 @@
+import { BigNumber } from 'bignumber.js'
 import { IUnit } from './unit'
 
-const weights = ['t', 'kg', 'g', 'mg', 'ug', 'ng', 'pg'] as const
+const koefs = new Map<string, BigNumber>([
+  ['Mt', new BigNumber('1e-12')],
+  ['t', new BigNumber('1e-6')],
+  ['kg', new BigNumber('1e-3')],
+  ['g', new BigNumber('1')],
+  ['mg', new BigNumber('1e3')],
+  ['ug', new BigNumber('1e6')],
+  ['ng', new BigNumber('1e9')],
+  ['pg', new BigNumber('1e12')],
+])
+const weights = ['Mt', 't', 'kg', 'g', 'mg', 'ug', 'ng', 'pg'] as const
+
 type WeightTypes = typeof weights[number]
 
 class WeightUnit implements IUnit {
-  value: number
+  value: BigNumber
   kind: WeightTypes
 
-  constructor(value: number, kind: WeightTypes) {
-    this.value = value
+  constructor(value: BigNumber, kind: WeightTypes) {
+    this.value = new BigNumber(value)
     this.kind = kind
   }
 
@@ -20,27 +32,20 @@ class WeightUnit implements IUnit {
     return new WeightUnit(this.convertTo(kind as WeightTypes), kind as WeightTypes)
   }
 
-  private convertTo(kind: WeightTypes): number {
-    if (!(koefs.get(kind.toLowerCase()) && koefs.get(this.kind.toLowerCase()))) {
+  private convertTo(kind: WeightTypes): BigNumber {
+    const currentKoef = koefs.get(this.kind)
+    const newKoef = koefs.get(kind)
+
+    if (!(currentKoef && newKoef)) {
       throw new Error(`Cannot convert ${this.kind} to ${kind}`)
     }
 
-    return this.value * (koefs.get(kind.toLowerCase())! / koefs.get(this.kind.toLowerCase())!)
+    return this.value.times(newKoef.div(currentKoef))
   }
 }
 
 function isOfTypeWeight(kind: WeightTypes) {
   return (weights as readonly WeightTypes[]).includes(kind)
 }
-
-const koefs = new Map<string, number>([
-  ['t', 1 / 1000],
-  ['kg', 1],
-  ['g', 1 * 1000],
-  ['mg', 1 * 1000 * 1000],
-  ['ug', 1 * 1000 * 1000 * 1000],
-  ['ng', 1 * 1000 * 1000 * 1000],
-  ['pg', 1 * 1000 * 1000 * 1000 * 1000],
-])
 
 export { WeightUnit, isOfTypeWeight, WeightTypes }

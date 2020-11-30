@@ -1,14 +1,45 @@
+import { BigNumber } from 'bignumber.js'
 import { IUnit } from './unit'
 
-const lengths = ['km', 'hm', 'dam', 'm', 'dm', 'cm', 'mm'] as const
+const koefs = new Map<string, BigNumber>([
+  ['Tm', new BigNumber('1e-12')],
+  ['Gm', new BigNumber('1e-9')],
+  ['Mm', new BigNumber('1e-6')],
+  ['km', new BigNumber('1e-3')],
+  ['hm', new BigNumber('1e-2')],
+  ['dam', new BigNumber('1e-1')],
+  ['m', new BigNumber('1')],
+  ['dm', new BigNumber('1e1')],
+  ['cm', new BigNumber('1e2')],
+  ['mm', new BigNumber('1e3')],
+  ['um', new BigNumber('1e6')],
+  ['nm', new BigNumber('1e9')],
+  ['pm', new BigNumber('1e12')],
+])
+const lengths = [
+  'Tm',
+  'Gm',
+  'Mm',
+  'km',
+  'hm',
+  'dam',
+  'm',
+  'dm',
+  'cm',
+  'mm',
+  'um',
+  'nm',
+  'pm',
+] as const
+
 type LengthTypes = typeof lengths[number]
 
 class LengthUnit implements IUnit {
-  value: number
+  value: BigNumber
   kind: LengthTypes
 
-  constructor(value: number, kind: LengthTypes) {
-    this.value = value
+  constructor(value: BigNumber, kind: LengthTypes) {
+    this.value = new BigNumber(value)
     this.kind = kind
   }
 
@@ -20,24 +51,17 @@ class LengthUnit implements IUnit {
     return new LengthUnit(this.convertTo(kind as LengthTypes), kind as LengthTypes)
   }
 
-  private convertTo(kind: LengthTypes): number {
-    if (!(koefs.get(kind.toLowerCase()) && koefs.get(this.kind.toLowerCase()))) {
+  private convertTo(kind: LengthTypes): BigNumber {
+    const currentKoef = koefs.get(this.kind)
+    const newKoef = koefs.get(kind)
+
+    if (!(currentKoef && newKoef)) {
       throw new Error(`Cannot convert ${this.kind} to ${kind}`)
     }
 
-    return this.value * (koefs.get(kind.toLowerCase())! / koefs.get(this.kind.toLowerCase())!)
+    return this.value.times(newKoef.div(currentKoef))
   }
 }
-
-const koefs = new Map<string, number>([
-  ['km', 1 / 1000],
-  ['hm', 1 / 100],
-  ['dam', 1 / 10],
-  ['m', 1],
-  ['dm', 10],
-  ['cm', 100],
-  ['mm', 1000],
-])
 
 function isOfTypeLength(kind: LengthTypes) {
   return (lengths as readonly LengthTypes[]).includes(kind)
