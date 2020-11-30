@@ -14,7 +14,7 @@ class WeightUnit implements IUnit {
 
   to(kind: WeightTypes): WeightUnit {
     if (!isOfTypeWeight(kind)) {
-      throw new Error('New unit must be the same type as this')
+      throw new Error(`New unit must be the same type as this, but it is ${kind}`)
     }
 
     return new WeightUnit(this.convertTo(kind as WeightTypes), kind as WeightTypes)
@@ -22,7 +22,7 @@ class WeightUnit implements IUnit {
 
   private convertTo(kind: WeightTypes): number {
     if (!(koefs.get(kind.toLowerCase()) && koefs.get(this.kind.toLowerCase()))) {
-      throw new Error('Cannot convert to this type of unit')
+      throw new Error(`Cannot convert ${this.kind} to ${kind}`)
     }
 
     return this.value * (koefs.get(kind.toLowerCase())! / koefs.get(this.kind.toLowerCase())!)

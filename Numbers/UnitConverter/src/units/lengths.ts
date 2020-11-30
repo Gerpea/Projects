@@ -14,7 +14,7 @@ class LengthUnit implements IUnit {
 
   to(kind: LengthTypes): LengthUnit {
     if (!isOfTypeLength(kind)) {
-      throw new Error('New unit must be the same type as this')
+      throw new Error(`New unit must be the same type as this, but it is ${kind}`)
     }
 
     return new LengthUnit(this.convertTo(kind as LengthTypes), kind as LengthTypes)
@@ -22,7 +22,7 @@ class LengthUnit implements IUnit {
 
   private convertTo(kind: LengthTypes): number {
     if (!(koefs.get(kind.toLowerCase()) && koefs.get(this.kind.toLowerCase()))) {
-      throw new Error('Cannot convert to this type of unit')
+      throw new Error(`Cannot convert ${this.kind} to ${kind}`)
     }
 
     return this.value * (koefs.get(kind.toLowerCase())! / koefs.get(this.kind.toLowerCase())!)

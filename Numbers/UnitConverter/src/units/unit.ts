@@ -11,14 +11,13 @@ interface IUnit {
 
 abstract class Unit {
   static create(value: number, kind: UnitTypes): IUnit {
-    console.log(value)
     switch (getType(kind)) {
       case LengthUnit:
         return new LengthUnit(value, kind as LengthTypes)
       case WeightUnit:
         return new WeightUnit(value, kind as WeightTypes)
       default:
-        throw new Error('I dont know this type of unit')
+        throw new Error(`I dont know this type of unit: ${kind}`)
     }
   }
 }

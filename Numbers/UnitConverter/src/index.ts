@@ -1,22 +1,15 @@
-import { LengthUnit } from './units/lengths'
+import { getInput } from './prompt'
 import { Unit } from './units/unit'
-import { WeightTypes, WeightUnit } from './units/weights'
+;(async () => {
+  try {
+    const from = await getInput('Enter unit to convert from')
+    const to = await getInput('Enter unit to convert to')
+    const value = await getInput('Enter value')
+    const fromUnit = Unit.create(value, from)
+    const toUnit = fromUnit.to(to)
 
-const meter = Unit.create(1, 'm') as LengthUnit
-const kilo = Unit.create(1, 'kg') as WeightUnit
-
-console.log('one meter is')
-console.log(meter.to('dm'), 'dm')
-console.log(meter.to('cm'), 'cm')
-console.log(meter.to('mm'), 'mm')
-console.log(meter.to('dam'), 'dam')
-console.log(meter.to('hm'), 'hm')
-console.log(meter.to('km'), 'km')
-
-console.log('one kilo is')
-console.log(kilo.to('g'), 'g')
-console.log(kilo.to('mg'), 'mg')
-console.log(kilo.to('ug'), 'ug')
-console.log(kilo.to('ng'), 'ng')
-console.log(kilo.to('pg'), 'pg')
-console.log(kilo.to('t'), 't')
+    console.log(`${fromUnit.value} ${fromUnit.kind} = ${toUnit.value} ${toUnit.kind}`)
+  } catch (e) {
+    console.log(e.message)
+  }
+})()
