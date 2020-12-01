@@ -1,7 +1,8 @@
 import { BigNumber } from 'bignumber.js'
-import { IUnit } from './unit'
+import { BaseUnit } from './baseUnit'
+import { lengths, LengthTypes } from './types'
 
-const koefs = new Map<string, BigNumber>([
+const koefs = new Map<LengthTypes, BigNumber>([
   ['Tm', new BigNumber('1e-12')],
   ['Gm', new BigNumber('1e-9')],
   ['Mm', new BigNumber('1e-6')],
@@ -16,50 +17,10 @@ const koefs = new Map<string, BigNumber>([
   ['nm', new BigNumber('1e9')],
   ['pm', new BigNumber('1e12')],
 ])
-const lengths = [
-  'Tm',
-  'Gm',
-  'Mm',
-  'km',
-  'hm',
-  'dam',
-  'm',
-  'dm',
-  'cm',
-  'mm',
-  'um',
-  'nm',
-  'pm',
-] as const
 
-type LengthTypes = typeof lengths[number]
-
-class LengthUnit implements IUnit {
-  value: BigNumber
-  kind: LengthTypes
-
-  constructor(value: BigNumber, kind: LengthTypes) {
-    this.value = new BigNumber(value)
-    this.kind = kind
-  }
-
-  to(kind: LengthTypes): LengthUnit {
-    if (!isOfTypeLength(kind)) {
-      throw new Error(`New unit must be the same type as this, but it is ${kind}`)
-    }
-
-    return new LengthUnit(this.convertTo(kind as LengthTypes), kind as LengthTypes)
-  }
-
-  private convertTo(kind: LengthTypes): BigNumber {
-    const currentKoef = koefs.get(this.kind)
-    const newKoef = koefs.get(kind)
-
-    if (!(currentKoef && newKoef)) {
-      throw new Error(`Cannot convert ${this.kind} to ${kind}`)
-    }
-
-    return this.value.times(newKoef.div(currentKoef))
+class LengthUnit extends BaseUnit {
+  constructor(value: BigNumber | number, kind: LengthTypes) {
+    super(value, kind, koefs)
   }
 }
 
@@ -67,4 +28,4 @@ function isOfTypeLength(kind: LengthTypes) {
   return (lengths as readonly LengthTypes[]).includes(kind)
 }
 
-export { LengthUnit, isOfTypeLength, LengthTypes }
+export { LengthUnit, isOfTypeLength }

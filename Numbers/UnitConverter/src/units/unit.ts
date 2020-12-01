@@ -1,17 +1,12 @@
 import { BigNumber } from 'bignumber.js'
 
-import { UnitTypes } from './types'
-import { isOfTypeLength, LengthTypes, LengthUnit } from './lengths'
-import { isOfTypeWeight, WeightTypes, WeightUnit } from './weights'
-
-interface IUnit {
-  value: BigNumber
-  kind: UnitTypes
-  to(kind: UnitTypes): IUnit
-}
+import { LengthTypes, UnitTypes, WeightTypes } from './types'
+import { isOfTypeLength, LengthUnit } from './lengths'
+import { isOfTypeWeight, WeightUnit } from './weights'
+import { BaseUnit } from './baseUnit'
 
 abstract class Unit {
-  static create(value: BigNumber, kind: UnitTypes): IUnit {
+  static create(value: BigNumber | number, kind: UnitTypes): BaseUnit {
     switch (getType(kind)) {
       case LengthUnit:
         return new LengthUnit(value, kind as LengthTypes)
@@ -31,4 +26,4 @@ function getType(kind: UnitTypes) {
   }
 }
 
-export { Unit, IUnit }
+export { Unit }

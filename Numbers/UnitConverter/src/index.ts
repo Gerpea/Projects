@@ -1,5 +1,4 @@
 import { getInput } from './prompt'
-import { LengthUnit } from './units/lengths'
 import { Unit } from './units/unit'
 ;(async () => {
   try {
