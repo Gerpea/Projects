@@ -1,97 +1,26 @@
-class Drawer {
-  private canvas: HTMLCanvasElement
-  private context: CanvasRenderingContext2D
+import { Pea } from './pea'
+import { Renderer } from './scripts/renderer'
 
-  private step: number
-  private elements: Set<DrawerElement>
+const firstPea = new Pea('pea1', { x: 0, y: 0 }, { x: 0, y: 0 }, { angle: 0 })
+firstPea.addScript(new Renderer())
 
-  constructor(canvas: HTMLCanvasElement) {
-    if (canvas) {
-      this.canvas = canvas!
-    } else {
-      throw new Error('Canvas should not be null')
-    }
-    if (this.canvas.getContext('2d')) {
-      this.context = this.canvas.getContext('2d')!
-    } else {
-      throw new Error("Can't find context")
-    }
+// class Drawer {
+//   private canvas: HTMLCanvasElement
+//   private context: CanvasRenderingContext2D
 
-    this.elements = new Set()
-    this.step = 1
-  }
-
-  add(element: DrawerElement) {
-    console.log('add', element.name)
-    this.elements.add(element)
-    this.repaint()
-  }
-
-  remove(element: DrawerElement) {
-    console.log('remove', element.name)
-    this.elements.delete(element)
-    this.repaint()
-  }
-
-  repaint() {
-    this.elements.forEach(function (element) {
-      const renderer = element.components.find(function (component) {
-        return component instanceof Renderer
-      }) as Renderer
-      if (renderer) {
-        renderer.render(element)
-      }
-    })
-  }
-}
-
-class DrawerElement {
-  name: string
-
-  private position: Point
-  private center: Center
-  private rotation: Rotation
-
-  components: Array<Component>
-  private scripts: Set<Script>
-
-  constructor(name: string, position: Point, center: Center, rotation: Rotation) {
-    this.name = name
-    this.position = position
-    this.center = center
-    this.rotation = rotation
-
-    this.components = new Array()
-    this.scripts = new Set()
-  }
-}
-
-type Point = { x: number; y: number }
-type Center = { x: number; y: number }
-type Rotation = { angle: number }
-
-interface Script {}
-interface Component {}
-
-class Trigger implements Component {}
-class Renderer implements Component {
-  render(element: DrawerElement) {
-    console.log(`render: ${element.name}`)
-  }
-}
-class Collider implements Component {}
-
-const drawer = new Drawer(document.getElementById('canvas') as HTMLCanvasElement)
-const elementOne = new DrawerElement('elementOne', { x: 0, y: 0 }, { x: 0, y: 0 }, { angle: 0 })
-const elementTwo = new DrawerElement('elementTwo', { x: 0, y: 0 }, { x: 0, y: 0 }, { angle: 0 })
-
-elementOne.components.push(new Renderer())
-
-drawer.add(elementOne)
-drawer.add(elementTwo)
-elementTwo.components.push(new Renderer())
-drawer.remove(elementOne)
-drawer.remove(elementTwo)
+//   constructor(canvas: HTMLCanvasElement) {
+//     if (canvas) {
+//       this.canvas = canvas!
+//     } else {
+//       throw new Error('Canvas should not be null')
+//     }
+//     if (this.canvas.getContext('2d')) {
+//       this.context = this.canvas.getContext('2d')!
+//     } else {
+//       throw new Error("Can't find context")
+//     }
+//   }
+// }
 
 //drawer.step = x
 //
