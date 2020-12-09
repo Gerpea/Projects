@@ -1,22 +1,25 @@
-import { Script, Point } from '../base'
+import { Script, Point, Color } from '../base'
 
 export class RectRenderer extends Script {
   protected context: CanvasRenderingContext2D
 
-  private centerPosition!: Point
+  private _centerPosition!: Point
 
   private width: number
   private height: number
 
-  constructor(context: CanvasRenderingContext2D, width: number, height: number) {
+  private color: Color
+
+  constructor(context: CanvasRenderingContext2D, width: number, height: number, color: Color) {
     super()
     this.context = context
     this.width = width
     this.height = height
+    this.color = color
   }
 
   onStart() {
-    this.centerPosition = new Point(this.pea.position.x / 2, this.pea.position.y / 2)
+    this._centerPosition = new Point(this.pea.position.x / 2, this.pea.position.y / 2)
   }
 
   onUpdate() {
@@ -25,10 +28,11 @@ export class RectRenderer extends Script {
   }
 
   draw(): void {
-    this.context.fillRect(this.centerPosition.x, this.centerPosition.y, this.width, this.height)
+    this.context.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
+    this.context.fillRect(this._centerPosition.x, this._centerPosition.y, this.width, this.height)
   }
 
   clear(): void {
-    this.context.clearRect(this.centerPosition.x, this.centerPosition.y, this.width, this.height)
+    this.context.clearRect(this._centerPosition.x, this._centerPosition.y, this.width, this.height)
   }
 }
