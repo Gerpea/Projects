@@ -5,7 +5,7 @@ export class PeaEngine {
 
   constructor() {
     this.peas = new Set()
-    setInterval(this.tick, 1000)
+    setInterval(this.tick.bind(this), 1000)
   }
 
   add(pea: Pea): void {
@@ -19,7 +19,7 @@ export class PeaEngine {
   private tick(): void {
     this.peas.forEach(function (pea) {
       pea.scripts.forEach(function (script) {
-        script.onUpdate.call(pea)
+        script.onUpdate()
       })
     })
   }

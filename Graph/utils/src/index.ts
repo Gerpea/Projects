@@ -1,37 +1,17 @@
-import { Pea } from './pea'
-import { Renderer } from './scripts/renderer'
+import { Pea } from './base/pea'
+import { PeaEngine } from './base/peaEngine'
+import { RectRenderer } from './scripts/rectRenderer'
 
-const firstPea = new Pea('pea1', { x: 0, y: 0 }, { x: 0, y: 0 }, { angle: 0 })
-firstPea.addScript(new Renderer())
+const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement
+const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D
 
-// class Drawer {
-//   private canvas: HTMLCanvasElement
-//   private context: CanvasRenderingContext2D
+const peaEngine = new PeaEngine()
 
-//   constructor(canvas: HTMLCanvasElement) {
-//     if (canvas) {
-//       this.canvas = canvas!
-//     } else {
-//       throw new Error('Canvas should not be null')
-//     }
-//     if (this.canvas.getContext('2d')) {
-//       this.context = this.canvas.getContext('2d')!
-//     } else {
-//       throw new Error("Can't find context")
-//     }
-//   }
-// }
+const firstPea = new Pea('pea1', { x: 10, y: 30 }, { x: 0, y: 0 }, { angle: 0 })
+firstPea.addScript(new RectRenderer(context, 10, 10))
 
-//drawer.step = x
-//
-//drawer.repaint()
-//
-//drawer.add(element)
-//drawer.remove(element)
-//
-//drawer.hit({x,y})              // return hitted element
-//
-//
+peaEngine.add(firstPea)
+
 //element.position = {x, y}      // default: 0, 0
 //element.rotation = r           // default: 0
 //element.center = {x%, y%}      // default: 0.0, 0.0
