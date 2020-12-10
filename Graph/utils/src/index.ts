@@ -1,6 +1,9 @@
 import { Color, Point, Rotation, Script } from './base'
 import { Pea } from './base/pea'
 import { PeaEngine } from './base/peaEngine'
+import { ChangeAngle } from './scripts/changeAngle'
+import { ChangeCenter } from './scripts/changeCenter'
+import { Move } from './scripts/move'
 import { RectRenderer } from './scripts/rectRenderer'
 
 const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement
@@ -8,66 +11,35 @@ const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRende
 
 const peaEngine = new PeaEngine()
 
-const firstPea = new Pea('pea1', new Point(250, 150), new Point(0, 0), { angle: Math.PI / 4 })
-const secondPea = new Pea('pea2', new Point(250, 150), new Point(0, 0), { angle: Math.PI / 4 })
+const firstPea = new Pea('pea1', new Point(250, 150), new Point(0, 0), { angle: Math.PI })
+const secondPea = new Pea('pea2', new Point(150, 150), new Point(-25, 0), { angle: Math.PI / 4 })
+const thirdPea = new Pea('pea3', new Point(250, 150), new Point(0, 0), { angle: Math.PI * 2 })
+const fourthPea = new Pea('pea4', new Point(350, 150), new Point(0, 0), { angle: Math.PI / 4 })
+const fifthPea = new Pea('pea5', new Point(0, 0), new Point(0, 0), { angle: Math.PI / 4 })
 
-class ChangeAngle extends Script {
-  private inc: boolean = false
-  private max: number = Math.PI / 3
-  private min: number = -Math.PI / 3
-  private step: number = Math.PI / 180
-  private angle: number = this.max
+firstPea.addChild(fifthPea)
 
-  onUpdate(): void {
-    if (this.angle >= this.max) {
-      this.inc = false
-    } else if (this.angle <= this.min) {
-      this.inc = true
-    }
+peaEngine.addPea(firstPea)
+peaEngine.addPea(fifthPea)
 
-    this.angle = this.inc ? this.angle + this.step : this.angle - this.step
-    this.pea.rotation = new Rotation(this.angle)
-  }
-}
+firstPea.addScript(new RectRenderer(context, 300, 300, new Color(255, 0, 0, 1)))
+fifthPea.addScript(new RectRenderer(context, 30, 30, new Color(0, 100, 255, 1)))
 
-class ChangeCenter extends Script {
-  private inc: boolean = false
-  private max: number = 25
-  private min: number = -25
-  private step: number = 1
-  private center: number = this.max
+firstPea.addScript(new Move(new Point(250, 150), new Point(250, 250), new Point(0.1, 0.1)))
+fifthPea.addScript(new ChangeAngle())
+fifthPea.addScript(new Move(new Point(-50, 0), new Point(50, 0), new Point(0.1, 0.1)))
 
-  onUpdate(): void {
-    if (this.center >= this.max) {
-      this.inc = false
-    } else if (this.center <= this.min) {
-      this.inc = true
-    }
-
-    this.center = this.inc ? this.center + this.step : this.center - this.step
-    this.pea.center.x = this.center
-  }
-}
-
-firstPea.addScript(new RectRenderer(context, 100, 100, new Color(255, 0, 0, 1)))
 secondPea.addScript(new RectRenderer(context, 50, 50, new Color(0, 0, 255, 1)))
+thirdPea.addScript(new RectRenderer(context, 50, 50, new Color(0, 0, 255, 1)))
+fourthPea.addScript(new RectRenderer(context, 50, 50, new Color(0, 0, 255, 1)))
+
 secondPea.addScript(new ChangeAngle())
-secondPea.addScript(new ChangeCenter())
 
-peaEngine.add(firstPea)
-peaEngine.add(secondPea)
+thirdPea.addScript(new ChangeCenter())
 
-//element.position = {x, y}      // default: 0, 0
-//element.rotation = r           // default: 0
-//element.center = {x%, y%}      // default: 0.0, 0.0
-//
-//element.components ???
-//element.scripts = <Script>[]
-//
-//element.name                   // for finding element in drawer
-//
-//
-//camera.position = {x, y}
-//camera.zoom = z
-//
-//
+fourthPea.addScript(new ChangeAngle())
+fourthPea.addScript(new ChangeCenter())
+
+// peaEngine.addPea(secondPea)
+// peaEngine.addPea(thirdPea)
+// peaEngine.addPea(fourthPea)

@@ -11,6 +11,9 @@ export class Pea {
 
   scripts: Set<Script>
 
+  parent!: Pea
+  children: Set<Pea>
+
   constructor(name: string, position: Point, center: Point, rotation: Rotation) {
     this.name = name
     this.position = position
@@ -18,6 +21,18 @@ export class Pea {
     this.rotation = rotation
 
     this.scripts = new Set()
+
+    this.children = new Set()
+  }
+
+  addChild(pea: Pea) {
+    pea.parent = this
+    this.children.add(pea)
+  }
+
+  removeChild(pea: Pea) {
+    pea.position = pea.position.plus(pea.parent.position)
+    pea.parent = pea.parent.parent
   }
 
   addScript<T extends Script>(script: T): void {

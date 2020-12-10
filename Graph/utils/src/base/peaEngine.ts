@@ -1,4 +1,6 @@
 import { Pea } from './pea'
+import { Point } from './point'
+import { Rotation } from './rotation'
 
 export class PeaEngine {
   private peas: Set<Pea>
@@ -8,11 +10,14 @@ export class PeaEngine {
     setInterval(this.tick.bind(this), 1000 / 60)
   }
 
-  add(pea: Pea): void {
+  addPea(pea: Pea): void {
+    if (!pea.parent) {
+      pea.parent = new Pea('', new Point(0, 0), new Point(0, 0), new Rotation(0))
+    }
     this.peas.add(pea)
   }
 
-  remove(pea: Pea): void {
+  removePea(pea: Pea): void {
     this.peas.delete(pea)
   }
 
