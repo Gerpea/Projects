@@ -3,8 +3,7 @@ import { Script, Point, Color } from '../base'
 export class RectRenderer extends Script {
   protected context: CanvasRenderingContext2D
 
-  private _centerPosition!: Point
-
+  private halfPea: Point
   private width: number
   private height: number
 
@@ -16,11 +15,11 @@ export class RectRenderer extends Script {
     this.width = width
     this.height = height
     this.color = color
+
+    this.halfPea = new Point(this.width / 2, this.height / 2)
   }
 
-  onStart() {
-    this._centerPosition = new Point(this.pea.position.x / 2, this.pea.position.y / 2)
-  }
+  onStart() {}
 
   onUpdate() {
     this.clear()
@@ -29,10 +28,46 @@ export class RectRenderer extends Script {
 
   draw(): void {
     this.context.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
-    this.context.fillRect(this._centerPosition.x, this._centerPosition.y, this.width, this.height)
+
+    this.context.moveTo(this.pea.position.x - this.width / 2, this.pea.position.y - this.height / 2)
+
+    this.context.beginPath()
+    const lb = this.pea.position.plus(
+      new Point(-this.halfPea.x, -this.halfPea.y).rotate(this.pea.center, this.pea.rotation)
+    )
+    const lt = this.pea.position.plus(
+      new Point(-this.halfPea.x, this.halfPea.y).rotate(this.pea.center, this.pea.rotation)
+    )
+    const rt = this.pea.position.plus(
+      new Point(this.halfPea.x, this.halfPea.y).rotate(this.pea.center, this.pea.rotation)
+    )
+    const rb = this.pea.position.plus(
+      new Point(this.halfPea.x, -this.halfPea.y).rotate(this.pea.center, this.pea.rotation)
+    )
+
+    this.context.lineTo(lb.x, lb.y)
+    this.context.lineTo(lt.x, lt.y)
+    this.context.lineTo(rt.x, rt.y)
+    this.context.lineTo(rb.x, rb.y)
+
+    this.context.closePath()
+    this.context.fill()
+
+    this.context.fillStyle = `rgb(0,255,0)`
+    this.context.fillRect(
+      this.pea.center.plus(this.pea.position).x - 5,
+      this.pea.center.plus(this.pea.position).y - 5,
+      10,
+      10
+    )
   }
 
   clear(): void {
-    this.context.clearRect(this._centerPosition.x, this._centerPosition.y, this.width, this.height)
+    this.context.clearRect(
+      this.pea.position.x - this.width / 2,
+      this.pea.position.y - this.height / 2,
+      this.width,
+      this.height
+    )
   }
 }

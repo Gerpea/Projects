@@ -21,6 +21,12 @@ export class Pea {
   }
 
   addScript<T extends Script>(script: T): void {
+    if (script) {
+      this.initScript(script)
+    }
+  }
+
+  private initScript<T extends Script>(script: T) {
     script.initialize(this)
     this.scripts.add(script)
   }

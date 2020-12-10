@@ -5,7 +5,7 @@ export class PeaEngine {
 
   constructor() {
     this.peas = new Set()
-    setInterval(this.tick.bind(this), 1000)
+    setInterval(this.tick.bind(this), 1000 / 60)
   }
 
   add(pea: Pea): void {
