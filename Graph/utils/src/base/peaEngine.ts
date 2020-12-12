@@ -26,6 +26,10 @@ export class PeaEngine {
       pea.scripts.forEach(function (script) {
         script.onUpdate()
       })
+
+      pea.renderers.forEach(function (renderer) {
+        renderer.onUpdate()
+      })
     })
   }
 }

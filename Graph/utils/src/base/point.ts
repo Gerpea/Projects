@@ -10,8 +10,8 @@ export class Point {
   }
 
   rotate(pivot: Point, rotation: Rotation): Point {
-    const sin = Math.sin(rotation.angle)
-    const cos = Math.cos(rotation.angle)
+    const sin = Math.sin(rotation.radian)
+    const cos = Math.cos(rotation.radian)
 
     const sp = this.minus(pivot)
 

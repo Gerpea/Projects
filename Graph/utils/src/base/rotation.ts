@@ -1,7 +1,15 @@
 export class Rotation {
-  angle: number
+  private _radian: number
 
-  constructor(angle: number) {
-    this.angle = angle
+  constructor(radians: number) {
+    this._radian = radians
+  }
+
+  get radian(): number {
+    return this._radian
+  }
+
+  set radian(value: number) {
+    this._radian = value
   }
 }
