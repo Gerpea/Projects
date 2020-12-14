@@ -12,7 +12,7 @@ export class EllipseRenderer2D extends Renderer2D {
     this.height = height
   }
 
-  protected draw(): void {
+  draw(): void {
     this.context.fillStyle = this.color.toRGBA()
 
     this.context.beginPath()

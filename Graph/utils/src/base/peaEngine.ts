@@ -23,12 +23,12 @@ export class PeaEngine {
 
   private tick(): void {
     this.peas.forEach(function (pea) {
-      pea.scripts.forEach(function (script) {
-        script.onUpdate()
+      pea.renderers.forEach(function (renderer) {
+        renderer.draw()
       })
 
-      pea.renderers.forEach(function (renderer) {
-        renderer.onUpdate()
+      pea.scripts.forEach(function (script) {
+        script.onUpdate()
       })
     })
   }

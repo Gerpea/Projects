@@ -14,5 +14,5 @@ export abstract class Renderer2D extends Script {
     this.draw()
   }
 
-  protected abstract draw(): void
+  abstract draw(): void
 }

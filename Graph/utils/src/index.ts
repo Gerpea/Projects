@@ -45,4 +45,3 @@ redRect.addScript(
 
 blueRect.addScript(new ChangeAngle())
 blueRect.addScript(new Move(new Point(-50, 0), new Point(50, 0), new Point(0.1, 0.1)))
-ellipse.addScript(new ChangeAngle())
