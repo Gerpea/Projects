@@ -1,6 +1,6 @@
 # Graph from links
 
-**[Graph from links](https://en.wikipedia.org/wiki/Collatz_conjecture)**
+**Graph from links**
 
 ## Table of Contents
 
