@@ -1,0 +1,17 @@
+{
+  "name": "links",
+  "version": "0.0.1",
+  "description": "Create a program that will create a graph or network from a series of links.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "commander": "^6.2.1",
+    "get-urls": "^10.0.0",
+    "url-parse": "^1.4.7",
+    "valid-url": "^1.0.9"
+  }
+}
