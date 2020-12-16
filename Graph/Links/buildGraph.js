@@ -2,7 +2,7 @@ const axios = require('axios').default
 const getUrls = require('get-urls')
 var Url = require('url-parse')
 
-const { Graph } = require('./graph')
+const { Graph } = require('../utils/graph')
 
 async function buildGraph(firstLink, depth = 0, onlyOrigin = true) {
   const linkGraph = new Graph()

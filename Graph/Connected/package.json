@@ -1,0 +1,11 @@
+{
+  "name": "connected",
+  "version": "0.0.1",
+  "description": "Create a program which takes a graph as an input and outputs whether every node is connected or not.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gerpea",
+  "license": "ISC"
+}

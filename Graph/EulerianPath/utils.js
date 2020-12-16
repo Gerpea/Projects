@@ -1,7 +1,7 @@
 const isValid = require('is-valid-path')
 const fs = require('fs')
 
-const { Graph } = require('./graph')
+const { Graph } = require('../utils/graph')
 
 exports.readGraph = function (path) {
   if (parsePath(path)) {

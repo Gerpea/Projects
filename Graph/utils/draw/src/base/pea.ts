@@ -1,5 +1,4 @@
 import { Renderer2D } from '../scripts/Renderer2D'
-import { Trigger2D } from '../scripts/trigger2D'
 import { Point } from './point'
 import { Rotation } from './rotation'
 import { Script } from './script'
@@ -12,7 +11,6 @@ export class Pea {
   private _rotation: Rotation
 
   renderers: Set<Renderer2D>
-  triggers: Set<Trigger2D>
   scripts: Set<Script>
 
   parent!: Pea
@@ -26,7 +24,6 @@ export class Pea {
 
     this.scripts = new Set()
     this.renderers = new Set()
-    this.triggers = new Set()
 
     this.children = new Set()
   }
@@ -85,8 +82,6 @@ export class Pea {
     script.initialize(this)
     if (script instanceof Renderer2D) {
       this.renderers.add(script)
-    } else if (script instanceof Trigger2D) {
-      this.triggers.add(script)
     } else {
       this.scripts.add(script)
     }
