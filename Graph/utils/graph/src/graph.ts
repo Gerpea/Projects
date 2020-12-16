@@ -1,4 +1,4 @@
-export type GraphNode = string
+export type GraphNode = string | number
 
 class NodeValue {
   nodes: Set<GraphNode>
@@ -19,9 +19,9 @@ export class Graph {
     this.edges = new Map()
   }
 
-  addEdges(mainNode: GraphNode, nodes: Array<GraphNode>): void {
+  addEdges(mainNode: GraphNode, nodes: Array<GraphNode>, directed = true): void {
     nodes.forEach((node) => {
-      this.addEdge(mainNode, node)
+      this.addEdge(mainNode, node, directed)
     })
   }
 
@@ -136,6 +136,34 @@ export class Graph {
     }
 
     return true
+  }
+
+  connected(): boolean {
+    const findStartNode = (graph: Graph): GraphNode => {
+      let size = Array.of(graph.edges.keys()).length
+      const nodeAt = Math.floor(Math.random() * size)
+      let i = 0
+      for (let [node, _] of graph.edges.entries()) {
+        if (i === nodeAt) {
+          return node
+        }
+      }
+
+      return graph.edges.keys().next().value
+    }
+
+    let visited = new Set<GraphNode>()
+    let graphCopy = this.copy()
+    let currentNode = findStartNode(graphCopy)
+    while (currentNode && this.edges.get(currentNode)!.outDegree !== 0) {
+      visited.add(currentNode)
+      const nextNode = graphCopy.edges.get(currentNode)?.nodes.values().next().value
+      graphCopy.deleteEdge(currentNode, nextNode)
+      currentNode = nextNode
+    }
+
+    const difference = new Set([...this.edges.keys()].filter((node) => !visited.has(node)))
+    return difference.size === 0
   }
 
   private createNodesIfNotExist(nodes: Array<GraphNode>): void {
