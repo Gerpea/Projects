@@ -1,12 +1,24 @@
 export type GraphNode = string | number
 
+class GraphEdge {
+  node: GraphNode
+  weight: number
+  directed: boolean
+
+  constructor(node: GraphNode) {
+    this.node = node
+    this.weight = Infinity
+    this.directed = true
+  }
+}
+
 class NodeValue {
-  nodes: Set<GraphNode>
+  edges: Set<GraphEdge>
   inDegree: number
   outDegree: number
 
   constructor() {
-    this.nodes = new Set()
+    this.edges = new Set()
     this.inDegree = 0
     this.outDegree = 0
   }
@@ -19,21 +31,25 @@ export class Graph {
     this.edges = new Map()
   }
 
-  addEdges(mainNode: GraphNode, nodes: Array<GraphNode>, directed = true): void {
+  addEdges(mainNode: GraphNode, nodes: Array<GraphNode>): void {
     nodes.forEach((node) => {
-      this.addEdge(mainNode, node, directed)
+      this.addEdge(mainNode, node)
     })
   }
 
-  addEdge(nodeA: GraphNode, nodeB: GraphNode, directed = true): void {
+  addEdge(nodeA: GraphNode, nodeB: GraphNode, weight = 0, directed = true): void {
     this.createNodesIfNotExist([nodeA, nodeB])
 
-    if (!this.edges.get(nodeA)!.nodes.has(nodeB)) {
+    if (
+      !Array.from(this.edges.get(nodeA)!.edges.values()).find((edge) => {
+        edge.node === nodeB
+      })
+    ) {
       this.edges.get(nodeA)!.outDegree++
       this.edges.get(nodeB)!.inDegree++
     }
 
-    this.edges.get(nodeA)!.nodes.add(nodeB)
+    this.edges.get(nodeA)!.edges.add(new GraphEdge(nodeB))
   }
 
   addNode(node: GraphNode): void {
@@ -165,6 +181,8 @@ export class Graph {
     const difference = new Set([...this.edges.keys()].filter((node) => !visited.has(node)))
     return difference.size === 0
   }
+
+  dijkstra() {}
 
   private createNodesIfNotExist(nodes: Array<GraphNode>): void {
     nodes.forEach((node) => {
