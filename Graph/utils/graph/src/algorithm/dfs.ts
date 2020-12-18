@@ -1,4 +1,4 @@
-import { Graph, GraphEdge, GraphNode } from '../gra'
+import { Graph, GraphNode } from '../gra'
 
 function* dfs(graph: Graph, startNode: GraphNode) {
   let visitedNodes = new Set<GraphNode>()
