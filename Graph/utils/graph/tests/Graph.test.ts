@@ -449,10 +449,31 @@ describe('Graph', function () {
           })
         }
 
-        console.log(graph)
         const result = graph.edgesCount
 
         expect(expected).equal(result)
+      })
+    })
+
+    describe('Get nodes', function () {
+      let graph: Graph
+      beforeEach(function () {
+        graph = new Graph()
+      })
+
+      it('Should return correct nodes', function () {
+        const expected: Array<GraphNode> = []
+        for (let i = 0; i < 10; i++) {
+          expected.push(graph.addNode(`Node_${i}`))
+        }
+
+        const nodes = graph.getNodes()
+
+        let result = expected.length === nodes.length
+        for (let node of nodes) {
+          result = result && expected.find((n) => n.isEqual(node)) !== undefined
+        }
+        expect(result).equal(true)
       })
     })
   })

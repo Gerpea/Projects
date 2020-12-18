@@ -205,6 +205,10 @@ class Graph {
     return delCount
   }
 
+  getNodes(): Array<GraphNode> {
+    return Array.from(this.nodes.keys())
+  }
+
   get nodesCount() {
     return this.nodes.size
   }
