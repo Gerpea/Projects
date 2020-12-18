@@ -234,6 +234,32 @@ describe('Graph', function () {
         expect(result).equal(true)
       })
 
+      it('Should increase in and out degree on nodes when create edge', function () {
+        const expectedA = {
+          inDegree: 1,
+          outDegree: 1,
+        }
+        const expectedB = {
+          inDegree: 1,
+          outDegree: 1,
+        }
+        const nodeA = new GraphNode('nodeA')
+        const nodeB = new GraphNode('nodeB')
+
+        graph.addEdge(nodeA, nodeB)
+
+        const resultA = {
+          inDegree: nodeA.inDegree,
+          outDegree: nodeA.outDegree,
+        }
+        const resultB = {
+          inDegree: nodeB.inDegree,
+          outDegree: nodeB.outDegree,
+        }
+        expect(expectedA).deep.equal(resultA)
+        expect(expectedB).deep.equal(resultB)
+      })
+
       it('Should add edge', function () {
         const nodeA = new GraphNode('nodeA')
         const nodeB = new GraphNode('nodeB')
@@ -300,6 +326,33 @@ describe('Graph', function () {
         graph.deleteEdge('nodeA', addedEdge)
 
         expect(graph.edgesCount).equal(0)
+      })
+
+      it('Should decrease in and out degree on nodes when delete edge', function () {
+        const expectedA = {
+          inDegree: 0,
+          outDegree: 0,
+        }
+        const expectedB = {
+          inDegree: 0,
+          outDegree: 0,
+        }
+        const nodeA = new GraphNode('nodeA')
+        const nodeB = new GraphNode('nodeB')
+        const addedEdge = graph.addEdge(nodeA, nodeB)
+
+        graph.deleteEdge(nodeA, addedEdge)
+
+        const resultA = {
+          inDegree: nodeA.inDegree,
+          outDegree: nodeA.outDegree,
+        }
+        const resultB = {
+          inDegree: nodeB.inDegree,
+          outDegree: nodeB.outDegree,
+        }
+        expect(expectedA).deep.equal(resultA)
+        expect(expectedB).deep.equal(resultB)
       })
 
       it('Should delete correct edge', function () {

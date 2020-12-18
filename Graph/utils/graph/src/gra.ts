@@ -158,7 +158,11 @@ class Graph {
 
     const edge = new GraphEdge(nB, params)
     this.nodes.set(nA, [...(this.nodes.get(nA) ?? []), edge])
+    nA.outDegree++
+    nB.inDegree++
     if (!edge.params.directed) {
+      nA.inDegree++
+      nB.outDegree++
       this.nodes.set(nB, [...(this.nodes.get(nB) ?? []), new GraphEdge(nA, params)])
     }
 
@@ -173,6 +177,8 @@ class Graph {
     let delIndex = this.nodes.get(n)?.findIndex((edge) => edge.isEqual(delEdge))
     if (delIndex !== undefined && delIndex !== -1) {
       this.nodes.get(n)?.splice(delIndex, 1)
+      n.outDegree--
+      delEdge.node.inDegree--
     }
 
     if (!delEdge.directed) {
@@ -180,6 +186,8 @@ class Graph {
       delIndex = this.nodes.get(delEdge.node)?.findIndex((edge) => edge.isEqual(reverseEdge))
       if (delIndex !== undefined && delIndex !== -1) {
         this.nodes.get(delEdge.node)?.splice(delIndex, 1)
+        n.inDegree--
+        delEdge.node.outDegree--
       }
     }
 
