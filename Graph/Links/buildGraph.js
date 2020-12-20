@@ -17,7 +17,11 @@ async function buildGraph(firstLink, depth = 0, onlyOrigin = true) {
         return onlyOrigin ? url.hostname : `${url.hostname}${url.pathname}`
       })
 
-      linkGraph.addEdges(firstLinks[i], links)
+      for (let link of links) {
+        linkGraph.addEdge(firstLinks[i], link, {
+          directed: true,
+        })
+      }
 
       links.forEach(function (link) {
         nextLinks.add(link)

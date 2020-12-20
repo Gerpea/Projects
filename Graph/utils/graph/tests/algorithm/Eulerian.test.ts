@@ -60,6 +60,32 @@ describe('Eulerian', function () {
       }
       expect(result).equal(true)
     })
+
+    it('Should return correct eulerian path', function () {
+      const expected: Array<GraphNode> = [
+        new GraphNode('Node_4'),
+        new GraphNode('Node_1'),
+        new GraphNode('Node_0'),
+        new GraphNode('Node_3'),
+        new GraphNode('Node_1'),
+        new GraphNode('Node_2'),
+        new GraphNode('Node_3'),
+      ]
+      graph.addEdge('Node_0', 'Node_1')
+      graph.addEdge('Node_0', 'Node_3')
+      graph.addEdge('Node_1', 'Node_2')
+      graph.addEdge('Node_1', 'Node_3')
+      graph.addEdge('Node_1', 'Node_4')
+      graph.addEdge('Node_3', 'Node_2')
+
+      const path = eulerianPath(graph)
+
+      let result = expected.length === path.length
+      for (let i = 0; i < expected.length; i++) {
+        result = result && expected[i].isEqual(path[i])
+      }
+      expect(result).equal(true)
+    })
   })
 
   describe('Cycle', function () {

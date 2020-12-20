@@ -22,10 +22,8 @@ exports.readGraph = function (path) {
       process.exit(1)
     }
 
-    for (let startNode in json) {
-      for (let endNode of json[startNode]) {
-        graph.addEdge(startNode, endNode)
-      }
+    for (let node in json) {
+      graph.addEdges(node, json[node])
     }
 
     return graph

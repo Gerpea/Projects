@@ -1,0 +1,14 @@
+{
+  "name": "dijkstra",
+  "version": "0.0.1",
+  "description": "Create a program that finds the shortest path through a graph using its edges.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "gerpea",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.1",
+    "is-valid-path": "^0.1.1"
+  }
+}

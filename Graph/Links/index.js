@@ -15,6 +15,15 @@ program.parse(process.argv)
   const linkGraph = await buildGraph(link, depth)
   const hrend = process.hrtime(hrstart)
 
-  console.log(linkGraph)
+  for (let node of linkGraph.getNodes()) {
+    const edges = linkGraph.getEdges(node)
+    console.log(`'${node.value}' => [${edges.length > 0 ? '' : ']'}`)
+    for (let edge of edges) {
+      console.log(`  '${edge.node.value}'`)
+    }
+    if (edges.length > 0) {
+      console.log(']')
+    }
+  }
   console.info(`Execution time (hr): ${hrend[0]}s ${hrend[1] / 1000000}ms`)
 })()
