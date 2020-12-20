@@ -1,7 +1,7 @@
 import 'mocha'
 import { expect } from 'chai'
 
-import { GraphEdge, GraphNode } from '../src/gra'
+import { GraphEdge, GraphNode } from '../../src/graph'
 
 describe('GraphEdge', function () {
   describe('IsEqual', function () {

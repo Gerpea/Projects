@@ -1,1 +1,1 @@
-export { Graph } from './graph'
+export { Graph, GraphEdge, GraphNode, EdgeParams, NodeValue } from './graph'

@@ -1,7 +1,7 @@
 import 'mocha'
 import { expect } from 'chai'
 
-import { GraphNode } from '../src/gra'
+import { GraphNode } from '../../src/graph'
 
 describe('GraphNode', function () {
   describe('IsEqual', function () {

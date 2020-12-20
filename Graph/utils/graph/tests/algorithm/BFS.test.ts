@@ -1,7 +1,7 @@
 import 'mocha'
 import { expect } from 'chai'
 
-import { Graph, GraphNode } from '../../src/gra'
+import { Graph, GraphNode } from '../../src/graph'
 import { bfs } from '../../src/algorithm/bfs'
 
 describe('BFS', function () {

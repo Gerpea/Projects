@@ -1,207 +1,226 @@
-export type GraphNode = string | number
+type NodeValue = string | number
+
+class GraphNode {
+  value: NodeValue
+  inDegree: number
+  outDegree: number
+
+  constructor(value: NodeValue) {
+    this.value = value
+
+    this.inDegree = 0
+    this.outDegree = 0
+  }
+
+  isEqual(node: any): boolean {
+    if (node instanceof GraphNode) {
+      return this === node || this.value === node.value
+    } else {
+      return this.value === node
+    }
+  }
+}
+
+type EdgeParams = {
+  weight?: number
+  directed?: boolean
+}
 
 class GraphEdge {
   node: GraphNode
   weight: number
   directed: boolean
 
-  constructor(node: GraphNode) {
+  constructor(node: GraphNode, params?: EdgeParams) {
     this.node = node
     this.weight = Infinity
-    this.directed = true
-  }
-}
-
-class NodeValue {
-  edges: Set<GraphEdge>
-  inDegree: number
-  outDegree: number
-
-  constructor() {
-    this.edges = new Set()
-    this.inDegree = 0
-    this.outDegree = 0
-  }
-}
-
-export class Graph {
-  private edges: Map<GraphNode, NodeValue>
-
-  constructor() {
-    this.edges = new Map()
-  }
-
-  addEdges(mainNode: GraphNode, nodes: Array<GraphNode>): void {
-    nodes.forEach((node) => {
-      this.addEdge(mainNode, node)
-    })
-  }
-
-  addEdge(nodeA: GraphNode, nodeB: GraphNode, weight = 0, directed = true): void {
-    this.createNodesIfNotExist([nodeA, nodeB])
-
-    if (
-      !Array.from(this.edges.get(nodeA)!.edges.values()).find((edge) => {
-        edge.node === nodeB
-      })
-    ) {
-      this.edges.get(nodeA)!.outDegree++
-      this.edges.get(nodeB)!.inDegree++
+    this.directed = false
+    if (params) {
+      this.weight = params.weight || this.weight
+      this.directed = params.directed || this.directed
     }
-
-    this.edges.get(nodeA)!.edges.add(new GraphEdge(nodeB))
   }
 
-  addNode(node: GraphNode): void {
-    this.edges.set(node, new NodeValue())
-  }
-
-  deleteEdge(nodeA: GraphNode, nodeB: GraphNode): boolean {
-    if (!this.nodesExist([nodeA, nodeB])) {
+  isEqual(edge: any) {
+    if (!(edge instanceof GraphEdge)) {
       return false
     }
 
-    this.edges.get(nodeA)!.nodes.delete(nodeB)
-    this.edges.get(nodeA)!.outDegree--
-    this.edges.get(nodeB)!.inDegree--
-
-    return true
+    return (
+      this === edge ||
+      (this.node === edge.node && this.weight === edge.weight && this.directed === edge.directed)
+    )
   }
 
-  deleteNode(deletedNode: GraphNode): boolean {
-    if (!this.nodeExist(deletedNode)) {
-      return false
+  get params(): EdgeParams {
+    return {
+      directed: this.directed,
+      weight: this.weight,
+    }
+  }
+}
+
+class Graph {
+  private nodes: Map<GraphNode, Array<GraphEdge>>
+
+  constructor() {
+    this.nodes = new Map()
+  }
+
+  getNode(node: GraphNode | NodeValue): GraphNode | undefined {
+    let value: NodeValue
+    if (node instanceof GraphNode) {
+      value = node.value
+    } else {
+      value = node
     }
 
-    this.edges.delete(deletedNode)
-
-    this.edges.forEach((nodeValue, node) => {
-      this.deleteEdge(node, deletedNode)
-      nodeValue.nodes.delete(deletedNode)
-    })
-
-    return true
+    const nodes = Array.from(this.nodes.keys())
+    return nodes.find((node) => node.isEqual(value))
   }
 
-  nodesExist(nodes: Array<GraphNode>): boolean {
-    return nodes.every((node) => {
-      return this.nodeExist(node)
-    })
-  }
-
-  nodeExist(node: GraphNode): boolean {
-    return this.edges.has(node)
-  }
-
-  eulerianPath(): Array<GraphNode> {
-    const findStartNode = (graph: Graph) => {
-      let start = graph.edges.keys().next().value
-      for (let [node, nodeValue] of graph.edges.entries()) {
-        if (nodeValue.outDegree - nodeValue.inDegree === 1) {
-          return node
-        }
-        if (nodeValue.outDegree > 0) {
-          start = node
-        }
+  addNode(node: GraphNode | NodeValue): GraphNode {
+    let addedNode
+    if (node instanceof GraphNode) {
+      if (!this.getNode(node.value)) {
+        this.nodes.set(node, [])
       }
-
-      return start
+      addedNode = node
+    } else {
+      const n = new GraphNode(node)
+      if (!this.getNode(node)) {
+        this.nodes.set(n, [])
+      }
+      addedNode = n
     }
 
-    if (this.edges.size === 0 || !this.hasEulerianPath()) {
+    return addedNode
+  }
+
+  deleteNode(node: NodeValue | GraphNode): boolean {
+    const deletedNode = this.getNode(node)
+    if (!deletedNode) {
+      return false
+    }
+
+    this.deleteEdges(deletedNode)
+    return this.nodes.delete(deletedNode)
+  }
+
+  getEdges(nodeA: NodeValue | GraphNode): Array<GraphEdge>
+  getEdges(nodeA: NodeValue | GraphNode, nodeB: NodeValue | GraphNode): Array<GraphEdge>
+  getEdges(nodeA: NodeValue | GraphNode, nodeB?: NodeValue | GraphNode): Array<GraphEdge> {
+    const nA = this.getNode(nodeA)
+    if (!nA) {
       return []
     }
 
-    let path: Array<GraphNode> = []
-    let graphCopy = this.copy()
+    if (nodeB) {
+      const nB = this.getNode(nodeB)
+      if (!nB) {
+        return []
+      }
 
-    let currentNode = findStartNode(graphCopy)
-    while (this.edges.get(currentNode)!.outDegree !== 0) {
-      path.push(currentNode)
-      const nextNode = graphCopy.edges.get(currentNode)?.nodes.values().next().value
-      graphCopy.deleteEdge(currentNode, nextNode)
-      currentNode = nextNode
+      return [...(this.nodes.get(nA)?.filter((edge) => edge.node.isEqual(nodeB)) ?? [])]
+    } else {
+      return [...(this.nodes.get(nA) ?? [])]
     }
-    path.push(currentNode)
-
-    return path
   }
 
-  hasEulerianPath(): boolean {
-    let startNodes = 0
-    let endNodes = 0
+  getEdge(
+    nodeA: NodeValue | GraphNode,
+    nodeB: NodeValue | GraphNode,
+    params?: EdgeParams
+  ): GraphEdge | undefined {
+    const nA = this.getNode(nodeA)
+    const nB = this.getNode(nodeB)
+    if (!(nA && nB)) {
+      return undefined
+    }
 
-    for (let [_, nodeValue] of this.edges.entries()) {
-      if (Math.abs(nodeValue.inDegree - nodeValue.outDegree) > 1) {
-        return false
-      } else if (nodeValue.inDegree - nodeValue.outDegree === 1) {
-        endNodes++
-      } else if (nodeValue.outDegree - nodeValue.inDegree === 1) {
-        startNodes++
+    const searchingEdge = new GraphEdge(nB, params)
+    return this.nodes.get(nA)?.find((edge) => edge.isEqual(searchingEdge))
+  }
+
+  addEdge(
+    nodeA: NodeValue | GraphNode,
+    nodeB: NodeValue | GraphNode,
+    params?: EdgeParams
+  ): GraphEdge {
+    let nA = this.getNode(nodeA)
+    let nB = this.getNode(nodeB)
+    if (!nA) {
+      nA = this.addNode(nodeA)
+    }
+    if (!nB) {
+      nB = this.addNode(nodeB)
+    }
+
+    const edge = new GraphEdge(nB, params)
+    this.nodes.set(nA, [...(this.nodes.get(nA) ?? []), edge])
+    nA.outDegree++
+    nB.inDegree++
+    if (!edge.params.directed) {
+      nA.inDegree++
+      nB.outDegree++
+      this.nodes.set(nB, [...(this.nodes.get(nB) ?? []), new GraphEdge(nA, params)])
+    }
+
+    return edge
+  }
+
+  deleteEdge(node: NodeValue | GraphNode, delEdge: GraphEdge): boolean {
+    const n = this.getNode(node)
+    if (!n) {
+      return false
+    }
+    let delIndex = this.nodes.get(n)?.findIndex((edge) => edge.isEqual(delEdge))
+    if (delIndex !== undefined && delIndex !== -1) {
+      this.nodes.get(n)?.splice(delIndex, 1)
+      n.outDegree--
+      delEdge.node.inDegree--
+    }
+
+    if (!delEdge.directed) {
+      const reverseEdge = new GraphEdge(n, delEdge.params)
+      delIndex = this.nodes.get(delEdge.node)?.findIndex((edge) => edge.isEqual(reverseEdge))
+      if (delIndex !== undefined && delIndex !== -1) {
+        this.nodes.get(delEdge.node)?.splice(delIndex, 1)
+        n.inDegree--
+        delEdge.node.outDegree--
       }
     }
 
-    return (startNodes === 0 && endNodes === 0) || (startNodes === 1 && endNodes === 1)
+    return delIndex !== undefined
   }
 
-  hasEulerianCircle(): boolean {
-    for (let [_, nodeValue] of this.edges.entries()) {
-      if (Math.abs(nodeValue.inDegree - nodeValue.outDegree) !== 0) {
-        return false
-      }
+  deleteEdges(node: NodeValue | GraphNode): number {
+    let delCount = 0
+    const edges = [...this.getEdges(node)]
+    for (let i = 0; i < edges.length; i++) {
+      this.deleteEdge(node, edges[i])
+      delCount++
     }
 
-    return true
+    return delCount
   }
 
-  connected(): boolean {
-    const findStartNode = (graph: Graph): GraphNode => {
-      let size = Array.of(graph.edges.keys()).length
-      const nodeAt = Math.floor(Math.random() * size)
-      let i = 0
-      for (let [node, _] of graph.edges.entries()) {
-        if (i === nodeAt) {
-          return node
-        }
-      }
+  getNodes(): Array<GraphNode> {
+    return Array.from(this.nodes.keys())
+  }
 
-      return graph.edges.keys().next().value
+  get nodesCount() {
+    return this.nodes.size
+  }
+
+  get edgesCount() {
+    let count = 0
+    for (let edges of this.nodes.values()) {
+      count += edges.length
     }
 
-    let visited = new Set<GraphNode>()
-    let graphCopy = this.copy()
-    let currentNode = findStartNode(graphCopy)
-    while (currentNode && this.edges.get(currentNode)!.outDegree !== 0) {
-      visited.add(currentNode)
-      const nextNode = graphCopy.edges.get(currentNode)?.nodes.values().next().value
-      graphCopy.deleteEdge(currentNode, nextNode)
-      currentNode = nextNode
-    }
-
-    const difference = new Set([...this.edges.keys()].filter((node) => !visited.has(node)))
-    return difference.size === 0
-  }
-
-  dijkstra() {}
-
-  private createNodesIfNotExist(nodes: Array<GraphNode>): void {
-    nodes.forEach((node) => {
-      this.createNodeIfNotExist(node)
-    })
-  }
-
-  private createNodeIfNotExist(node: GraphNode): void {
-    if (!this.edges.has(node)) {
-      this.addNode(node)
-    }
-  }
-
-  private copy(): Graph {
-    let newGraph = new Graph()
-    this.edges.forEach((nodeValue, node) => {
-      newGraph.addEdges(node, [...nodeValue.nodes])
-    })
-
-    return newGraph
+    return count
   }
 }
+
+export { NodeValue, EdgeParams, GraphNode, GraphEdge, Graph }

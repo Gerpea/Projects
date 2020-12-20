@@ -1,4 +1,4 @@
-import { Graph, GraphNode } from '../../src/gra'
+import { Graph, GraphNode } from '../graph'
 
 function isConnected(graph: Graph, node?: GraphNode): boolean {
   if (node) {

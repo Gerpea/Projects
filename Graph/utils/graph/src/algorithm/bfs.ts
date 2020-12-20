@@ -1,4 +1,4 @@
-import { Graph, GraphEdge, GraphNode } from '../gra'
+import { Graph, GraphEdge, GraphNode } from '../graph'
 
 function* bfs(graph: Graph, startNode: GraphNode) {
   let visitedNodes = new Set<GraphNode>()

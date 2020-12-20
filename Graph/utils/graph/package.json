@@ -10,11 +10,11 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
+    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "tsc",
-    "build": "npm run build:js",
-    "test": "mocha -r ts-node/register tests/**/*.test.ts",
-    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
+    "build": "npm run build:js"
   },
   "author": "gerpea",
   "license": "ISC",

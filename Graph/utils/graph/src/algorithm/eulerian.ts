@@ -1,4 +1,4 @@
-import { Graph, GraphEdge, GraphNode } from '../gra'
+import { Graph, GraphEdge, GraphNode } from '../graph'
 
 function eulerianPath(graph: Graph): Array<GraphNode> {
   let path: Array<GraphNode> = []

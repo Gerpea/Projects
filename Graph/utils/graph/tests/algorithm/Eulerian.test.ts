@@ -1,7 +1,7 @@
 import 'mocha'
 import { expect } from 'chai'
 
-import { Graph, GraphNode } from '../../src/gra'
+import { Graph, GraphNode } from '../../src/graph'
 import { eulerianPath, eulerianCycle } from '../../src/algorithm/eulerian'
 
 describe('Eulerian', function () {
