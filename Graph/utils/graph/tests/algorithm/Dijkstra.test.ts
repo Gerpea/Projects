@@ -4,7 +4,7 @@ import { expect } from 'chai'
 import { Graph, GraphNode } from '../../src/graph'
 import { dijkstra, ShortestPath } from '../../src/algorithm/dijkstra'
 
-describe.only('Dijkstra', function () {
+describe('Dijkstra', function () {
   let graph: Graph
   beforeEach(function () {
     graph = new Graph()
@@ -156,6 +156,50 @@ describe.only('Dijkstra', function () {
     })
     graph.addEdge(node3, node4, {
       weight: 3,
+    })
+
+    const shortestPath = dijkstra(graph, node1)
+
+    let result = true
+    for (let [node, { distance, path }] of shortestPath) {
+      const eP = expected.get(node)?.path
+      let pathEqual = eP ? true : false
+      for (let i = 0; eP && i < eP.length; i++) {
+        pathEqual = pathEqual && eP[i].isEqual(path[i])
+      }
+      result = result && pathEqual && expected.get(node)?.distance === distance
+    }
+    expect(result).equal(true)
+  })
+
+  it('Should return correct path and distance with directed graph', function () {
+    const node1 = new GraphNode('Node_1')
+    const node2 = new GraphNode('Node_2')
+    const node3 = new GraphNode('Node_3')
+    const node4 = new GraphNode('Node_4')
+    const expected: ShortestPath = new Map([
+      [node1, { distance: 0, path: [node1] }],
+      [node2, { distance: 4, path: [node1, node3, node4, node2] }],
+      [node3, { distance: 1, path: [node1, node3] }],
+      [node4, { distance: 3, path: [node1, node3, node4] }],
+    ])
+    graph.addEdge(node1, node2, {
+      directed: true,
+      weight: 10,
+    })
+    graph.addEdge(node1, node3, {
+      weight: 1,
+    })
+    graph.addEdge(node3, node2, {
+      directed: true,
+      weight: 5,
+    })
+    graph.addEdge(node3, node4, {
+      directed: true,
+      weight: 2,
+    })
+    graph.addEdge(node4, node2, {
+      weight: 1,
     })
 
     const shortestPath = dijkstra(graph, node1)

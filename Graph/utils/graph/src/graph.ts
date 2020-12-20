@@ -36,7 +36,7 @@ class GraphEdge {
     this.weight = Infinity
     this.directed = false
     if (params) {
-      this.weight = params.weight || this.weight
+      this.weight = params.weight ?? this.weight
       this.directed = params.directed || this.directed
     }
   }

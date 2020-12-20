@@ -1,3 +1,10 @@
-const { bfs, dfs, eulerianCycle, eulerianPath, isConnected } = require('../dist/algorithm')
+const {
+  bfs,
+  dfs,
+  eulerianCycle,
+  eulerianPath,
+  isConnected,
+  dijkstra,
+} = require('../dist/algorithm')
 
-module.exports = { bfs, dfs, eulerianCycle, eulerianPath, isConnected }
+module.exports = { bfs, dfs, eulerianCycle, eulerianPath, isConnected, dijkstra }

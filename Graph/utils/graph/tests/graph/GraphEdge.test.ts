@@ -4,6 +4,28 @@ import { expect } from 'chai'
 import { GraphEdge, GraphNode } from '../../src/graph'
 
 describe('GraphEdge', function () {
+  describe('Constructor', function () {
+    it('Should correctly set weight', function () {
+      const expected = 0
+      const node = new GraphNode('node')
+      const edge = new GraphEdge(node, {
+        weight: 0,
+      })
+
+      expect(edge.weight).equal(expected)
+    })
+
+    it('Should correctly set direction', function () {
+      const expected = true
+      const node = new GraphNode('node')
+      const edge = new GraphEdge(node, {
+        directed: true,
+      })
+
+      expect(edge.directed).equal(expected)
+    })
+  })
+
   describe('IsEqual', function () {
     it('Same edge should be equal', function () {
       const node = new GraphNode('node')
