@@ -1,6 +1,18 @@
 {
-  "0": ["1", "2", "3"],
-  "1": ["2", "3"],
-  "2": ["3"],
-  "3": ["0"]
+  "0": [
+    { "node": "1", "weight": 10, "directed": true },
+    { "node": "2", "weight": 1, "directed": false }
+  ],
+  "2": [
+    { "node": "0", "weight": 5, "directed": true },
+    { "node": "1", "weight": 5, "directed": true },
+    { "node": "3", "weight": 2, "directed": true }
+  ],
+  "3": [
+    { "node": "1", "weight": 1, "directed": true },
+    { "node": "4", "weight": 3, "directed": false },
+    { "node": "5", "weight": 4, "directed": false },
+    { "node": "5", "weight": 3, "directed": true }
+  ],
+  "4": [{ "node": "5", "weight": 1, "directed": false }]
 }
