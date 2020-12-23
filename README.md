@@ -1,4 +1,4 @@
-# Mega Project List [**36**/100]
+# Mega Project List [**37**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -103,7 +103,7 @@ Problems are motivated by the ones shared at:
 
 [**Dijkstra’s Algorithm**](https://github.com/Gerpea/Projects/tree/master/Graph/Dijkstra) - Create a program that finds the shortest path through a graph using its edges.
 
-**Minimum Spanning Tree** - Create a program which takes a connected, undirected graph with weights and outputs the minimum spanning tree of the graph i.e., a
+[**Minimum Spanning Tree**](https://github.com/Gerpea/Projects/tree/master/Graph/MST) - Create a program which takes a connected, undirected graph with weights and outputs the minimum spanning tree of the graph i.e., a
 subgraph that is a tree, contains all the vertices, and the sum of its weights is the least possible.
 
 ## Data Structures
