@@ -113,11 +113,24 @@ main {
   padding-bottom: 62px;
 }
 
-.files-list-el {
+.files-list__el {
   border-radius: 5px;
   width: 93px;
   height: 93px;
-  background-color: #ebebeb;
+  background: url('./icons/file.svg') no-repeat center;
+  background-size: cover;
+}
+
+.files-list__el:hover {
+  background-image: url('./icons/file-hovered.svg');
+}
+
+.files-list__el--selected {
+  background-image: url('./icons/file-selected.svg');
+}
+
+.files-list__el--selected:hover {
+  background-image: url('./icons/file-selected-hovered.svg');
 }
 
 @media screen and (max-width: 1067px) {
@@ -163,7 +176,7 @@ main {
     column-gap: 6px;
   }
 
-  .files-list-el {
+  .files-list__el {
     width: 67px;
     height: 67px;
   }
