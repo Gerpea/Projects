@@ -1,0 +1,170 @@
+/*
+  non_focus: bce0e2
+  focus: edfeff
+  font: 203647
+*/
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  color: #1e1e1e;
+  font-size: 14px;
+}
+
+body,
+input {
+  font-family: 'Balsamiq Sans', cursive;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.files {
+  background-color: #fff;
+  padding: 62px;
+  padding-left: 65px;
+  padding-right: 164px;
+  overflow: scroll;
+}
+
+.files__input {
+  width: 50%;
+  height: 100%;
+}
+
+.files__menu {
+  position: fixed;
+  left: 25%;
+  bottom: 47px;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.files__menu > * {
+  margin: 0 5px;
+}
+
+.result {
+  background-color: #f8f8f8;
+  padding: 62px;
+  padding-left: 164px;
+  padding-right: 65px;
+  overflow: scroll;
+}
+
+.result .files-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: end;
+  justify-content: end;
+}
+
+.result__ouput {
+  width: 50%;
+  height: 100%;
+}
+
+.search {
+  background-color: #ffffff;
+  padding: 10px;
+  border: 1px solid #bfbfbf;
+  border-radius: 3px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.search__input {
+  height: 47px;
+  width: 197px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 47px;
+}
+
+.button {
+  background-color: #b4d7f3;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: 8px 20px;
+}
+
+.button:hover {
+  background-color: #e0edff;
+}
+
+.files-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 93px);
+  grid-auto-flow: row;
+  justify-content: start;
+  row-gap: 13px;
+  column-gap: 13px;
+  padding-bottom: 62px;
+}
+
+.files-list-el {
+  border-radius: 5px;
+  width: 93px;
+  height: 93px;
+  background-color: #ebebeb;
+}
+
+@media screen and (max-width: 1067px) {
+  main {
+    flex-direction: column-reverse;
+  }
+  .files__input {
+    width: 100%;
+  }
+
+  .result__ouput {
+    width: 100%;
+  }
+
+  .result {
+    padding: 62px;
+  }
+
+  .result .files-list {
+    display: grid;
+    justify-content: center;
+  }
+
+  .files {
+    padding: 62px;
+  }
+
+  .search__input {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  .files__menu {
+    left: 50%;
+  }
+
+  .files-list {
+    grid-template-columns: repeat(auto-fit, 67px);
+    justify-content: center;
+    row-gap: 6px;
+    column-gap: 6px;
+  }
+
+  .files-list-el {
+    width: 67px;
+    height: 67px;
+  }
+}
