@@ -84,4 +84,12 @@ let selected = new Files()
 
     files.addFile(newFile, i++)
   })
+
+  removeBtn.addEventListener('click', () => {
+    selected.files.forEach(function (node, value) {
+      files.deleteFile(value)
+      inputFiles.removeChild(node)
+      selected.deleteFile(value)
+    })
+  })
 })()
