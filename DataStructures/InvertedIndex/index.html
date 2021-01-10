@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inverted Index</title>
-  <link rel="stylesheet" href="./main.css">
-</head>
-<body>
-  <main>
-    <div class="files files__input files__theme">
-      <div id="input-files" class="files-list">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inverted Index</title>
+    <link rel="stylesheet" href="./main.css" />
+  </head>
+  <body>
+    <main>
+      <div id="drag-area" class="files files__input files__theme empty">
+        <span class="empty__icon"></span>
+        <div id="input-files" class="files-list"></div>
+        <div class="files__menu">
+          <input id="file-input" class="hide-outside" type="file" multiple="multiple" />
+          <input id="add-file" class="button button__theme" type="button" value="Add File" />
+          <input
+            id="remove-file"
+            class="button button__theme"
+            style="display: none"
+            type="button"
+            value="Delete File"
+          />
+        </div>
       </div>
-      <div class="files__menu">
-        <input id="file-input" class="hide-outside" type="file" multiple="multiple">
-        <input id="add-file" class="button button__theme" type="button" value="Add File"/>
-        <input id="remove-file" class="button button__theme" style="display: none" type="button" value="Delete File"/>
+      <input
+        id="search"
+        class="search search__input search__theme"
+        type="search"
+        placeholder="Search"
+      />
+      <div class="result result__ouput result__theme">
+        <div id="output-files" class="files-list"></div>
       </div>
-    </div>
-    <input id="search" class="search search__input search__theme" type="search" placeholder="Search"/>
-    <div class="result result__ouput result__theme">
-      <div id="output-files" class="files-list">
-      </div>
-    </div>
-  </main>
+    </main>
 
-  <script src="./index.js"></script>
-</body>
+    <script src="./index.js"></script>
+  </body>
 </html>

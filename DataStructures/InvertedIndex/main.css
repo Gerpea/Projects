@@ -30,7 +30,8 @@ main {
 
 .files {
   background-color: #fff;
-  padding: 62px;
+  padding-top: 62px;
+  padding-bottom: 80px;
   padding-left: 65px;
   padding-right: 164px;
   overflow: scroll;
@@ -97,6 +98,7 @@ main {
   border-radius: 3px;
   font-size: 1rem;
   padding: 8px 20px;
+  cursor: pointer;
 }
 
 .button:hover {
@@ -104,13 +106,10 @@ main {
 }
 
 .files-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 93px);
-  grid-auto-flow: row;
-  justify-content: start;
+  display: flex;
+  flex-wrap: wrap;
   row-gap: 13px;
   column-gap: 13px;
-  padding-bottom: 62px;
 }
 
 .files-list__el {
@@ -146,13 +145,70 @@ main {
 
 .hide-outside {
   position: absolute;
-  top: -1000px;
+  top: -10000px;
+  left: -10000px;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.6rem dashed #e0edff;
+  color: #bfbfbf;
+  text-align: center;
+  cursor: pointer;
+}
+
+.empty:hover {
+  border-color: #b4d7f3;
+}
+
+.empty__icon {
+  display: none;
+}
+
+.empty > .empty__icon {
+  display: block;
+  position: relative;
+  width: 30%;
+  padding-bottom: 30%;
+  border: 0.3em dashed #e0edff;
+  transform: translateX(25%);
+}
+
+.empty__icon::before {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  border: 0.3rem solid #b4d7f3;
+  background: #e0edff;
+}
+
+.empty__icon::after {
+  content: '';
+  position: absolute;
+  bottom: -25%;
+  right: -25%;
+  width: 50%;
+  height: 50%;
+  background: url('./icons/hand-pointer.svg') no-repeat center;
+  background-size: cover;
+  transform: rotateZ(-45deg);
+  filter: invert(84%) sepia(21%) saturate(592%) hue-rotate(179deg) brightness(97%) contrast(96%);
 }
 
 @media screen and (max-width: 1067px) {
+  .empty__message {
+    transform: none;
+  }
+
   main {
     flex-direction: column-reverse;
   }
+
   .files__input {
     width: 100%;
   }

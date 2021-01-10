@@ -87,6 +87,7 @@ class Files {
   const fileInput = document.getElementById('file-input')
   const removeBtn = document.getElementById('remove-file')
   const searchInput = document.getElementById('search')
+  const dragArea = document.getElementById('drag-area')
 
   addBtn.onclick = () => {
     fileInput.click()
@@ -96,17 +97,43 @@ class Files {
     inputFiles.addFiles(event.target.files)
   }
 
-  removeBtn.onclick = () => {
+  dragArea.onclick = (event) => {
+    if (inputFiles.files.length < 1) {
+      fileInput.click()
+    }
+  }
+
+  dragArea.ondrop = (event) => {
+    event.preventDefault()
+    if (event.dataTransfer.items) {
+      let droppedFiles = []
+      for (let item of event.dataTransfer.items) {
+        if (item.kind === 'file') {
+          droppedFiles.push(item.getAsFile())
+        }
+      }
+      inputFiles.addFiles(droppedFiles)
+    } else {
+      inputFiles.addFiles(event.dataTransfer.files)
+    }
+  }
+
+  dragArea.ondragover = (event) => {
+    event.preventDefault()
+  }
+
+  removeBtn.onclick = (event) => {
+    event.stopPropagation()
     inputFiles.removeSelected()
   }
 
-  searchInput.oninput = (event) => {
-    showIn(outputArea, filterFiles(inputFiles.files, searchInput.value), true)
+  searchInput.oninput = () => {
+    showIn(outputArea, filterFiles(inputFiles.files, searchInput.value), false)
   }
 
   inputFiles.addFilesChangeListener(function (newFiles) {
     showIn(inputArea, newFiles)
-    showIn(outputArea, filterFiles(newFiles, searchInput.value), true)
+    showIn(outputArea, filterFiles(newFiles, searchInput.value), false)
   })
 
   inputFiles.addFilesChangeListener(function (newFiles) {
@@ -120,6 +147,13 @@ class Files {
     }
   })
 
+  inputFiles.addFilesChangeListener(function (newFiles) {
+    if (newFiles.length > 0) {
+      dragArea.classList.remove('empty')
+    } else {
+      dragArea.classList.add('empty')
+    }
+  })
   function filterFiles(files, filter) {
     return (
       files.filter(function (file) {
