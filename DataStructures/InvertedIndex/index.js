@@ -81,13 +81,14 @@ class Files {
 ;(() => {
   const inputFiles = new Files()
 
-  const outputArea = document.getElementById('output-files')
-  const inputArea = document.getElementById('input-files')
+  const outputFilesArea = document.getElementById('output-files')
+  const inputFilesArea = document.getElementById('input-files')
   const addBtn = document.getElementById('add-file')
   const fileInput = document.getElementById('file-input')
   const removeBtn = document.getElementById('remove-file')
   const searchInput = document.getElementById('search')
   const dragArea = document.getElementById('drag-area')
+  const outputArea = document.getElementById('output-area')
 
   addBtn.onclick = () => {
     fileInput.click()
@@ -97,7 +98,7 @@ class Files {
     inputFiles.addFiles(event.target.files)
   }
 
-  dragArea.onclick = (event) => {
+  dragArea.onclick = () => {
     if (inputFiles.files.length < 1) {
       fileInput.click()
     }
@@ -105,6 +106,7 @@ class Files {
 
   dragArea.ondrop = (event) => {
     event.preventDefault()
+
     if (event.dataTransfer.items) {
       let droppedFiles = []
       for (let item of event.dataTransfer.items) {
@@ -127,13 +129,18 @@ class Files {
     inputFiles.removeSelected()
   }
 
-  searchInput.oninput = () => {
-    showIn(outputArea, filterFiles(inputFiles.files, searchInput.value), false)
+  searchInput.oninput = (event) => {
+    showIn(outputFilesArea, filterFiles(inputFiles.files, event.target.value), false)
+    if (filterFiles(inputFiles.files, event.target.value).length > 0) {
+      outputArea.classList.remove('result__empty')
+    } else {
+      outputArea.classList.add('result__empty')
+    }
   }
 
   inputFiles.addFilesChangeListener(function (newFiles) {
-    showIn(inputArea, newFiles)
-    showIn(outputArea, filterFiles(newFiles, searchInput.value), false)
+    showIn(inputFilesArea, newFiles)
+    showIn(outputFilesArea, filterFiles(newFiles, searchInput.value), false)
   })
 
   inputFiles.addFilesChangeListener(function (newFiles) {
@@ -154,6 +161,15 @@ class Files {
       dragArea.classList.add('empty')
     }
   })
+
+  inputFiles.addFilesChangeListener(function (newFiles) {
+    if (filterFiles(newFiles, searchInput.value).length > 0) {
+      outputArea.classList.remove('result__empty')
+    } else {
+      outputArea.classList.add('result__empty')
+    }
+  })
+
   function filterFiles(files, filter) {
     return (
       files.filter(function (file) {
@@ -196,3 +212,7 @@ class Files {
     return fileNameNode
   }
 })()
+
+// make hint when output area is empty
+// change input file icon on mobile
+// add inverted index

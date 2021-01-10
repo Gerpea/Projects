@@ -200,6 +200,26 @@ main {
   filter: invert(84%) sepia(21%) saturate(592%) hue-rotate(179deg) brightness(97%) contrast(96%);
 }
 
+.result__empty-message {
+  display: none;
+}
+
+.result__empty {
+  display: flex;
+  justify-content: center;
+}
+
+.result__empty-message {
+  color: #b4d7f3;
+  align-self: center;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.result__empty > .result__empty-message {
+  display: block;
+}
+
 @media screen and (max-width: 1067px) {
   .empty__message {
     transform: none;
@@ -251,5 +271,17 @@ main {
   .files-list__el {
     width: 67px;
     height: 67px;
+  }
+
+  .files_list__el-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 1px 10px;
+    cursor: default;
+  }
+
+  .empty > .empty__icon {
+    transform: none;
   }
 }
