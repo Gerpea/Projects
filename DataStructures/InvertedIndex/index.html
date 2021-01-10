@@ -10,22 +10,16 @@
   <main>
     <div class="files files__input files__theme">
       <div id="input-files" class="files-list">
-        <div class="files-list__el files-list__el--selected"></div>
-        <div class="files-list__el"></div>
       </div>
       <div class="files__menu">
+        <input id="file-input" class="hide-outside" type="file" multiple="multiple">
         <input id="add-file" class="button button__theme" type="button" value="Add File"/>
-        <input id="delete-file" class="button button__theme" style="display: none" type="button" value="Delete File"/>
+        <input id="remove-file" class="button button__theme" style="display: none" type="button" value="Delete File"/>
       </div>
     </div>
-    <input class="search search__input search__theme" type="search" placeholder="Search"/>
+    <input id="search" class="search search__input search__theme" type="search" placeholder="Search"/>
     <div class="result result__ouput result__theme">
-      <div class="files-list">
-        <div class="files-list__el"></div>
-        <div class="files-list__el"></div>
-        <div class="files-list__el"></div>
-        <div class="files-list__el"></div>
-        <div class="files-list__el"></div>
+      <div id="output-files" class="files-list">
       </div>
     </div>
   </main>

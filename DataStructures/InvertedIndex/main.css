@@ -119,6 +119,9 @@ main {
   height: 93px;
   background: url('./icons/file.svg') no-repeat center;
   background-size: cover;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .files-list__el:hover {
@@ -131,6 +134,19 @@ main {
 
 .files-list__el--selected:hover {
   background-image: url('./icons/file-selected-hovered.svg');
+}
+
+.files_list__el-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 5px 10px;
+  cursor: default;
+}
+
+.hide-outside {
+  position: absolute;
+  top: -1000px;
 }
 
 @media screen and (max-width: 1067px) {

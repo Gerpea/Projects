@@ -1,95 +1,164 @@
-class TextFile {
-  constructor(node, file) {
-    this.node = node
-    this.file = file
-  }
-}
-
 class Files {
   constructor() {
-    this.files = new Map()
-    this.listeners = []
+    this.files = []
+    this._listeners = []
   }
 
-  addListener(listener) {
-    this.listeners.push(listener)
+  addFiles(files) {
+    for (let addedFile of files) {
+      addedFile = {
+        file: addedFile,
+        selected: false,
+      }
+      if (!this.containFile(addedFile)) {
+        this.files.push(addedFile)
+      }
+    }
+
+    this._notifyListeners()
   }
 
-  notifyListeners() {
-    this.listeners.forEach((listener) => {
-      listener?.apply(this, [this.files])
+  removeFile(deletedFile) {
+    const delIndex = this.files.findIndex((file) => {
+      return this._filesEqual(deletedFile, file)
     })
+
+    if (delIndex !== -1) {
+      this.files.splice(delIndex, 1)
+    }
+
+    this._notifyListeners()
   }
 
-  addFile(node, value) {
-    this.files.set(value, node)
-    this.notifyListeners()
+  addFilesChangeListener(listener) {
+    if (typeof listener === 'function') {
+      this._listeners.push(listener)
+    }
   }
 
-  deleteFile(value) {
-    this.files.delete(value)
-    this.notifyListeners()
+  containFile(checkedFile) {
+    return (
+      this.files.findIndex((file) => {
+        return this._filesEqual(file, checkedFile)
+      }) !== -1
+    )
   }
 
-  getFileByValue(value) {
-    return this.files.get(value)
+  toggleSelect(toggledFile) {
+    const file = this.files.find((file) => this._filesEqual(file, toggledFile))
+    if (file) {
+      file.selected = !file.selected
+    }
+
+    this._notifyListeners()
   }
 
-  getFileByNode(node) {
-    let result = undefined
-    this.files.forEach(function (value, n) {
-      if (node === value) {
-        result = n
-        return n
+  removeSelected() {
+    let removedFile = []
+
+    this.files.forEach(function (file) {
+      if (file.selected) {
+        removedFile.push(file)
       }
     })
-    return result
+
+    removedFile.forEach((file) => {
+      this.removeFile(file)
+    })
+  }
+
+  _filesEqual(file1, file2) {
+    return file1.file.name === file2.file.name
+  }
+
+  _notifyListeners() {
+    this._listeners.forEach((listener) => {
+      listener.call(this, this.files)
+    })
   }
 }
 
-let files = new Files()
-let selected = new Files()
-
 ;(() => {
-  const addBtn = document.getElementById('add-file')
-  const removeBtn = document.getElementById('delete-file')
-  const inputFiles = document.getElementById('input-files')
+  const inputFiles = new Files()
 
-  selected.addListener(function (selectedFiles) {
-    if (selectedFiles.size > 0) {
+  const outputArea = document.getElementById('output-files')
+  const inputArea = document.getElementById('input-files')
+  const addBtn = document.getElementById('add-file')
+  const fileInput = document.getElementById('file-input')
+  const removeBtn = document.getElementById('remove-file')
+  const searchInput = document.getElementById('search')
+
+  addBtn.onclick = () => {
+    fileInput.click()
+  }
+
+  fileInput.onchange = (event) => {
+    inputFiles.addFiles(event.target.files)
+  }
+
+  removeBtn.onclick = () => {
+    inputFiles.removeSelected()
+  }
+
+  searchInput.oninput = (event) => {
+    showIn(outputArea, filterFiles(inputFiles.files, searchInput.value), true)
+  }
+
+  inputFiles.addFilesChangeListener(function (newFiles) {
+    showIn(inputArea, newFiles)
+    showIn(outputArea, filterFiles(newFiles, searchInput.value), true)
+  })
+
+  inputFiles.addFilesChangeListener(function (newFiles) {
+    const selectedFiles = newFiles.filter(function (file) {
+      return file.selected
+    })
+    if (selectedFiles.length > 0) {
       removeBtn.style = 'display: block'
     } else {
       removeBtn.style = 'display: none'
     }
   })
 
-  let i = 0
-  addBtn.addEventListener('click', () => {
-    const newFile = document.createElement('div')
-    inputFiles.appendChild(newFile)
+  function filterFiles(files, filter) {
+    return (
+      files.filter(function (file) {
+        return file.file.name === filter
+      }) ?? []
+    )
+  }
 
-    newFile.addEventListener('click', (event) => {
-      event.target.classList.toggle('files-list__el--selected')
-      const file = files.getFileByNode(event.target)
-      if (file !== undefined) {
-        if (selected.getFileByValue(file)) {
-          selected.deleteFile(file)
-        } else {
-          selected.addFile(event.target, file)
-        }
+  function showIn(area, files, canBeSelected = true) {
+    while (area.firstChild) {
+      area.removeChild(area.firstChild)
+    }
+
+    files.forEach(function (file) {
+      area.appendChild(createFileNode(file, canBeSelected))
+    })
+  }
+
+  function createFileNode(file, canBeSelected) {
+    const fileNode = document.createElement('div')
+    fileNode.className =
+      file.selected && canBeSelected ? 'files-list__el files-list__el--selected' : 'files-list__el'
+    fileNode.id = `${file.file.name}`
+
+    if (canBeSelected) {
+      fileNode.onclick = (event) => {
+        inputFiles.toggleSelect(file)
       }
-    })
+    }
 
-    newFile.className = 'files-list__el'
+    fileNode.appendChild(createFileNameNode(file.file.name))
+    return fileNode
+  }
 
-    files.addFile(newFile, i++)
-  })
+  function createFileNameNode(fileName) {
+    const fileNameNode = document.createElement('span')
+    fileNameNode.className = 'files_list__el-name'
+    fileNameNode.textContent = fileName
 
-  removeBtn.addEventListener('click', () => {
-    selected.files.forEach(function (node, value) {
-      files.deleteFile(value)
-      inputFiles.removeChild(node)
-      selected.deleteFile(value)
-    })
-  })
+    return fileNameNode
+  }
 })()
