@@ -213,6 +213,4 @@ class Files {
   }
 })()
 
-// make hint when output area is empty
-// change input file icon on mobile
 // add inverted index
