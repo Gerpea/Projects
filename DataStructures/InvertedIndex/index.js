@@ -1,84 +1,5 @@
-class Files {
-  constructor() {
-    this.files = []
-    this._listeners = []
-  }
-
-  addFiles(files) {
-    for (let addedFile of files) {
-      addedFile = {
-        file: addedFile,
-        selected: false,
-      }
-      if (!this.containFile(addedFile)) {
-        this.files.push(addedFile)
-      }
-    }
-
-    this._notifyListeners()
-  }
-
-  removeFile(deletedFile) {
-    const delIndex = this.files.findIndex((file) => {
-      return this._filesEqual(deletedFile, file)
-    })
-
-    if (delIndex !== -1) {
-      this.files.splice(delIndex, 1)
-    }
-
-    this._notifyListeners()
-  }
-
-  addFilesChangeListener(listener) {
-    if (typeof listener === 'function') {
-      this._listeners.push(listener)
-    }
-  }
-
-  containFile(checkedFile) {
-    return (
-      this.files.findIndex((file) => {
-        return this._filesEqual(file, checkedFile)
-      }) !== -1
-    )
-  }
-
-  toggleSelect(toggledFile) {
-    const file = this.files.find((file) => this._filesEqual(file, toggledFile))
-    if (file) {
-      file.selected = !file.selected
-    }
-
-    this._notifyListeners()
-  }
-
-  removeSelected() {
-    let removedFile = []
-
-    this.files.forEach(function (file) {
-      if (file.selected) {
-        removedFile.push(file)
-      }
-    })
-
-    removedFile.forEach((file) => {
-      this.removeFile(file)
-    })
-  }
-
-  _filesEqual(file1, file2) {
-    return file1.file.name === file2.file.name
-  }
-
-  _notifyListeners() {
-    this._listeners.forEach((listener) => {
-      listener.call(this, this.files)
-    })
-  }
-}
-
 ;(() => {
+  const invertedIndex = new InvertedIndex()
   const inputFiles = new Files()
 
   const outputFilesArea = document.getElementById('output-files')
@@ -212,5 +133,3 @@ class Files {
     return fileNameNode
   }
 })()
-
-// add inverted index
