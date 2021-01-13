@@ -1,0 +1,66 @@
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bfbfbf;
+  overflow: hidden;
+}
+
+.empty__border {
+  border: none;
+}
+
+.empty.empty__border:hover {
+  border-color: #b4d7f3;
+}
+
+.empty.empty__border {
+  border: 0.6rem dashed #e0edff;
+}
+
+.empty > .empty__icon {
+  display: block;
+}
+
+.empty > .empty__message {
+  display: block;
+}
+
+.empty__icon {
+  display: none;
+  position: relative;
+  width: 30%;
+  padding-bottom: 30%;
+  border: 0.3em dashed #e0edff;
+  transform: translateX(25%);
+}
+
+.empty__icon::before {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  border: 0.3rem solid #b4d7f3;
+  background: #e0edff;
+}
+
+.empty__icon::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  right: -20%;
+  width: 50%;
+  height: 50%;
+  background: url('../icons/hand-pointer.svg') no-repeat center;
+  background-size: cover;
+  transform: rotateZ(-45deg);
+  filter: invert(84%) sepia(21%) saturate(592%) hue-rotate(179deg) brightness(97%) contrast(96%);
+}
+
+.empty__message {
+  display: none;
+  color: #b4d7f3;
+  font-size: 1.5rem;
+}

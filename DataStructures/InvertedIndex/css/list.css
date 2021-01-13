@@ -1,0 +1,30 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+.list__el {
+  width: 93px;
+  height: 93px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: url('../icons/file.svg') no-repeat center;
+  background-size: cover;
+}
+.list__el:hover {
+  background-image: url('../icons/file-hovered.svg');
+}
+.list__el--selected {
+  background-image: url('../icons/file-selected.svg');
+}
+.list__el--selected:hover {
+  background-image: url('../icons/file-selected-hovered.svg');
+}
+.list__el-name {
+  padding: 5px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: default;
+}

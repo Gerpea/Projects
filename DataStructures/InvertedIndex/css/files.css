@@ -1,0 +1,36 @@
+.files {
+  padding-top: 62px;
+  padding-bottom: 80px;
+  padding-left: 65px;
+  padding-right: 15%;
+  overflow: scroll;
+}
+
+.files__input {
+  width: 50%;
+  height: 100%;
+}
+
+.files__output {
+  background-color: #f8f8f8;
+  padding-left: 15%;
+  padding-right: 65px;
+  width: 50%;
+  height: 100%;
+}
+
+.files__menu {
+  position: fixed;
+  left: 25%;
+  bottom: 47px;
+  transform: translateX(-50%);
+  display: flex;
+}
+.files__menu > * {
+  margin: 0 5px;
+}
+
+.files__output > .list {
+  align-content: end;
+  justify-content: end;
+}

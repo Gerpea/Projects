@@ -1,0 +1,8 @@
+.hide-outside {
+  position: absolute;
+  top: -10000px;
+  left: -10000px;
+}
+.no-display {
+  display: none;
+}

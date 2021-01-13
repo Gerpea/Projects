@@ -1,31 +1,24 @@
 ;(() => {
   const invertedIndex = new InvertedIndex()
   const inputFiles = new Files()
+  const outputFiles = new Files()
 
-  const outputFilesArea = document.getElementById('output-files')
-  const inputFilesArea = document.getElementById('input-files')
+  const outputArea = document.getElementById('output-files')
+  const inputArea = document.getElementById('input-files')
+
   const addBtn = document.getElementById('add-file')
-  const fileInput = document.getElementById('file-input')
   const removeBtn = document.getElementById('remove-file')
-  const searchInput = document.getElementById('search')
-  const dragArea = document.getElementById('drag-area')
-  const outputArea = document.getElementById('output-area')
 
-  addBtn.onclick = () => {
-    fileInput.click()
-  }
+  const fileInput = document.getElementById('file-input')
+  const searchInput = document.getElementById('search-input')
 
-  fileInput.onchange = (event) => {
-    inputFiles.addFiles(event.target.files)
-  }
-
-  dragArea.onclick = () => {
+  inputArea.onclick = () => {
     if (inputFiles.files.length < 1) {
       fileInput.click()
     }
   }
 
-  dragArea.ondrop = (event) => {
+  inputArea.ondrop = (event) => {
     event.preventDefault()
 
     if (event.dataTransfer.items) {
@@ -41,8 +34,16 @@
     }
   }
 
-  dragArea.ondragover = (event) => {
+  inputArea.ondragover = (event) => {
     event.preventDefault()
+  }
+
+  fileInput.onchange = (event) => {
+    inputFiles.addFiles(event.target.files)
+  }
+
+  addBtn.onclick = () => {
+    fileInput.click()
   }
 
   removeBtn.onclick = (event) => {
@@ -51,85 +52,34 @@
   }
 
   searchInput.oninput = (event) => {
-    showIn(outputFilesArea, filterFiles(inputFiles.files, event.target.value), false)
-    if (filterFiles(inputFiles.files, event.target.value).length > 0) {
-      outputArea.classList.remove('result__empty')
-    } else {
-      outputArea.classList.add('result__empty')
-    }
+    showIn(outputArea, filterFiles(inputFiles.files, event.target.value), false)
   }
 
-  inputFiles.addFilesChangeListener(function (newFiles) {
-    showIn(inputFilesArea, newFiles)
-    showIn(outputFilesArea, filterFiles(newFiles, searchInput.value), false)
+  inputFiles.addFilesChangeListener('add', function (newFiles, addedFile) {
+    showIn(inputArea, newFiles, true, (file) => {
+      inputFiles.toggleSelect(file)
+    })
+    showIn(outputArea, filterFiles(newFiles, searchInput.value), false)
   })
 
-  inputFiles.addFilesChangeListener(function (newFiles) {
+  inputFiles.addFilesChangeListener('remove', function (newFiles, removedFile) {
+    showIn(inputArea, newFiles, true, (file) => {
+      inputFiles.toggleSelect(file)
+    })
+    showIn(outputArea, filterFiles(newFiles, searchInput.value), false)
     const selectedFiles = newFiles.filter(function (file) {
       return file.selected
     })
-    if (selectedFiles.length > 0) {
-      removeBtn.style = 'display: block'
-    } else {
-      removeBtn.style = 'display: none'
-    }
+    checkElement(removeBtn, selectedFiles.length > 0)
   })
 
-  inputFiles.addFilesChangeListener(function (newFiles) {
-    if (newFiles.length > 0) {
-      dragArea.classList.remove('empty')
-    } else {
-      dragArea.classList.add('empty')
-    }
-  })
-
-  inputFiles.addFilesChangeListener(function (newFiles) {
-    if (filterFiles(newFiles, searchInput.value).length > 0) {
-      outputArea.classList.remove('result__empty')
-    } else {
-      outputArea.classList.add('result__empty')
-    }
-  })
-
-  function filterFiles(files, filter) {
-    return (
-      files.filter(function (file) {
-        return file.file.name === filter
-      }) ?? []
-    )
-  }
-
-  function showIn(area, files, canBeSelected = true) {
-    while (area.firstChild) {
-      area.removeChild(area.firstChild)
-    }
-
-    files.forEach(function (file) {
-      area.appendChild(createFileNode(file, canBeSelected))
+  inputFiles.addFilesChangeListener('select', function (newFiles, selectedFile) {
+    const selectedFiles = newFiles.filter(function (file) {
+      return file.selected
     })
-  }
-
-  function createFileNode(file, canBeSelected) {
-    const fileNode = document.createElement('div')
-    fileNode.className =
-      file.selected && canBeSelected ? 'files-list__el files-list__el--selected' : 'files-list__el'
-    fileNode.id = `${file.file.name}`
-
-    if (canBeSelected) {
-      fileNode.onclick = (event) => {
-        inputFiles.toggleSelect(file)
-      }
-    }
-
-    fileNode.appendChild(createFileNameNode(file.file.name))
-    return fileNode
-  }
-
-  function createFileNameNode(fileName) {
-    const fileNameNode = document.createElement('span')
-    fileNameNode.className = 'files_list__el-name'
-    fileNameNode.textContent = fileName
-
-    return fileNameNode
-  }
+    showIn(inputArea, newFiles, true, (file) => {
+      inputFiles.toggleSelect(file)
+    })
+    checkElement(removeBtn, selectedFiles.length > 0)
+  })
 })()

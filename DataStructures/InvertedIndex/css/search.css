@@ -1,0 +1,16 @@
+.search {
+  padding: 10px;
+  border: 3px solid #b4d7f3;
+  border-radius: 3px;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #fff;
+}
+.search__input {
+  position: absolute;
+  top: 47px;
+  left: 50%;
+  height: 47px;
+  width: 25%;
+  transform: translateX(-50%);
+}
