@@ -1,8 +1,12 @@
 function filterFiles(files, filter) {
   return (
-    files.filter(function (file) {
-      return file.file.name === filter
-    }) ?? []
+    files
+      .filter(function (file) {
+        return file.file.name === filter
+      })
+      .map(function (file) {
+        return file.file
+      }) ?? []
   )
 }
 
@@ -57,3 +61,19 @@ function checkElement(element, predicate) {
     element.classList.add('no-display')
   }
 }
+
+async function readFile(file) {
+  return new Promise(function (resolve, reject) {
+    let reader = new FileReader()
+    reader.onload = function () {
+      resolve(reader.result)
+    }
+    reader.onerror = function () {
+      reject(reader.error)
+    }
+
+    reader.readAsText(file)
+  })
+}
+
+export { filterFiles, showIn, createFileNode, createFileNameNode, checkElement, readFile }

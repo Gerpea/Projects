@@ -1,3 +1,7 @@
+import '../css/main.css'
+import { Files } from './files'
+import { InvertedIndex } from './invertedIndex'
+import { checkElement, filterFiles, showIn } from './utils'
 ;(() => {
   const invertedIndex = new InvertedIndex()
   const inputFiles = new Files()
@@ -13,7 +17,7 @@
   const searchInput = document.getElementById('search-input')
 
   inputArea.onclick = () => {
-    if (inputFiles.files.length < 1) {
+    if (inputFiles.files.size < 1) {
       fileInput.click()
     }
   }
@@ -52,34 +56,45 @@
   }
 
   searchInput.oninput = (event) => {
-    showIn(outputArea, filterFiles(inputFiles.files, event.target.value), false)
+    outputFiles.clear()
+    outputFiles.addFiles(filterFiles(Array.from(inputFiles.files), event.target.value))
   }
 
   inputFiles.addFilesChangeListener('add', function (newFiles, addedFile) {
     showIn(inputArea, newFiles, true, (file) => {
       inputFiles.toggleSelect(file)
     })
-    showIn(outputArea, filterFiles(newFiles, searchInput.value), false)
-  })
 
+    invertedIndex.addFile(addedFile.file)
+    outputFiles.addFiles(filterFiles([addedFile], searchInput.value))
+  })
   inputFiles.addFilesChangeListener('remove', function (newFiles, removedFile) {
     showIn(inputArea, newFiles, true, (file) => {
       inputFiles.toggleSelect(file)
     })
-    showIn(outputArea, filterFiles(newFiles, searchInput.value), false)
+
+    const selectedFiles = newFiles.filter(function (file) {
+      return file.selected
+    })
+    checkElement(removeBtn, selectedFiles.length > 0)
+
+    outputFiles.removeFile(removedFile)
+  })
+  inputFiles.addFilesChangeListener('select', function (newFiles, selectedFile) {
+    showIn(inputArea, newFiles, true, (file) => {
+      inputFiles.toggleSelect(file)
+    })
+
     const selectedFiles = newFiles.filter(function (file) {
       return file.selected
     })
     checkElement(removeBtn, selectedFiles.length > 0)
   })
 
-  inputFiles.addFilesChangeListener('select', function (newFiles, selectedFile) {
-    const selectedFiles = newFiles.filter(function (file) {
-      return file.selected
-    })
-    showIn(inputArea, newFiles, true, (file) => {
-      inputFiles.toggleSelect(file)
-    })
-    checkElement(removeBtn, selectedFiles.length > 0)
+  outputFiles.addFilesChangeListener('add', function (newFiles, addedFiles) {
+    showIn(outputArea, newFiles, false)
+  })
+  outputFiles.addFilesChangeListener('remove', function (newFiles, removedFiles) {
+    showIn(outputArea, newFiles, false)
   })
 })()

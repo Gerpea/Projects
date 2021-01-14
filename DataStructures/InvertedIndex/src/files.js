@@ -1,6 +1,6 @@
 class Files {
   constructor() {
-    this.files = []
+    this.files = new Set()
     this._addListeners = []
     this._removeListeners = []
     this._selectListeners = []
@@ -12,24 +12,17 @@ class Files {
         file: addedFile,
         selected: false,
       }
-      if (!this.containFile(addedFile)) {
-        this.files.push(addedFile)
+      if (!this.findFile((file) => this._filesEqual(file, addedFile))) {
+        this.files.add(addedFile)
         this._notifyListeners('add', addedFile)
       }
     }
   }
 
-  removeFile(file) {
-    const delIndex = this.files.findIndex((f) => {
-      return this._filesEqual(file, f)
-    })
-
-    const deletedFile = this.files[delIndex]
-    if (delIndex !== -1) {
-      this.files.splice(delIndex, 1)
-    }
-
-    this._notifyListeners('remove', deletedFile)
+  removeFile(removedFile) {
+    const file = this.findFile((file) => this._filesEqual(file, removedFile))
+    this.files.delete(file)
+    this._notifyListeners('remove', file)
   }
 
   addFilesChangeListener(type, listener) {
@@ -50,16 +43,8 @@ class Files {
     }
   }
 
-  containFile(checkedFile) {
-    return (
-      this.files.findIndex((file) => {
-        return this._filesEqual(file, checkedFile)
-      }) !== -1
-    )
-  }
-
   toggleSelect(toggledFile) {
-    const file = this.files.find((file) => this._filesEqual(file, toggledFile))
+    const file = this.findFile((file) => this._filesEqual(file, toggledFile))
     if (file) {
       file.selected = !file.selected
       this._notifyListeners('select', file)
@@ -78,6 +63,20 @@ class Files {
     removedFile.forEach((file) => {
       this.removeFile(file)
     })
+  }
+
+  findFile(predicate) {
+    for (let file of this.files) {
+      if (predicate(file)) {
+        return file
+      }
+    }
+  }
+
+  clear() {
+    const data = Array.from(this.files)
+    this.files.clear()
+    this._notifyListeners('remove', data)
   }
 
   _filesEqual(file1, file2) {
@@ -100,7 +99,9 @@ class Files {
         return
     }
     listeners.forEach((listener) => {
-      listener.apply(this, [this.files, data])
+      listener.apply(this, [Array.from(this.files.values()), data])
     })
   }
 }
+
+export { Files }
