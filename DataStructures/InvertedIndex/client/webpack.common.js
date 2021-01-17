@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: path.resolve(__dirname, 'src/index.js'),
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -52,10 +52,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Inverted Index',
-      template: './index.html',
+      template: path.resolve(__dirname, 'index.html'),
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',

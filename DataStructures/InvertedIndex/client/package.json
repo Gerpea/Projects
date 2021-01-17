@@ -1,5 +1,5 @@
 {
-  "name": "invertedindex",
+  "name": "inverted-index-server",
   "version": "0.0.1",
   "description": "An Inverted Index is a data structure used to create full text search. Given a set of text files, implement a program to create an inverted index. Also create a user interface to do a search using that inverted index which returns a list of files that contain the query term / terms. The search index can be in memory.",
   "scripts": {
@@ -28,5 +28,9 @@
     "webpack-cli": "^4.3.1",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {
+    "stopword": "^1.0.6",
+    "wink-tokenizer": "^5.2.3"
   }
 }
