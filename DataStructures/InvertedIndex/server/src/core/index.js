@@ -1,5 +1,4 @@
 import http from 'http'
-
 class Server {
   constructor() {
     this._httpSever = http.createServer((req, res) => this._requestListener(req, res))
@@ -21,6 +20,10 @@ class Server {
 
   listen(listener, port, hostname = '127.0.0.1') {
     this._httpSever.listen(port, hostname, listener)
+  }
+
+  close() {
+    this._httpSever.close()
   }
 
   _requestListener(req, res) {

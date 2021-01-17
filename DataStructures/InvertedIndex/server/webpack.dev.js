@@ -7,4 +7,16 @@ module.exports = merge(common, {
   devServer: {
     contentBase: './dist',
   },
+  watch: true,
+  watchOptions: {
+    ignored: 'node_modules/**',
+  },
+  ignoreWarnings: [
+    {
+      module: /.*mongo.*/,
+    },
+    {
+      module: /.*require_optional.*/,
+    },
+  ],
 })
