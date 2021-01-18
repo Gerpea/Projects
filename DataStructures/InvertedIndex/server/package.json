@@ -24,6 +24,8 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "formidable": "^1.2.2",
     "mongoose": "^5.11.12",
     "uuid": "^8.3.2"
   }

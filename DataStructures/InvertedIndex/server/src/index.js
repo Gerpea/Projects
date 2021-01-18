@@ -1,8 +1,13 @@
+import formidable from 'formidable'
+import fs from 'fs'
+import path from 'path'
+
 import { Server } from './core'
 import dbConnect from './db'
 
 const pid = process.pid
-const hostname = '127.0.0.1'
+
+const hostname = process.env.HOSTNAME || '127.0.0.1'
 const port = process.env.PORT || 3000
 
 const server = new Server()
@@ -13,7 +18,15 @@ server.get('/api/file/:id', (req, res) => {
 })
 
 server.post('/api/files', (req, res) => {
-  console.log(req.url.params)
+  const form = new formidable.IncomingForm()
+  form.parse(req, (err, fields, files) => {
+    const oldpath = files.filetoupload.path
+    const newpath = path.resolve(`${__dirname}/files`)
+    fs.rename(oldpath, newpath, (err) => {
+      if (err) throw err
+      res.end('File uploaded and moved')
+    })
+  })
   res.end(JSON.stringify(req.url))
 })
 
