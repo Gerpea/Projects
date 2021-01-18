@@ -7,7 +7,8 @@ const FileModel = model('File', fileSchema)
  * @return {String} id of created file or undefined if not created
  */
 async function createFile(file) {
-  return await (await FileModel.create({ name: file.name, path: file.path }))._id
+  const fileId = await (await FileModel.create({ name: file.name, timestamp: new Date() }))._id
+  return fileId
 }
 /**
  * @param  {String} id
