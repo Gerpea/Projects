@@ -18,5 +18,8 @@ module.exports = merge(common, {
     {
       module: /.*require_optional.*/,
     },
+    {
+      module: /.*formidable.*/,
+    },
   ],
 })

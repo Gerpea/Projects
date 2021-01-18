@@ -1,7 +1,7 @@
 import http from 'http'
 class Server {
   constructor() {
-    this._httpSever = http.createServer((req, res) => this._requestListener(req, res))
+    this._httpServer = http.createServer((req, res) => this._requestListener(req, res))
 
     this._get = []
     this._delete = []
@@ -19,11 +19,11 @@ class Server {
   }
 
   listen(listener, port, hostname = '127.0.0.1') {
-    this._httpSever.listen(port, hostname, listener)
+    this._httpServer.listen(port, hostname, listener)
   }
 
   close() {
-    this._httpSever.close()
+    this._httpServer.close()
   }
 
   _requestListener(req, res) {
@@ -41,7 +41,7 @@ class Server {
     }
 
     if (result) {
-      this._callRoute(result.route, { ...req, url: result.route.url }, res)
+      this._callRoute(result.route, Object.assign(req, { url: result.route.url }), res)
     }
   }
 

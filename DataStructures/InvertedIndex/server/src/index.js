@@ -20,14 +20,16 @@ server.get('/api/file/:id', (req, res) => {
 server.post('/api/files', (req, res) => {
   const form = new formidable.IncomingForm()
   form.parse(req, (err, fields, files) => {
-    const oldpath = files.filetoupload.path
-    const newpath = path.resolve(`${__dirname}/files`)
-    fs.rename(oldpath, newpath, (err) => {
-      if (err) throw err
-      res.end('File uploaded and moved')
-    })
+    console.log(files)
+    res.end('File uploaded and moved')
+    // const oldpath = files.filetoupload.path
+    // const newpath = path.resolve(`${__dirname}/files`)
+    // fs.rename(oldpath, newpath, (err) => {
+    //   if (err) throw err
+    //   res.end('File uploaded and moved')
+    // })
   })
-  res.end(JSON.stringify(req.url))
+  // res.end(JSON.stringify(req.url))
 })
 
 dbConnect()
