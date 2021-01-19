@@ -1,16 +1,20 @@
 .search {
+  position: relative;
+  top: 0;
   padding: 10px;
-  border: 3px solid #b4d7f3;
+  border: 2px solid #fff;
   border-radius: 3px;
   font-size: 1.5rem;
-  text-align: center;
-  background-color: #fff;
+  text-align: left;
+  background-color: transparent;
+  transition: top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
 .search__input {
-  position: absolute;
-  top: 47px;
-  left: 50%;
+  color: #fff;
   height: 47px;
-  width: 25%;
-  transform: translateX(-50%);
+  width: 100%;
+}
+.search__input:focus {
+  border-color: #2cfe10;
 }

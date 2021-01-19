@@ -1,11 +1,15 @@
 .button {
-  border: none;
-  border-radius: 3px;
-  background-color: #b4d7f3;
+  background: transparent;
+  color: #fff;
   font-size: 1rem;
-  padding: 8px 20px;
+  padding: 8px 8px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  text-align: center;
   cursor: pointer;
+  line-height: 8px;
 }
 .button:hover {
-  background-color: #e0edff;
+  border-color: #2cfe10;
+  color: #2cfe10;
 }

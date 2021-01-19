@@ -1,0 +1,36 @@
+.card {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: #2cfe10;
+}
+
+.card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card__title {
+  font-size: 1.2rem;
+}
+
+.card__content {
+  word-wrap: break-word;
+  color: #aaa;
+  padding: 5px 0;
+}
+
+.card__time {
+  font-size: 0.7rem;
+  color: #999;
+}
