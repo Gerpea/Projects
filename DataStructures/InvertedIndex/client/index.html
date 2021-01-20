@@ -7,16 +7,16 @@
   </head>
   <body>
     <main>
-      <div class="menu">
+      <div id="menu" class="menu center">
         <input id="file-input" class="hide-outside" type="file" multiple="multiple" />
         <input id="add-file" class="button" type="button" value="+" />
+        <input
+          id="search-input"
+          class="search search__input"
+          type="search"
+          placeholder="Type something"
+        />
       </div>
-      <input
-        id="search-input"
-        class="search search__input center"
-        type="search"
-        placeholder="Type something"
-      />
       <div id="output-files" class="files">
         <div class="list"></div>
       </div>

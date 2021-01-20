@@ -6,6 +6,7 @@ import { fetchFileById, SearchApi, sendFile } from './api'
   const searchApi = new SearchApi()
   const outputFiles = new Files()
 
+  const menuBox = document.getElementById('menu')
   const outputArea = document.getElementById('output-files')
   const addBtn = document.getElementById('add-file')
   const fileInput = document.getElementById('file-input')
@@ -14,9 +15,9 @@ import { fetchFileById, SearchApi, sendFile } from './api'
   searchApi.addListener(async (data) => {
     outputFiles.clear()
     if (data.length === 0) {
-      searchInput.classList.add('center')
+      menuBox.classList.add('center')
     } else {
-      searchInput.classList.remove('center')
+      menuBox.classList.remove('center')
       for (let fileId of data) {
         outputFiles.addFiles([(await fetchFileById(fileId)).data])
       }
