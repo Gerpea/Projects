@@ -1,22 +1,27 @@
 import axios from 'axios'
 
-const apiAddress = process.env.API_ADDRESS || '127.0.0.1/api'
+const serverAddress = process.env.SERVER_ADDRESS || '127.0.0.1:3000'
+const apiRoute = process.env.API_ROUTE || 'api'
 
 async function fetchFileById(id) {
-  return await axios.get(`http://${apiAddress}/file/${id}`)
+  return await axios.get(`http://${serverAddress}/${apiRoute}/file/${id}`)
 }
 
 async function sendFile(file) {
   const formData = new FormData()
   formData.append('file', file)
   await axios
-    .post(`http://${apiAddress}/files`, formData, {
+    .post(`http://${serverAddress}/${apiRoute}/files`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': '*',
       },
     })
     .catch((err) => console.log(err))
+}
+
+function getFileUrl(file) {
+  return `http://${serverAddress}/files/${file.id}`
 }
 
 class SearchApi {
@@ -34,7 +39,7 @@ class SearchApi {
   }
 
   _connect() {
-    this._socket = new WebSocket(`ws://${apiAddress}/search`)
+    this._socket = new WebSocket(`ws://${serverAddress}/${apiRoute}/search`)
     this._socket.addEventListener('message', (event) => {
       this._listeners.forEach((listener) => {
         listener?.call(this, JSON.parse(event.data))
@@ -48,4 +53,4 @@ class SearchApi {
   }
 }
 
-export { fetchFileById, sendFile, SearchApi }
+export { fetchFileById, sendFile, SearchApi, getFileUrl }

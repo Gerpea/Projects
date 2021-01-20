@@ -1,12 +1,10 @@
-import path from 'path'
 import fs from 'fs'
 import formidable from 'formidable'
 
 import { createFile, getFileById } from './file/file.model'
 import { updateIndex } from './index/index.model'
 import { getWords, getFileContent } from './core/utils'
-
-const filesDir = path.resolve(`${__dirname}/../static/files`)
+import { filesDir } from './const'
 
 async function readFirstNBytes(path, n) {
   let chunks = ''

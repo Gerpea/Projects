@@ -1,7 +1,7 @@
 import '../css/main.css'
 import { Files } from './files'
 import { showIn } from './utils'
-import { fetchFileById, SearchApi, sendFile } from './api'
+import { fetchFileById, SearchApi, sendFile, getFileUrl } from './api'
 ;(() => {
   const searchApi = new SearchApi()
   const outputFiles = new Files()
@@ -39,9 +39,8 @@ import { fetchFileById, SearchApi, sendFile } from './api'
   }
 
   outputFiles.addFilesChangeListener('add', function (newFiles) {
-    showIn(outputArea, newFiles)
-  })
-  outputFiles.addFilesChangeListener('remove', function (newFiles) {
-    showIn(outputArea, newFiles)
+    showIn(outputArea, newFiles, (file) => {
+      window.location = getFileUrl(file)
+    })
   })
 })()
