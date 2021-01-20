@@ -43,4 +43,8 @@ import { fetchFileById, SearchApi, sendFile, getFileUrl } from './api'
       window.location = getFileUrl(file)
     })
   })
+
+  outputFiles.addFilesChangeListener('remove', function (newFiles) {
+    showIn(outputArea, newFiles)
+  })
 })()

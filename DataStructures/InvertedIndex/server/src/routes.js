@@ -43,7 +43,6 @@ export default {
         const fileId = await createFile(files.file)
         if (fileId) {
           const newpath = `${filesDir}/${fileId}`
-          console.log(newpath)
           if (!fs.existsSync(filesDir)) {
             fs.mkdirSync(filesDir, { recursive: true })
           }

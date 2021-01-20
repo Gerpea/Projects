@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { filesDir } from '../const'
+import { filesDir, clientDir } from '../const'
 
 class HttpServer {
   constructor() {
@@ -8,6 +8,7 @@ class HttpServer {
     this.server.use(cors())
     this.server.use(express.json())
     this.server.use('/files', express.static(filesDir))
+    this.server.use('/', express.static(clientDir))
   }
 
   get(url, listener) {
