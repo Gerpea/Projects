@@ -6,7 +6,8 @@ const pid = process.pid
 
 const hostname = process.env.HOSTNAME || '127.0.0.1'
 const httpPort = process.env.HTTP_PORT || 3000
-const socketPort = process.env.SOCKET_PORT || 3056
+const socketPort = process.env.SOCKET_PORT || 5031
+const socketPath = process.env.SOCKET_PATH || '/api/search'
 
 const httpServer = new HttpServer()
 const socketServer = new SocketServer()
@@ -23,10 +24,6 @@ dbConnect()
     process.exit(0)
   })
 
-process.on('beforeExit', () => {
-  httpServer.close()
-})
-
 function startServers() {
   httpServer.listen(
     () => {
@@ -38,10 +35,10 @@ function startServers() {
   socketServer.listen(
     () => {
       console.log(
-        `[Info]: Socket Server running at ws://${hostname}:${socketPort}/ with pid: ${pid}`
+        `[Info]: Socket Server running at ws://${hostname}:${socketPort}${socketPath}/ with pid: ${pid}`
       )
     },
     socketPort,
-    hostname
+    socketPath
   )
 }

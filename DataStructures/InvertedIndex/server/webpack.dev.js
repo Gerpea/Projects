@@ -21,5 +21,8 @@ module.exports = merge(common, {
     {
       module: /.*formidable.*/,
     },
+    {
+      module: /.*ws.*/,
+    },
   ],
 })

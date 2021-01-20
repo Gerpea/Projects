@@ -3,15 +3,10 @@ class Files {
     this.files = new Set()
     this._addListeners = []
     this._removeListeners = []
-    this._selectListeners = []
   }
 
   addFiles(files) {
     for (let addedFile of files) {
-      addedFile = {
-        file: addedFile,
-        selected: false,
-      }
       if (!this.findFile((file) => this._filesEqual(file, addedFile))) {
         this.files.add(addedFile)
         this._notifyListeners('add', addedFile)
@@ -34,35 +29,10 @@ class Files {
         case 'remove':
           this._removeListeners.push(listener)
           break
-        case 'select':
-          this._selectListeners.push(listener)
-          break
         default:
           break
       }
     }
-  }
-
-  toggleSelect(toggledFile) {
-    const file = this.findFile((file) => this._filesEqual(file, toggledFile))
-    if (file) {
-      file.selected = !file.selected
-      this._notifyListeners('select', file)
-    }
-  }
-
-  removeSelected() {
-    let removedFile = []
-
-    this.files.forEach(function (file) {
-      if (file.selected) {
-        removedFile.push(file)
-      }
-    })
-
-    removedFile.forEach((file) => {
-      this.removeFile(file)
-    })
   }
 
   findFile(predicate) {
@@ -80,7 +50,7 @@ class Files {
   }
 
   _filesEqual(file1, file2) {
-    return file1.file.name === file2.file.name
+    return file1.id === file2.id
   }
 
   _notifyListeners(type, data) {
@@ -91,9 +61,6 @@ class Files {
         break
       case 'remove':
         listeners = this._removeListeners
-        break
-      case 'select':
-        listeners = this._selectListeners
         break
       default:
         return

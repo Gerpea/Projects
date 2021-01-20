@@ -1,7 +1,9 @@
 import '../css/main.css'
 import { Files } from './files'
-import { checkElement, filterFiles, showIn } from './utils'
+import { showIn } from './utils'
+import { fetchFileById, SearchApi, sendFile } from './api'
 ;(() => {
+  const searchApi = new SearchApi()
   const outputFiles = new Files()
 
   const outputArea = document.getElementById('output-files')
@@ -9,19 +11,36 @@ import { checkElement, filterFiles, showIn } from './utils'
   const fileInput = document.getElementById('file-input')
   const searchInput = document.getElementById('search-input')
 
+  searchApi.addListener(async (data) => {
+    outputFiles.clear()
+    if (data.length === 0) {
+      searchInput.classList.add('center')
+    } else {
+      searchInput.classList.remove('center')
+      for (let fileId of data) {
+        outputFiles.addFiles([(await fetchFileById(fileId)).data])
+      }
+    }
+  })
+
   addBtn.onclick = () => {
     fileInput.click()
   }
 
-  searchInput.oninput = (event) => {
-    outputFiles.clear()
-    outputFiles.addFiles(filterFiles(Array.from(inputFiles.files), event.target.value))
+  fileInput.onchange = (event) => {
+    for (let file of event.target.files) {
+      sendFile(file)
+    }
   }
 
-  outputFiles.addFilesChangeListener('add', function (newFiles, addedFiles) {
-    showIn(outputArea, newFiles, false)
+  searchInput.oninput = (event) => {
+    searchApi.searchFiles(event.target.value)
+  }
+
+  outputFiles.addFilesChangeListener('add', function (newFiles) {
+    showIn(outputArea, newFiles)
   })
-  outputFiles.addFilesChangeListener('remove', function (newFiles, removedFiles) {
-    showIn(outputArea, newFiles, false)
+  outputFiles.addFilesChangeListener('remove', function (newFiles) {
+    showIn(outputArea, newFiles)
   })
 })()

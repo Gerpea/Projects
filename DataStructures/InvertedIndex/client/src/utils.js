@@ -1,26 +1,7 @@
-function filterFiles(files, filter) {
-  return (
-    files
-      .filter(function (file) {
-        return file.file.name === filter
-      })
-      .map(function (file) {
-        return file.file
-      }) ?? []
-  )
-}
-
-function showIn(area, files, canBeSelected = true, onClick) {
+function showIn(area, files, onClick) {
   const lists = area.getElementsByClassName('list')
   if (!lists) {
-    area.classList.add('empty')
     return
-  }
-
-  if (files.length > 0) {
-    area.classList.remove('empty')
-  } else {
-    area.classList.add('empty')
   }
 
   for (let list of lists) {
@@ -28,52 +9,40 @@ function showIn(area, files, canBeSelected = true, onClick) {
       list.removeChild(list.firstChild)
     }
     files.forEach(function (file) {
-      list.appendChild(createFileNode(file, canBeSelected, onClick))
+      list.appendChild(createFileNode(file, onClick))
     })
   }
 }
 
-function createFileNode(file, canBeSelected, onClick) {
+function createFileNode(file, onClick) {
   const fileNode = document.createElement('div')
-  fileNode.className = file.selected && canBeSelected ? 'list__el list__el--selected' : 'list__el'
-  fileNode.id = `${file.file.name}`
+  fileNode.className = 'list__el card'
+  fileNode.id = `${file.id}`
+  const fileTop = document.createElement('div')
+  fileTop.className = 'card__top'
+  const fileTitle = document.createElement('div')
+  fileTitle.className = 'card__title'
+  const fileTime = document.createElement('div')
+  fileTime.className = 'card__time'
+  const fileContent = document.createElement('div')
+  fileContent.className = 'card__content'
 
-  if (canBeSelected) {
-    fileNode.onclick = () => onClick?.call(this, file)
-  }
+  fileTop.appendChild(fileTitle)
+  fileTop.appendChild(fileTime)
 
-  fileNode.appendChild(createFileNameNode(file.file.name))
+  fileNode.appendChild(fileTop)
+  fileNode.appendChild(fileContent)
+
+  fileTitle.innerText = file.name
+  fileTime.innerHTML = new Intl.DateTimeFormat(navigator.language || navigator.userLanguage, {
+    dateStyle: 'long',
+    timeStyle: 'short',
+  }).format(new Date(file.timestamp))
+  fileContent.innerText = file.description
+
+  fileNode.onclick = () => onClick?.call(this, file)
+
   return fileNode
 }
 
-function createFileNameNode(fileName) {
-  const fileNameNode = document.createElement('span')
-  fileNameNode.className = 'list__el-name'
-  fileNameNode.textContent = fileName
-
-  return fileNameNode
-}
-
-function checkElement(element, predicate) {
-  if (predicate) {
-    element.classList.remove('no-display')
-  } else {
-    element.classList.add('no-display')
-  }
-}
-
-async function readFile(file) {
-  return new Promise(function (resolve, reject) {
-    let reader = new FileReader()
-    reader.onload = function () {
-      resolve(reader.result)
-    }
-    reader.onerror = function () {
-      reject(reader.error)
-    }
-
-    reader.readAsText(file)
-  })
-}
-
-export { filterFiles, showIn, createFileNode, createFileNameNode, checkElement, readFile }
+export { showIn }
