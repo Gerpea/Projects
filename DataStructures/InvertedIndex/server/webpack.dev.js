@@ -24,5 +24,11 @@ module.exports = merge(common, {
     {
       module: /.*ws.*/,
     },
+    {
+      module: /.*natural.*/,
+    },
+    {
+      module: /.*express.*/,
+    },
   ],
 })

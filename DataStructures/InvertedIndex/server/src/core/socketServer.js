@@ -2,20 +2,9 @@ import WebSocket from 'ws'
 import { getWords } from './utils'
 import { getFilesIdsByIndexes } from '../index/index.model'
 class SocketServer {
-  _connectionListener(socket) {
-    socket.isAlive = true
-    socket.on('pong', () => (socket.isAlive = true))
-
-    socket.on('message', async (data) => {
-      const words = await getWords(data.toString())
-      const files = await getFilesIdsByIndexes(words)
-      socket.send(JSON.stringify(files))
-    })
-  }
-
-  listen(listener, port, path) {
+  constructor(httpServer, path) {
     this._socketServer = new WebSocket.Server({
-      port,
+      server: httpServer,
       path,
     })
     const interval = setInterval(() => {
@@ -28,11 +17,17 @@ class SocketServer {
     }, 30000)
     this._socketServer.on('connection', this._connectionListener)
     this._socketServer.on('close', () => clearInterval(interval))
-    listener?.call()
   }
 
-  close() {
-    this._socketServer.close()
+  _connectionListener(socket) {
+    socket.isAlive = true
+    socket.on('pong', () => (socket.isAlive = true))
+
+    socket.on('message', async (data) => {
+      const words = await getWords(data.toString())
+      const files = await getFilesIdsByIndexes(words)
+      socket.send(JSON.stringify(files))
+    })
   }
 }
 

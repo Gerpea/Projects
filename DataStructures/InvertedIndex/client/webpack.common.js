@@ -1,7 +1,9 @@
 const path = require('path')
+const { EnvironmentPlugin } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' })
 
 module.exports = {
   entry: {
@@ -61,5 +63,6 @@ module.exports = {
       filename: '[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css',
     }),
+    new EnvironmentPlugin(Object.keys(dotenv.parsed || {})),
   ],
 }

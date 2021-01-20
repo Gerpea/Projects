@@ -30,6 +30,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "stopword": "^1.0.6",
     "wink-tokenizer": "^5.2.3"
   }
