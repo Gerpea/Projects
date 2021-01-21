@@ -1,23 +1,40 @@
-function showIn(area, files, onClick) {
+import { v4 as uuidV4 } from 'uuid'
+import { fetchFileById } from './api'
+
+function showIn(area, filesId, onClick) {
   const lists = area.getElementsByClassName('list')
   if (!lists) {
     return
   }
 
+  const listNode = new Map()
+
   for (let list of lists) {
     while (list.firstChild) {
       list.removeChild(list.firstChild)
     }
-    files.forEach(function (file) {
-      list.appendChild(createFileNode(file, onClick))
-    })
+
+    for (let fileId of filesId) {
+      const fileNode = createFileNode(onClick)
+      list.appendChild(fileNode)
+      listNode.set(fileId, fileNode)
+    }
   }
+
+  listNode.forEach(async (node, fileId) => {
+    await updateFileCard(fileId, node, onClick)
+  })
 }
 
-function createFileNode(file, onClick) {
+function createFileNode() {
   const fileNode = document.createElement('div')
   fileNode.className = 'list__el card'
-  fileNode.id = `${file.id}`
+  fileNode.id = `${uuidV4()}`
+
+  return fileNode
+}
+
+async function updateFileCard(fileId, fileNode, onClick) {
   const fileTop = document.createElement('div')
   fileTop.className = 'card__top'
   const fileTitle = document.createElement('div')
@@ -27,12 +44,7 @@ function createFileNode(file, onClick) {
   const fileContent = document.createElement('div')
   fileContent.className = 'card__content'
 
-  fileTop.appendChild(fileTitle)
-  fileTop.appendChild(fileTime)
-
-  fileNode.appendChild(fileTop)
-  fileNode.appendChild(fileContent)
-
+  const file = (await fetchFileById(fileId)).data
   fileTitle.innerText = file.name
   fileTime.innerHTML = new Intl.DateTimeFormat(navigator.language || navigator.userLanguage, {
     dateStyle: 'long',
@@ -40,9 +52,13 @@ function createFileNode(file, onClick) {
   }).format(new Date(file.timestamp))
   fileContent.innerText = file.description
 
-  fileNode.onclick = () => onClick?.call(this, file)
+  fileTop.appendChild(fileTitle)
+  fileTop.appendChild(fileTime)
 
-  return fileNode
+  fileNode.appendChild(fileTop)
+  fileNode.appendChild(fileContent)
+
+  fileNode.onclick = () => onClick?.call(this, file)
 }
 
 export { showIn }

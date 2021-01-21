@@ -24,12 +24,9 @@ class SocketServer {
     socket.on('pong', () => (socket.isAlive = true))
 
     socket.on('message', async (data) => {
-      console.log('data', data.toString())
       const words = await getWords(data.toString())
-      console.log('words', words)
       const files = await getFilesIdsByIndexes(words)
-      console.log('files', files)
-      socket.send(JSON.stringify(files))
+      socket.send(JSON.stringify({ trigger: data.toString(), files }))
     })
   }
 }

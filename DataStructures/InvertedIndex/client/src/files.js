@@ -7,11 +7,9 @@ class Files {
 
   addFiles(files) {
     for (let addedFile of files) {
-      if (!this.findFile((file) => this._filesEqual(file, addedFile))) {
-        this.files.add(addedFile)
-        this._notifyListeners('add', addedFile)
-      }
+      this.files.add(addedFile)
     }
+    this._notifyListeners('add', files)
   }
 
   removeFile(removedFile) {
@@ -65,9 +63,9 @@ class Files {
       default:
         return
     }
-    listeners.forEach((listener) => {
-      listener.apply(this, [Array.from(this.files.values()), data])
-    })
+    for (let listener of listeners) {
+      listener(Array.from(this.files.values()), data)
+    }
   }
 }
 

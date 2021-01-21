@@ -34,3 +34,24 @@
   font-size: 0.7rem;
   color: #999;
 }
+
+.card:empty {
+  height: 80px;
+  background: linear-gradient(90deg, transparent 25%, #2cfe10 30%, #2cfe10 40%, transparent 45%);
+  background-size: 400% 100%;
+  animation: gradient_animation 3s linear infinite;
+  cursor: default;
+}
+
+.card:empty:hover {
+  border-color: #fff;
+}
+
+@keyframes gradient_animation {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

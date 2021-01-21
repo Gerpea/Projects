@@ -7,17 +7,22 @@ async function fetchFileById(id) {
   return await axios.get(`http://${serverAddress}/${apiRoute}/file/${id}`)
 }
 
-async function sendFile(file) {
+async function sendFile(file, progressListener) {
   const formData = new FormData()
   formData.append('file', file)
-  await axios
+  return await axios
     .post(`http://${serverAddress}/${apiRoute}/files`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': '*',
       },
+      onUploadProgress: (progressEvent) => {
+        const percentComleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        progressListener?.call(null, percentComleted)
+      },
     })
-    .catch((err) => console.log(err))
+    .then(() => true)
+    .catch(() => false)
 }
 
 function getFileUrl(file) {
@@ -28,6 +33,7 @@ class SearchApi {
   constructor() {
     this._connect()
     this._listeners = []
+    this._lastRequestTrigger = undefined
   }
 
   addListener(listener) {
@@ -35,15 +41,19 @@ class SearchApi {
   }
 
   searchFiles(value) {
+    this._lastRequestTrigger = value
     this._socket.send(value)
   }
 
   _connect() {
     this._socket = new WebSocket(`ws://${serverAddress}/${apiRoute}/search`)
     this._socket.addEventListener('message', (event) => {
-      this._listeners.forEach((listener) => {
-        listener?.call(this, JSON.parse(event.data))
-      })
+      const data = JSON.parse(event.data)
+      if (data.trigger === this._lastRequestTrigger) {
+        for (let listener of this._listeners) {
+          listener(data.files)
+        }
+      }
     })
     this._socket.addEventListener('close', () => {
       setTimeout(() => {

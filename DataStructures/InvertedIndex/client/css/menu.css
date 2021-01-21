@@ -8,5 +8,20 @@
   align-items: flex-end;
   row-gap: 15px;
   padding-bottom: 15px;
-  transition: top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: top 0.5s ease-in-out;
+}
+
+.menu--center {
+  left: 50%;
+  top: 39% !important;
+  transform: translateX(-50%);
+}
+
+.menu__add-file {
+  display: flex;
+}
+
+.menu__upload-progress {
+  display: flex;
+  align-items: center;
 }

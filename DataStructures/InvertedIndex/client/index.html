@@ -7,14 +7,26 @@
   </head>
   <body>
     <main>
-      <div id="menu" class="menu center">
-        <input id="file-input" class="hide-outside" type="file" multiple="multiple" />
-        <input id="add-file" class="button" type="button" value="+" />
+      <div id="menu" class="menu menu--center">
+        <div class="menu__add-file">
+          <input id="file-input" class="hide-outside" type="file" multiple="multiple" />
+          <div class="menu__upload-progress">
+            <progress
+              id="upload-progress"
+              class="progress no-display"
+              value="0"
+              max="100"
+            ></progress>
+            <span id="upload-counter" class="ml mr no-display"></span>
+          </div>
+          <input id="add-file" class="button" type="button" value="+" />
+        </div>
         <input
           id="search-input"
           class="search search__input"
           type="search"
           placeholder="Type something"
+          autocomplete="off"
         />
       </div>
       <div id="output-files" class="files">

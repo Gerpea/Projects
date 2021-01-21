@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "stopword": "^1.0.6",
-    "wink-tokenizer": "^5.2.3"
+    "lodash": "^4.17.20",
+    "uuid": "^8.3.2"
   }
 }
