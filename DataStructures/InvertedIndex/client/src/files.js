@@ -1,72 +1,75 @@
 class Files {
   constructor() {
-    this.files = new Set()
-    this._addListeners = []
-    this._removeListeners = []
+    this.files = new Set();
+    this.addListeners = [];
+    this.removeListeners = [];
   }
 
   addFiles(files) {
-    for (let addedFile of files) {
-      this.files.add(addedFile)
-    }
-    this._notifyListeners('add', files)
+    files.forEach((addedFile) => {
+      this.files.add(addedFile);
+    });
+    this.notifyListeners('add', files);
   }
 
   removeFile(removedFile) {
-    const file = this.findFile((file) => this._filesEqual(file, removedFile))
-    this.files.delete(file)
-    this._notifyListeners('remove', file)
+    const file = this.findFile((f) => this.filesEqual(f, removedFile));
+    this.files.delete(file);
+    this.notifyListeners('remove', file);
   }
 
   addFilesChangeListener(type, listener) {
     if (typeof listener === 'function') {
       switch (type) {
         case 'add':
-          this._addListeners.push(listener)
-          break
+          this.addListeners.push(listener);
+          break;
         case 'remove':
-          this._removeListeners.push(listener)
-          break
+          this.removeListeners.push(listener);
+          break;
         default:
-          break
+          break;
       }
     }
   }
 
   findFile(predicate) {
-    for (let file of this.files) {
+    let result;
+    this.files.forEach((file) => {
       if (predicate(file)) {
-        return file
+        result = file;
       }
-    }
+    });
+
+    return result;
   }
 
   clear() {
-    const data = Array.from(this.files)
-    this.files.clear()
-    this._notifyListeners('remove', data)
+    const data = Array.from(this.files);
+    this.files.clear();
+    this.notifyListeners('remove', data);
   }
 
-  _filesEqual(file1, file2) {
-    return file1.id === file2.id
+  static filesEqual(file1, file2) {
+    return file1.id === file2.id;
   }
 
-  _notifyListeners(type, data) {
-    let listeners
+  notifyListeners(type, data) {
+    let listeners;
     switch (type) {
       case 'add':
-        listeners = this._addListeners
-        break
+        listeners = this.addListeners;
+        break;
       case 'remove':
-        listeners = this._removeListeners
-        break
+        listeners = this.removeListeners;
+        break;
       default:
-        return
+        return;
     }
-    for (let listener of listeners) {
-      listener(Array.from(this.files.values()), data)
-    }
+    listeners.forEach((listener) => {
+      listener(Array.from(this.files.values()), data);
+    });
   }
 }
 
-export { Files }
+export default Files;
