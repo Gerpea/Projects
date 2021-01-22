@@ -2,6 +2,7 @@ import { HttpServer, SocketServer } from './core'
 import dbConnect from './db'
 import routes from './routes'
 import http from 'http'
+import logger from './logger'
 
 const pid = process.pid
 
@@ -19,14 +20,13 @@ dbConnect()
     startServers()
   })
   .catch((e) => {
-    console.log(e)
-    console.log('[Error]: Cannot connect to db')
+    logger.error(`Cannot connect to db: ${e}`)
   })
 
 function startServers() {
   const server = http.createServer(httpServer.server)
   new SocketServer(server, socketPath)
   server.listen(httpPort, hostname, () => {
-    console.log(`[Info]: Server running at ${hostname}:${httpPort}/ with pid: ${pid}`)
+    logger.info(`Server running at ${hostname}:${httpPort}/ with pid: ${pid}`)
   })
 }
