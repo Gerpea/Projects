@@ -32,4 +32,6 @@ main {
   height: 100%;
   margin: 0 10%;
   padding-top: 10px;
+  display: flex;
+  flex-direction: column;
 }

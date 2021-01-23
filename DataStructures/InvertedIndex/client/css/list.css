@@ -1,11 +1,10 @@
 .list {
-  position: relative;
+  position: absolute;
   top: 0;
-  width: 100%;
-  height: 100%;
-  filter: opacity(1);
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
+  filter: opacity(1);
+  width: 100%;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .list__el {
@@ -17,6 +16,7 @@
 }
 
 .list:empty {
-  filter: opacity(0);
+  position: absolute;
   top: 100%;
+  filter: opacity(0);
 }

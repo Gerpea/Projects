@@ -12,6 +12,12 @@
   height: 47px;
   width: 100%;
 }
+
 .search__input:focus {
   border-color: #2cfe10;
+  outline-style: none;
+}
+
+.search__input:enabled::-webkit-search-cancel-button {
+  display: none;
 }
