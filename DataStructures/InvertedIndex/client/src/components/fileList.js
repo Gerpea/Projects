@@ -1,14 +1,22 @@
+import { menuBindToCenter, menuUnbindFromCenter } from './menu'
+
 const outputArea = document.getElementById('output-files')
 const list = outputArea.getElementsByClassName('list')[0]
 
 function addFile(fileId, onClick) {
   list.appendChild(createFileNode(fileId, onClick))
+  if (list.childElementCount > 0) {
+    menuUnbindFromCenter()
+  }
 }
 
 function removeFile(fileId) {
   const fileNode = document.getElementById(fileId)
   if (fileNode) {
     list.removeChild(fileNode)
+  }
+  if (list.childElementCount === 0) {
+    menuBindToCenter()
   }
 }
 

@@ -13,3 +13,8 @@
   border-color: #2cfe10;
   color: #2cfe10;
 }
+.button:disabled {
+  border-color: #a9a9a9;
+  color: #a9a9a9;
+  cursor: default;
+}

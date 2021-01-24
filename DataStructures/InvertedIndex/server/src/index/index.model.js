@@ -23,17 +23,23 @@ async function updateIndex(indexName, fileId) {
   }
 }
 
-async function getFilesIdsByIndexes(words) {
+async function getIndexesByWords(words) {
   try {
     const indexes = await IndexModel.find({
       word: { $in: words },
     })
     return indexes.reduce((value, index) => {
-      return [...value, ...index.files]
+      return [
+        ...value,
+        {
+          word: index.word,
+          files: [...(value[index.word]?.files || []), ...index.files],
+        },
+      ]
     }, [])
   } catch (e) {
-    logger.error(`Cannot get files ids bu indexes: ${e}`)
+    logger.error(`Cannot get index: ${e}`)
   }
 }
 
-export { updateIndex, getFilesIdsByIndexes }
+export { updateIndex, getIndexesByWords }

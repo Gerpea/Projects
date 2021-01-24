@@ -33,7 +33,10 @@ function searchFile(value) {
 }
 
 async function fetchFileById(id) {
-  return (await axios.get(`http://${serverAddress}/${apiRoute}/file/${id}`)).data
+  return await axios
+    .get(`http://${serverAddress}/${apiRoute}/file/${id}`)
+    .then((r) => r.data)
+    .catch((e) => undefined)
 }
 
 export { searchFile, fetchFileById, sendFile, fileSearch$ }

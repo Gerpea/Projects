@@ -1,6 +1,8 @@
 import WebSocket from 'ws'
+import _ from 'lodash'
+
 import { getWords } from './utils'
-import { getFilesIdsByIndexes } from '../index/index.model'
+import { getIndexesByWords } from '../index/index.model'
 
 class SocketServer {
   constructor(httpServer, path) {
@@ -29,7 +31,11 @@ function connectionListener(socket) {
 
   socket.on('message', async (data) => {
     const words = await getWords(data.toString().trim())
-    const files = await getFilesIdsByIndexes(words)
+    const indexes = await getIndexesByWords(words)
+    const files = _.intersection(
+      ...indexes.map((index) => index.files.map((file) => file.toString()))
+    )
+
     socket.send(JSON.stringify({ trigger: data.toString(), files }))
   })
 }
