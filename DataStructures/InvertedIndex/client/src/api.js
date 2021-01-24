@@ -1,11 +1,15 @@
 import axios from 'axios'
+import { map, retryWhen, delay, tap } from 'rxjs/operators'
+import { webSocket } from 'rxjs/webSocket'
 
-const serverAddress = process.env.SERVER_ADDRESS || '127.0.0.1:3000'
-const apiRoute = process.env.API_ROUTE || 'api'
+import { serverAddress, apiRoute } from './consts'
 
-async function fetchFileById(id) {
-  return await axios.get(`http://${serverAddress}/${apiRoute}/file/${id}`)
-}
+const socket$ = webSocket(`ws://${serverAddress}/${apiRoute}/search`)
+
+const fileSearch$ = socket$.pipe(
+  retryWhen((e) => e.pipe(delay(1000))),
+  map((v) => v.files)
+)
 
 async function sendFile(file, progressListener) {
   const formData = new FormData()
@@ -14,7 +18,6 @@ async function sendFile(file, progressListener) {
     .post(`http://${serverAddress}/${apiRoute}/files`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
       },
       onUploadProgress: (progressEvent) => {
         const percentComleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
@@ -25,42 +28,12 @@ async function sendFile(file, progressListener) {
     .catch(() => false)
 }
 
-function getFileUrl(file) {
-  return `http://${serverAddress}/files/${file.id}`
+function searchFile(value) {
+  socket$.next(value)
 }
 
-class SearchApi {
-  constructor() {
-    this._connect()
-    this._listeners = []
-    this._lastRequestTrigger = undefined
-  }
-
-  addListener(listener) {
-    this._listeners.push(listener)
-  }
-
-  searchFiles(value) {
-    this._lastRequestTrigger = value
-    this._socket.send(value)
-  }
-
-  _connect() {
-    this._socket = new WebSocket(`ws://${serverAddress}/${apiRoute}/search`)
-    this._socket.addEventListener('message', (event) => {
-      const data = JSON.parse(event.data)
-      if (data.trigger === this._lastRequestTrigger) {
-        for (let listener of this._listeners) {
-          listener(data.files)
-        }
-      }
-    })
-    this._socket.addEventListener('close', () => {
-      setTimeout(() => {
-        this._connect()
-      }, 1000)
-    })
-  }
+async function fetchFileById(id) {
+  return (await axios.get(`http://${serverAddress}/${apiRoute}/file/${id}`)).data
 }
 
-export { fetchFileById, sendFile, SearchApi, getFileUrl }
+export { searchFile, fetchFileById, sendFile, fileSearch$ }

@@ -1,8 +1,10 @@
 .files {
   position: relative;
-  background: none;
   pointer-events: none;
   padding: 15px 0;
   width: 100%;
   flex: 1;
+}
+.files > * {
+  pointer-events: all;
 }
