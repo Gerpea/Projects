@@ -1,50 +1,12 @@
 import fs from 'fs'
 import natural from 'natural'
 import { removeStopwords } from 'stopword'
-import franc from 'franc-min'
 
 const tokenizer = new natural.WordTokenizer()
 
-function stem(words, language) {
+function stem(words) {
   return words.map((word) => {
-    let stemmer
-    switch (language) {
-      case 'deu':
-        stemmer = natural.PorterStemmerNl
-        break
-      case 'fra':
-        stemmer = natural.PorterStemmerFr
-        break
-      case 'ita':
-        stemmer = natural.PorterStemmerIt
-        break
-      case 'nob':
-        stemmer = natural.PorterStemmerNo
-        break
-      case 'por':
-        stemmer = natural.PorterStemmerPt
-        break
-      case 'rus':
-        stemmer = natural.PorterStemmerRu
-        break
-      case 'spa':
-        stemmer = natural.PorterStemmerEs
-        break
-      case 'swe':
-        stemmer = natural.PorterStemmerSv
-        break
-      case 'ind':
-        stemmer = natural.StemmerId
-        break
-      case 'jpn':
-        stemmer = natural.StemmerJa
-        break
-      default:
-        stemmer = natural.PorterStemmer
-        break
-    }
-    stemmer = stemmer ?? natural.PorterStemmer
-    return stemmer.stem(word)
+    return natural.PorterStemmer.stem(word)
   })
 }
 
@@ -53,8 +15,7 @@ async function getFileContent(filePath) {
 }
 
 async function getWords(content) {
-  const language = 'und' //franc(content, { minLength: 10 })
-  const words = stem(removeStopwords(tokenizer.tokenize(content) || []), language)
+  const words = stem(removeStopwords(tokenizer.tokenize(content) || []))
   return words
 }
 

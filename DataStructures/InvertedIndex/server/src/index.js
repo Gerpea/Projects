@@ -24,9 +24,13 @@ dbConnect()
   })
 
 function startServers() {
-  const server = http.createServer(httpServer.server)
-  new SocketServer(server, socketPath)
-  server.listen(httpPort, hostname, () => {
-    logger.info(`Server running at ${hostname}:${httpPort}/ with pid: ${pid}`)
-  })
+  try {
+    const server = http.createServer(httpServer.server)
+    new SocketServer(server, socketPath)
+    server.listen(httpPort, hostname, () => {
+      logger.info(`Server running at ${hostname}:${httpPort}/ with pid: ${pid}`)
+    })
+  } catch (e) {
+    logger.error(`Cannot create servers: ${e}`)
+  }
 }

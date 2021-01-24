@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
+
 import { filesDir, clientDir } from '../const'
+import logger from '../logger'
 
 class HttpServer {
   constructor() {
@@ -12,10 +14,18 @@ class HttpServer {
   }
 
   get(url, listener) {
-    this.server.get(url, listener)
+    try {
+      this.server.get(url, listener)
+    } catch (e) {
+      logger.error(`Uncaught get error: ${e}`)
+    }
   }
   post(url, listener) {
-    this.server.post(url, listener)
+    try {
+      this.server.post(url, listener)
+    } catch (e) {
+      logger.error(`Uncaught post error: ${e}`)
+    }
   }
 }
 
