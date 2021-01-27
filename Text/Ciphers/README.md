@@ -1,29 +1,32 @@
-# ciphers
+# Ciphers
 
-## Project setup
+[**Ceasar Cipher**](https://en.wikipedia.org/wiki/Caesar_cipher)
 
-```
-npm install
-```
+[**Vigenere Cipher**](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)
 
-### Compiles and hot-reloads for development
+[**Vernam Cipher**](https://en.wikipedia.org/wiki/One-time_pad)
 
-```
+## Table of Contents
+
+1. [Run](#run)
+2. [Examples](#examples)
+
+## Run
+
+```bash
 npm run serve
 ```
 
-### Compiles and minifies for production
+## Examples
 
-```
-npm run build
-```
+1. Ceasar
 
-### Lints and fixes files
+![Ceasar](assets/ceasar.gif)
 
-```
-npm run lint
-```
+2. Vigenere
 
-### Customize configuration
+![Vigenere](assets/vigenere.gif)
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+3. Vernam
+
+![Vernam](assets/vernam.gif)

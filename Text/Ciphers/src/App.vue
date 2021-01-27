@@ -4,7 +4,8 @@
       class="user-input"
       placeholder="Type something"
       autofocus
-      v-model.trim="input"
+      :value="input"
+      @input="encryptInput"
     ></textarea>
     <div class="cipher">
       <v-select
@@ -15,14 +16,21 @@
         :searchable="false"
         class="cipher__selector"
       ></v-select>
-      <input v-if="cipher" class="cipher__key" type="number" min="0" v-model="key" />
+      <input
+        v-if="cipher.key === 0"
+        class="cipher__key cipher__key-number"
+        type="number"
+        min="0"
+        v-model="cipher.params.key"
+      />
+      <input v-else class="cipher__key cipher__key-text" type="text" v-model="cipher.params.key" />
     </div>
-    <textarea class="user-input" v-model.trim="encryptedInput"></textarea>
+    <textarea class="user-input" :value="encryptedInput" @input="decryptInput"></textarea>
   </main>
 </template>
 
 <script>
-import { Ciphers, encrypt } from './utils/ciphers'
+import { Ciphers, encrypt, decrypt } from './utils/ciphers'
 export default {
   name: 'App',
   data: () => ({
@@ -30,39 +38,42 @@ export default {
       label: cipherName,
       key: Ciphers[cipherName],
     })),
-    cipher: undefined,
+    cipher: {
+      label: '',
+      key: 0,
+      params: { key: '' },
+    },
     input: '',
     encryptedInput: '',
-    key: 0,
   }),
   methods: {
     setCipher(value) {
-      this.cipher = this.ciphers.find((cipher) => cipher.key === value.key)
+      this.cipher = { ...this.cipher, ...this.ciphers.find((cipher) => cipher.key === value.key) }
+      this.encryptedInput = encrypt(this.input, value.key, this.cipher.params)
+    },
+    decryptInput(event) {
+      this.encryptedInput = event.target.value
+      this.input = decrypt(event.target.value, this.cipher.key, this.cipher.params)
+    },
+    encryptInput(event) {
+      this.input = event.target.value
+      this.encryptedInput = encrypt(event.target.value, this.cipher.key, this.cipher.params)
     },
   },
   watch: {
-    key: function(value) {
-      if (value.length === 0) {
-        this.key = 0
-      }
-      this.key = parseInt(this.key, 10)
-      this.encryptedInput = encrypt(this.input, this.cipher.key, {
-        key: parseInt(this.key, 10).toString(),
-      })
-    },
-    cipher: function(value) {
-      this.encryptedInput = encrypt(this.input, value.key, {
-        key: this.key,
-      })
-    },
-    input: function(value) {
-      this.encryptedInput = encrypt(value, this.cipher.key, {
-        key: this.key,
-      })
+    'cipher.params.key': {
+      handler: function(value) {
+        if (this.cipher.key === 0) {
+          this.cipher.params.key = parseInt(value) || 0
+        }
+        this.encryptedInput = encrypt(this.input, this.cipher.key, this.cipher.params)
+      },
+      deep: true,
+      immediate: true,
     },
   },
   mounted() {
-    this.cipher = this.ciphers[0]
+    this.cipher = { ...this.cipher, ...this.ciphers[0] }
   },
 }
 </script>
@@ -111,9 +122,10 @@ main {
 }
 .cipher {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-top: 19px;
   margin-bottom: 19px;
+  row-gap: 11px;
 }
 .cipher__selector {
   height: 33px;
@@ -140,17 +152,24 @@ main {
   background: inherit;
 }
 .cipher__key {
+  height: 33px;
   background: #070606;
   border: 1px solid #fff;
   border-radius: 5px;
   padding: 10px;
   outline: none;
 }
+.cipher__key-number {
+  appearance: textfield;
+}
 .cipher__key:focus {
   outline: none;
   border-color: #2cfe10;
 }
-.cipher__key::-webkit-inner-spin-button {
+.cipher__key:invalid {
+  box-shadow: none;
+}
+.cipher__key-number::-webkit-inner-spin-button {
   display: none;
 }
 @media only screen and (min-width: 768px) {
@@ -162,10 +181,9 @@ main {
   }
   .cipher {
     position: absolute !important;
-    display: flex;
+    flex-direction: row;
     left: 50%;
     transform: translateX(-50%) translateY(-100%);
-    flex-direction: row;
     margin: 0;
     margin-top: -31px;
     height: 33px;
@@ -174,8 +192,10 @@ main {
   .cipher__selector {
     width: 269px;
   }
-
-  .cipher__key {
+  .cipher__key-text {
+    width: 269px;
+  }
+  .cipher__key-number {
     width: 70px;
   }
 }
