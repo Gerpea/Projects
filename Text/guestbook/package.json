@@ -12,6 +12,7 @@
     "@vue/composition-api": "^1.0.0-rc.1",
     "@vueform/multiselect": "^1.2.5",
     "core-js": "^3.6.5",
+    "firebase": "^8.2.5",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.11",
     "vue-select": "^3.11.2"

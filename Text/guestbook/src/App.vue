@@ -10,8 +10,7 @@
 </template>
 
 <script>
-//TODO: check how tests are written and organized in multiselect component
-//TODO: write tests
+//TODO: connect to firebase
 import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
 

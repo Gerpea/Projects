@@ -4,17 +4,28 @@ import Message from '@/components/message.vue'
 
 describe('message.vue', () => {
   describe('props', () => {
-    describe(':content', () => {
-      it('should display content', () => {
-        const content = 'Content'
+    describe(':dateTime', () => {
+      it('should set to initialValue when undefined', () => {
         const wrapper = mount(Message, {
           propsData: {
-            content,
+            content: '',
           },
         })
 
-        expect(wrapper.html().includes(content)).to.eq(true)
+        expect(wrapper.vm.$props.dateTime).to.be.an.instanceOf(Date)
       })
-    })
+    }),
+      describe(':content', () => {
+        it('should display content', () => {
+          const content = 'Content'
+          const wrapper = mount(Message, {
+            propsData: {
+              content,
+            },
+          })
+
+          expect(wrapper.html().includes(content)).to.eq(true)
+        })
+      })
   })
 })
