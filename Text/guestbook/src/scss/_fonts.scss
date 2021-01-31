@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+@import './variables';
+
+$sizes: (
+  normal: $font-size-normal,
+  small: $font-size-small,
+  big: $font-size-big,
+);
+
+@each $name, $size in $sizes {
+  .font-size-#{$name} {
+    font-size: $size;
+  }
+}

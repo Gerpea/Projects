@@ -1,0 +1,44 @@
+.multiselect {
+  border-radius: $border-radius-input !important;
+  font-size: 1em !important;
+  &-input {
+    font-size: 1em !important;
+    border: $border-width solid $color-tetrary !important;
+    border-radius: $border-radius-input !important;
+  }
+  &-single-label {
+    padding-left: 7px !important;
+  }
+  &-options {
+    font-size: 1em !important;
+    border: $border-width solid $color-tetrary !important;
+    border-radius: $border-radius-input !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    background: $color-secondary-dark !important;
+    color: $color-tetrary !important;
+
+    .is-pointed {
+      background: none !important;
+      color: $color-primary !important;
+    }
+
+    .is-selected {
+      background: none !important;
+      color: inherit !important;
+    }
+  }
+
+  &-option {
+    color: $color-secondary-light !important;
+  }
+}
+
+.multiselect .is-open {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  &-input {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+}
