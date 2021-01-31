@@ -1,7 +1,7 @@
-const API_KEY = process.env.API_KEY
-const PROJECT_ID = process.env.PROJECT_ID
-const SENDER_ID = process.env.SENDER_ID
-const APP_ID = process.env.APP_ID
+const API_KEY = process.env.VUE_APP_API_KEY
+const PROJECT_ID = process.env.VUE_APP_PROJECT_ID
+const SENDER_ID = process.env.VUE_APP_SENDER_ID
+const APP_ID = process.env.VUE_APP_APP_ID
 
 export default {
   apiKey: API_KEY,

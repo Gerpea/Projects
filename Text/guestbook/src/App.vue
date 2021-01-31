@@ -10,36 +10,41 @@
 </template>
 
 <script>
-//TODO: connect to firebase
+//TODO: send message to firebase
+
 import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
+import { messagesCollection } from '@/firebase'
 
 export default {
   data: () => ({
-    messages: [
-      {
-        id: 1,
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis elit ante. Donec egestas venenatis erat vitae sollicitudin. Donec efficitur ex',
-        dateTime: new Date(),
-      },
-      {
-        id: 2,
-        content: 'Message2',
-        dateTime: new Date(),
-      },
-      {
-        id: 3,
-        content: 'Message3',
-        dateTime: new Date(),
-      },
-      {
-        id: 4,
-        content: 'Message4',
-        dateTime: new Date(),
-      },
-    ],
+    messages: [],
   }),
+  mounted() {
+    messagesCollection.onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        const data = change.doc.data()
+        if (change.type === 'added') {
+          this.messages.push({
+            id: change.doc.id,
+            content: data.content,
+          })
+        }
+        if (change.type === 'modified') {
+          const message = this.messages.find((message) => message.id === change.doc.id)
+          if (message) {
+            message.content = data.content
+          }
+        }
+        if (change.type === 'removed') {
+          const index = this.messages.findIndex((message) => message.id === change.doc.id)
+          if (index !== -1) {
+            this.messages.splice(index, 1)
+          }
+        }
+      })
+    })
+  },
   name: 'App',
   components: {
     'g-input': gInput,
