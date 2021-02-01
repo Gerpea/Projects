@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <main class="messages">
+    <section v-if="messages.length > 0" class="messages">
       <message v-for="message in messages" v-bind="message" :key="message.id" />
-    </main>
+    </section>
+    <section v-else class="messages-empty">
+      There is no messages. Write one
+    </section>
     <div class="send-message">
       <g-input v-model="message" :maxLength="80" @submit="sendMessage" />
     </div>
@@ -10,8 +13,6 @@
 </template>
 
 <script>
-//TODO: add send button to input
-//TODO: add placeholder when there is no messages
 import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
 import { messagesCollection } from '@/firebase'
@@ -83,7 +84,13 @@ export default {
   padding: 20px 20px 73px 20px;
   row-gap: 13px;
 }
-
+.messages-empty {
+  height: 100vh;
+  color: $color-primary-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .send-message {
   min-height: 38px;
   position: absolute;
