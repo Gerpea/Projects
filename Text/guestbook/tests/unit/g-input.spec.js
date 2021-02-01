@@ -9,7 +9,7 @@ describe('g-input.vue', () => {
         const wrapper = mount(GInput)
         const expected = 'value'
 
-        const input = wrapper.find('input')
+        const input = wrapper.find('textarea')
         input.element.value = expected
         input.trigger('input')
 
@@ -21,7 +21,7 @@ describe('g-input.vue', () => {
           const wrapper = mount(GInput)
           const expected = 'value'
 
-          const input = wrapper.find('input')
+          const input = wrapper.find('textarea')
           input.element.value = expected
           input.trigger('keydown.enter')
 

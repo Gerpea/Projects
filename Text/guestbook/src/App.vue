@@ -4,14 +4,12 @@
       <message v-for="message in messages" v-bind="message" :key="message.id" />
     </main>
     <div class="send-message">
-      <g-input v-model="message" @submit="sendMessage" />
+      <g-input v-model="message" :maxLength="80" @submit="sendMessage" />
     </div>
   </div>
 </template>
 
 <script>
-//TODO: make char counter in input
-//TODO: make input expand when text is not fit
 //TODO: add send button to input
 //TODO: add placeholder when there is no messages
 import gInput from '@/components/g-input.vue'
