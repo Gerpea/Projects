@@ -4,20 +4,23 @@
       <message v-for="message in messages" v-bind="message" :key="message.id" />
     </main>
     <div class="send-message">
-      <g-input class="input" />
+      <g-input v-model="message" @submit="sendMessage" />
     </div>
   </div>
 </template>
 
 <script>
-//TODO: send message to firebase
-
+//TODO: make char counter in input
+//TODO: make input expand when text is not fit
+//TODO: add send button to input
+//TODO: add placeholder when there is no messages
 import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
 import { messagesCollection } from '@/firebase'
 
 export default {
   data: () => ({
+    message: undefined,
     messages: [],
   }),
   mounted() {
@@ -44,6 +47,17 @@ export default {
         }
       })
     })
+  },
+  methods: {
+    sendMessage() {
+      if (this.message && this.message.length > 0) {
+        messagesCollection.add({
+          content: this.message,
+          dateTime: new Date().toUTCString(),
+        })
+      }
+      this.message = ''
+    },
   },
   name: 'App',
   components: {
@@ -77,8 +91,8 @@ export default {
   position: absolute;
   bottom: 0;
   right: 50%;
-  width: 100%;
-  padding: 0 20px 12px 20px;
+  width: calc(100% - 40px);
+  padding: 0 0 12px 0;
   background: $color-secondary-dark;
   transform: translateX(50%);
   display: flex;
