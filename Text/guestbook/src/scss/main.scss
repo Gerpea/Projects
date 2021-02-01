@@ -6,11 +6,18 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
-  font-size: $font-size-base;
+  background: $color-secondary-dark;
   color: $color-tetrary;
+
+  font-size: $font-size-base;
   font-family: $font-family;
 
-  height: 100vh;
-  overflow: hidden;
+  overflow: auto;
+
+  height: 100%;
 }

@@ -17,6 +17,9 @@ import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
 import { messagesCollection } from '@/firebase'
 
+//TODO: desktop layout
+//TODO: messages should be created throught function
+
 export default {
   data: () => ({
     message: undefined,
@@ -68,12 +71,12 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  overflow: scroll;
+  display: flex;
   justify-content: center;
-  background: $color-secondary-dark;
 
-  min-height: 100%;
-  max-height: 100%;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
 }
 
 .messages {
@@ -81,24 +84,28 @@ export default {
   display: flex;
   flex-direction: column;
 
-  padding: 20px 20px 73px 20px;
+  width: 100%;
+  height: max-content;
+
+  padding: 20px 20px 77px 20px;
   row-gap: 13px;
 }
 .messages-empty {
-  height: 100vh;
-  color: $color-primary-light;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  color: $color-primary-light;
+
+  height: 100vh;
 }
 .send-message {
   min-height: 38px;
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  border-radius: $border-radius-input;
+  bottom: 12px;
   right: 50%;
   width: calc(100% - 40px);
-  padding: 0 0 12px 0;
-  background: $color-secondary-dark;
   transform: translateX(50%);
   display: flex;
   justify-content: center;
