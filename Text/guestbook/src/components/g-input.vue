@@ -12,6 +12,11 @@
       @keydown.prevent.enter="handleEnter"
     />
     <span class="char-counter">{{ `${charCount}/${maxLength}` }}</span>
+    <div ref="confirmButton" class="confirm-button" @click="handleEnter">
+      <object class="confirm-icon" type="image/svg+xml" :data="require('@/assets/send-icon.svg')">
+        <img class="confirm-icon" src="@/assets/send-icon.svg" alt="send button" />
+      </object>
+    </div>
   </div>
 </template>
 
@@ -20,12 +25,27 @@ export default {
   data: () => ({
     lineCount: 1,
   }),
+  mounted() {
+    this.$refs.confirmButton.style.width = this.$refs.confirmButton.clientHeight + 'px'
+    this.$refs.confirmButton.childNodes.forEach((child) => {
+      child.style.height =
+        this.$refs.confirmButton.clientHeight *
+          (parseFloat(window.getComputedStyle(child).getPropertyValue('max-height')) / 100) +
+        'px'
+    })
+    this.$refs.input.style.paddingRight =
+      this.$refs.confirmButton.offsetWidth +
+      parseFloat(
+        window.getComputedStyle(this.$refs.confirmButton).getPropertyValue('margin-left')
+      ) +
+      'px'
+  },
   methods: {
     handleInput(e) {
       this.$emit('input', e.target.value)
     },
-    handleEnter(e) {
-      this.$emit('submit', e.target.value)
+    handleEnter() {
+      this.$emit('submit', this.$refs.input.value)
     },
     measureText(value) {
       const context = this.$refs.canvas.getContext('2d')
@@ -76,11 +96,8 @@ export default {
   width: 100%;
 }
 .hide {
-  position: absolute;
-  top: -10000px;
-  left: -10000px;
+  display: none;
 }
-
 .input {
   background: $color-secondary-dark;
   color: inherit;
@@ -116,5 +133,30 @@ export default {
 
   transform: translateY(-5px);
   font-size: $font-size-small;
+}
+.confirm-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 100%;
+  transform: translateY(-50%);
+  cursor: pointer !important;
+
+  filter: invert(78%) sepia(13%) saturate(89%) hue-rotate(314deg) brightness(102%) contrast(87%);
+
+  &:hover {
+    filter: invert(80%) sepia(12%) saturate(6104%) hue-rotate(58deg) brightness(97%) contrast(118%);
+  }
+}
+.confirm-icon {
+  pointer-events: none;
+  width: 100%;
+  max-height: 70%;
+  display: inline-block;
+  background-size: cover;
 }
 </style>
