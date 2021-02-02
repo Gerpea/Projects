@@ -7,7 +7,7 @@
       There is no messages. Write one
     </section>
     <div class="send-message">
-      <g-input v-model="message" :maxLength="80" @submit="sendMessage" />
+      <g-input :maxLength="300" @submit="sendMessage" />
     </div>
   </div>
 </template>
@@ -22,7 +22,6 @@ import { messagesCollection } from '@/firebase'
 
 export default {
   data: () => ({
-    message: undefined,
     messages: [],
   }),
   mounted() {
@@ -51,14 +50,13 @@ export default {
     })
   },
   methods: {
-    sendMessage() {
-      if (this.message && this.message.length > 0) {
+    sendMessage(message) {
+      if (message && message.length > 0) {
         messagesCollection.add({
-          content: this.message,
+          content: message,
           dateTime: new Date().toUTCString(),
         })
       }
-      this.message = ''
     },
   },
   name: 'App',

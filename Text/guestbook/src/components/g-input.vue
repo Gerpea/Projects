@@ -1,16 +1,14 @@
 <template>
   <div class="root">
-    <canvas ref="canvas" class="hide"></canvas>
-    <textarea
+    <div
       ref="input"
       class="input"
-      type="text"
-      :rows="lineCount"
-      :maxlength="maxLength"
-      :value="value"
+      contenteditable
       @input="handleInput"
       @keydown.prevent.enter="handleEnter"
-    />
+    >
+      ' ' <br />
+    </div>
     <span class="char-counter">{{ `${charCount}/${maxLength}` }}</span>
     <div ref="confirmButton" class="confirm-button" @click="handleEnter">
       <object class="confirm-icon" type="image/svg+xml" :data="require('@/assets/send-icon.svg')">
@@ -21,11 +19,17 @@
 </template>
 
 <script>
+// Workaround for mozilla caret bug: https://bugzilla.mozilla.org/show_bug.cgi?id=389321
+// Make contenteditable not empty
+// By putting Line Separator \U+2028 when it try to be empty
+const emptyChar = String.fromCharCode(8232)
+
 export default {
   data: () => ({
-    lineCount: 1,
+    value: '',
   }),
   mounted() {
+    this.$refs.input.innerText = emptyChar
     this.$refs.confirmButton.style.width = this.$refs.confirmButton.clientHeight + 'px'
     this.$refs.confirmButton.childNodes.forEach((child) => {
       child.style.height =
@@ -41,34 +45,27 @@ export default {
       'px'
   },
   methods: {
-    handleInput(e) {
-      this.$emit('input', e.target.value)
+    handleInput() {
+      // Remove <br> tags added after space caharacters in mozilla
+      // This block should be before innerText is setted
+      while (this.$refs.input.lastElementChild) {
+        this.$refs.input.removeChild(this.$refs.input.lastElementChild)
+      }
+
+      const innerText = this.$refs.input.innerText.replace(emptyChar, '')
+      this.$emit('input', innerText.trim())
+
+      if (innerText.length === 0) {
+        this.$refs.input.innerText = emptyChar
+      }
+
+      this.value = innerText
     },
     handleEnter() {
-      this.$emit('submit', this.$refs.input.value)
-    },
-    measureText(value) {
-      const context = this.$refs.canvas.getContext('2d')
-
-      const inputFontSize = window.getComputedStyle(this.$refs.input).fontSize
-      const inputFontFamily = window.getComputedStyle(this.$refs.input).fontFamily
-
-      context.font = `${inputFontSize} ${inputFontFamily}`
-
-      const width = context.measureText(value).width
-      return width
-    },
-  },
-  watch: {
-    value(value) {
-      const width = this.measureText(value)
-      const pL = parseFloat(
-        window.getComputedStyle(this.$refs.input).getPropertyValue('padding-left')
-      )
-      const pR = parseFloat(
-        window.getComputedStyle(this.$refs.input).getPropertyValue('padding-right')
-      )
-      this.lineCount = Math.floor(width / (this.$refs.input.clientWidth - pR - pL) + 1)
+      const innerText = this.$refs.input.innerText.replace(emptyChar, '')
+      this.$emit('submit', innerText.trim())
+      this.$refs.input.innerText = emptyChar
+      this.value = ''
     },
   },
   computed: {
@@ -78,10 +75,6 @@ export default {
   },
   name: 'gInput',
   props: {
-    value: {
-      type: String,
-      default: '',
-    },
     maxLength: {
       type: Number,
       default: 10,
@@ -94,6 +87,7 @@ export default {
 .root {
   position: relative;
   width: 100%;
+  height: inherit;
 }
 .hide {
   display: none;
@@ -101,7 +95,12 @@ export default {
 .input {
   background: $color-secondary-dark;
   color: inherit;
+
   resize: none;
+  display: inline-flex;
+  align-items: center;
+
+  overflow-wrap: anywhere;
 
   border: $border-width solid $color-tetrary;
   border-radius: $border-radius-input;
@@ -109,8 +108,7 @@ export default {
   padding: 6px 12px;
 
   width: 100%;
-  min-width: 0;
-  height: inherit;
+  height: 100%;
 
   &:focus {
     border-color: $color-primary;
