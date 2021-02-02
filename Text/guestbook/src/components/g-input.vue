@@ -111,11 +111,16 @@ export default {
   height: 100%;
 
   &:focus {
+    outline: none;
     border-color: $color-primary;
 
     + .char-counter {
       display: inline-block;
     }
+  }
+
+  &:empty {
+    line-height: 100%;
   }
 }
 .char-counter {
@@ -136,13 +141,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 10px;
   position: absolute;
   top: 50%;
   right: 0;
   height: 100%;
   transform: translateY(-50%);
-  cursor: pointer !important;
+  cursor: pointer;
 
   filter: invert(78%) sepia(13%) saturate(89%) hue-rotate(314deg) brightness(102%) contrast(87%);
 

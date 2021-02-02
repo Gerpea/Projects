@@ -17,7 +17,6 @@ import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
 import { messagesCollection } from '@/firebase'
 
-//TODO: desktop layout
 //TODO: messages should be created throught function
 
 export default {
@@ -97,14 +96,18 @@ export default {
 
   height: 100vh;
 }
+/* 
+  1. I don't know what happens with this
+  but it solves the problem with element which without it move 1px right from center
+  also with this we do not need transform to center element
+*/
 .send-message {
   min-height: 38px;
   position: fixed;
   border-radius: $border-radius-input;
   bottom: 12px;
-  right: 50%;
+  left: calc(50%-0); /* 1 */
   width: calc(100% - 40px);
-  transform: translateX(50%);
   display: flex;
   justify-content: center;
   align-content: center;
