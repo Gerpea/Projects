@@ -7,7 +7,7 @@
       There is no messages. Write one
     </section>
     <div class="send-message">
-      <g-input :maxLength="300" @submit="sendMessage" />
+      <g-input :maxLength="150" @submit="sendMessage" />
     </div>
   </div>
 </template>
@@ -18,6 +18,9 @@ import message from '@/components/message.vue'
 import { messagesCollection } from '@/firebase'
 
 //TODO: messages should be created throught function
+//TODO: add comments to messages
+//TODO: remove messages every hour
+//TODO: link to messages like on github
 
 export default {
   data: () => ({
@@ -70,6 +73,7 @@ export default {
 .container {
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 
   position: relative;
   height: 100vh;
@@ -80,6 +84,7 @@ export default {
   align-items: center;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 
   width: 100%;
   height: max-content;
@@ -97,16 +102,18 @@ export default {
   height: 100vh;
 }
 /* 
-  1. I don't know what happens with this
-  but it solves the problem with element which without it move 1px right from center
-  also with this we do not need transform to center element
+  1. Left is unset to center element, cause transform translate
+  calculate element width with border incorrect
+  https://stackoverflow.com/questions/66004597/is-an-invalid-css-left-property-acceptable
 */
 .send-message {
+  box-sizing: border-box;
   min-height: 38px;
   position: fixed;
   border-radius: $border-radius-input;
   bottom: 12px;
-  left: calc(50%-0); /* 1 */
+  left: unset; //invalid; /* 1 */
+  // transform: translateX(-50%);
   width: calc(100% - 40px);
   display: flex;
   justify-content: center;

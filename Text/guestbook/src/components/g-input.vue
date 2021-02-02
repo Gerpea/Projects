@@ -4,6 +4,7 @@
       ref="input"
       class="input"
       contenteditable
+      @keypress="handleKeypress"
       @input="handleInput"
       @keydown.prevent.enter="handleEnter"
     >
@@ -45,6 +46,11 @@ export default {
       'px'
   },
   methods: {
+    handleKeypress(e) {
+      if (this.$refs.input.innerText.length >= this.maxLength + 1) {
+        e.preventDefault()
+      }
+    },
     handleInput() {
       // Remove <br> tags added after space caharacters in mozilla
       // This block should be before innerText is setted
