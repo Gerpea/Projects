@@ -137,11 +137,11 @@ export default {
 
   border-radius: 3px;
 
-  top: -$font-size-small;
+  top: -$font-size-s;
   right: 5px;
 
   transform: translateY(-5px);
-  font-size: $font-size-small;
+  font-size: $font-size-s;
 }
 .confirm-button {
   display: flex;

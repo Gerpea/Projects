@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": "auth.uid != null",
+    ".write": false,
+    "messages": {
+      ".indexOn": ["timestamp"]
+    },
+    "comments": {
+      "$messageId": {
+        ".indexOn": ["timestamp"]
+      }
+    }
+  }
+}

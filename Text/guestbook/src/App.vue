@@ -15,49 +15,30 @@
 <script>
 import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
-import { messagesCollection } from '@/firebase'
+import { addMessage, getMessages } from '@/firebase'
 
-//TODO: messages should be created throught function
-//TODO: add comments to messages
-//TODO: remove messages every hour
 //TODO: link to messages like on github
+//TODO: animate
 
 export default {
   data: () => ({
     messages: [],
   }),
   mounted() {
-    messagesCollection.onSnapshot((snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const data = change.doc.data()
-        if (change.type === 'added') {
-          this.messages.push({
-            id: change.doc.id,
-            content: data.content,
-          })
+    getMessages(
+      (message) => this.messages.push(message),
+      (message) => {
+        const index = this.messages.findIndex((msg) => msg.id === message.id)
+        if (index !== -1) {
+          this.messages.splice(index, 1)
         }
-        if (change.type === 'modified') {
-          const message = this.messages.find((message) => message.id === change.doc.id)
-          if (message) {
-            message.content = data.content
-          }
-        }
-        if (change.type === 'removed') {
-          const index = this.messages.findIndex((message) => message.id === change.doc.id)
-          if (index !== -1) {
-            this.messages.splice(index, 1)
-          }
-        }
-      })
-    })
+      }
+    )
   },
   methods: {
     sendMessage(message) {
       if (message && message.length > 0) {
-        messagesCollection.add({
-          content: message,
-          dateTime: new Date().toUTCString(),
-        })
+        addMessage(message).catch((e) => console.log(e))
       }
     },
   },

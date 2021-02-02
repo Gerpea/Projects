@@ -2,9 +2,11 @@
 @import './variables';
 
 $sizes: (
-  normal: $font-size-normal,
-  small: $font-size-small,
-  big: $font-size-big,
+  m: $font-size-m,
+  s: $font-size-s,
+  xs: $font-size-xs,
+  l: $font-size-l,
+  xl: $font-size-xl,
 );
 
 @each $name, $size in $sizes {
