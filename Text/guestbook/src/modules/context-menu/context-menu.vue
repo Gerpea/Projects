@@ -1,9 +1,17 @@
 <template>
-  <div v-if="display" :style="style" class="context-menu" @blur="$emit('blur')" :tabindex="-1">
-    <div class="menu">
-      <div class="menu__item">
-        First option
-      </div>
+  <div v-if="display" :style="style" class="context-menu" @blur="onBlur" :tabindex="-1">
+    <div
+      v-for="(item, i) in items"
+      :key="i"
+      @click="
+        (e) => {
+          item.onClick(e)
+          onBlur(e)
+        }
+      "
+      class="context-menu__item"
+    >
+      {{ item.label }}
     </div>
   </div>
 </template>
@@ -16,6 +24,11 @@ export default {
         left: this.$props.left + 'px',
         top: this.$props.top + 'px',
       }
+    },
+  },
+  methods: {
+    onBlur(e) {
+      this.$emit('blur', e)
     },
   },
   name: 'ContextMenu',
@@ -43,9 +56,30 @@ export default {
 <style lang="scss" scoped>
 .context-menu {
   position: fixed;
-  background: $color-secondary-dark;
-  z-index: 999;
-  outline: none;
   cursor: pointer;
+  color: inherit;
+
+  background: $color-secondary-dark;
+  border-radius: $border-radius-input;
+  border: $border-width solid $color-tetrary;
+  outline: none;
+
+  font-size: $font-size-s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  row-gap: 6px;
+
+  z-index: 999;
+
+  &__item {
+    padding: 5px 10px;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
 }
 </style>

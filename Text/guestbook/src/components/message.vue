@@ -1,5 +1,10 @@
 <template>
-  <div :id="id" class="message" @click="toggleCommentInput" @contextmenu.prevent="showContextMenu">
+  <div
+    :id="id"
+    class="message"
+    @click="toggleCommentInput"
+    @contextmenu.prevent.stop="(e) => showContextMenu(e, id)"
+  >
     <div class="message__content">{{ content }}</div>
     <div v-if="!canWriteComment" class="message__bottom">
       <date-time class="color-tetrary-dark" :dateTime="dateTime" />
@@ -49,8 +54,16 @@ export default {
         addComment(comment, this.id).catch((e) => console.log(e))
       }
     },
-    showContextMenu(e) {
-      this.$showContextMenu({
+    showContextMenu(e, id) {
+      this.$contextMenu.show({
+        items: [
+          {
+            label: 'Copy link',
+            onClick: () => {
+              copyToClipboard(location.origin + '/#' + id)
+            },
+          },
+        ],
         position: {
           x: e.clientX,
           y: e.clientY,
@@ -84,6 +97,24 @@ export default {
     'date-time': dateTime,
     comment: comment,
   },
+}
+
+function copyToClipboard(str) {
+  const el = document.createElement('textarea')
+  el.value = str
+  el.setAttribute('readonly', '')
+  el.style.position = 'absolute'
+  el.style.left = '-9999px'
+  document.body.appendChild(el)
+  const selected =
+    document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+  if (selected) {
+    document.getSelection().removeAllRanges()
+    document.getSelection().addRange(selected)
+  }
 }
 </script>
 

@@ -17,10 +17,6 @@ export default {
       }),
       methods: {
         show(params) {
-          if (this.display) {
-            this.hide()
-            return
-          }
           this.items = params?.items || []
           this.position = {
             ...{
@@ -64,9 +60,7 @@ export default {
           },
           on: {
             blur: () => {
-              if (this.display) {
-                this.hide()
-              }
+              this.hide()
             },
           },
         })
@@ -78,7 +72,9 @@ export default {
     document.body.appendChild(menuNode)
     const menu = new menuComponent().$mount('#' + menuNode.id)
 
-    Vue.prototype.$showContextMenu = menu.show
-    Vue.prototype.$hideContextMenu = menu.hide
+    Vue.prototype.$contextMenu = {
+      show: menu.show,
+      hide: menu.hide,
+    }
   },
 }

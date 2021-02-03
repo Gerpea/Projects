@@ -22,7 +22,6 @@ import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
 import { addMessage, getMessages } from '@/firebase'
 
-//TODO: link to messages like on github
 //TODO: animate
 
 export default {

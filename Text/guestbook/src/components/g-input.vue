@@ -4,6 +4,7 @@
       ref="input"
       class="input"
       contenteditable
+      @contextmenu.stop=""
       @keypress="handleKeypress"
       @input="handleInput"
       @keydown.prevent.enter="handleEnter"
