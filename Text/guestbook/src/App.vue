@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <section v-if="messages.length > 0" class="messages">
-      <message v-for="message in messages" v-bind="message" :key="message.id" />
+      <message
+        v-for="message in messages"
+        v-bind="message"
+        :key="message.id"
+        :class="{ selected: message.id === getIdFromLink() }"
+      />
     </section>
     <section v-else class="messages-empty">
       There is no messages. Write one
@@ -40,6 +45,10 @@ export default {
       if (message && message.length > 0) {
         addMessage(message).catch((e) => console.log(e))
       }
+    },
+    getIdFromLink() {
+      console.log(location.hash.slice(1))
+      return location.hash.slice(1)
     },
   },
   name: 'App',
@@ -99,5 +108,9 @@ export default {
   display: flex;
   justify-content: center;
   align-content: center;
+}
+.selected {
+  border-color: $color-primary-dark;
+  border-width: 2px;
 }
 </style>

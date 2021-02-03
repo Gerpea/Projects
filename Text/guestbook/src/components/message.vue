@@ -1,5 +1,5 @@
 <template>
-  <div class="message" @click="toggleCommentInput">
+  <div :id="id" class="message" @click="toggleCommentInput" @contextmenu.prevent="showContextMenu">
     <div class="message__content">{{ content }}</div>
     <div v-if="!canWriteComment" class="message__bottom">
       <date-time class="color-tetrary-dark" :dateTime="dateTime" />
@@ -48,6 +48,18 @@ export default {
       if (comment && comment.length > 0) {
         addComment(comment, this.id).catch((e) => console.log(e))
       }
+    },
+    showContextMenu(e) {
+      this.$showContextMenu({
+        position: {
+          x: e.clientX,
+          y: e.clientY,
+        },
+        offset: {
+          x: 15,
+          y: -5,
+        },
+      })
     },
   },
   name: 'Message',
