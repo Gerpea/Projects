@@ -6,16 +6,13 @@
     @contextmenu.prevent.stop="(e) => showContextMenu(e, id)"
   >
     <div class="message__content">{{ content }}</div>
-    <div v-if="!canWriteComment" class="message__bottom">
-      <date-time class="color-tetrary-dark" :dateTime="dateTime" />
-    </div>
     <div v-if="canWriteComment" class="message__comments" @click.stop="">
       <g-input :maxLength="150" @submit="sendComment" class="message__comments-input" />
-      <div class="message__comments-list">
+      <transition-group class="message__comments-list" name="comments" tag="div">
         <comment v-for="comment in comments" v-bind="comment" :key="comment.id" />
-      </div>
+      </transition-group>
     </div>
-    <div v-if="canWriteComment" class="message__bottom">
+    <div class="message__bottom">
       <date-time class="color-tetrary-dark" :dateTime="dateTime" />
     </div>
   </div>
@@ -30,7 +27,7 @@ import { addComment, getComments } from '@/firebase'
 
 export default {
   data: () => ({
-    canWriteComment: true,
+    canWriteComment: false,
     comments: [],
   }),
   mounted() {
@@ -130,13 +127,28 @@ function copyToClipboard(str) {
   border-radius: $border-radius;
   border: $border-width solid $color-tetrary;
 
-  row-gap: 10px;
   padding: 17px;
+
+  > * {
+    margin: 5px 0;
+  }
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
 
   width: 100%;
 
+  transition: all 0.2s;
+
   &:hover {
     border-color: $color-primary;
+  }
+
+  &__content {
+    font-size: $font-size-l;
   }
 
   &__bottom {
@@ -146,22 +158,32 @@ function copyToClipboard(str) {
 
   &__send-comment {
     cursor: auto;
-    font-size: 0.8rem;
 
+    font-size: 0.8rem;
     margin-top: 7px;
     height: 30px;
   }
 
   &__comments {
     position: relative;
-    cursor: auto;
     overflow-y: auto;
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
 
-    font-size: $font-size-s;
+    cursor: auto;
+
+    > * {
+      margin: 5px 0;
+    }
+    > *:first-child {
+      margin-top: 0;
+    }
+    > *:last-child {
+      margin-bottom: 0;
+    }
+
     width: 100%;
   }
 
@@ -175,11 +197,37 @@ function copyToClipboard(str) {
   }
 
   &__comments-list {
+    font-size: $font-size-s;
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
 
+    > * {
+      margin: 5px 0;
+    }
+    > *:first-child {
+      margin-top: 0;
+    }
+    > *:last-child {
+      margin-bottom: 0;
+    }
+
+    height: auto;
     max-height: 50vh;
   }
+}
+.comments-enter-active,
+.comments-leave-active {
+  transition: all 0.2s;
+}
+.comments-enter,
+.comments-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
 }
 </style>

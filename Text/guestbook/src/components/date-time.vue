@@ -7,8 +7,12 @@ export default {
   computed: {
     dt: function() {
       return new Intl.DateTimeFormat(navigator.language || navigator.userLanguage, {
-        dateStyle: 'long',
-        timeStyle: 'short',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
       }).format(this.$props.dateTime)
     },
   },

@@ -41,10 +41,19 @@ export default {
   border-radius: $border-radius;
   border: $border-width solid $color-tetrary;
 
-  row-gap: 6px;
   padding: 10px;
 
   width: 100%;
+
+  > * {
+    margin: 3px 0;
+  }
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
 
   &__bottom {
     font-size: $font-size-xs;

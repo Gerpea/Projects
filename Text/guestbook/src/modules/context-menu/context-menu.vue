@@ -70,7 +70,15 @@ export default {
   flex-direction: column;
   justify-content: space-around;
 
-  row-gap: 6px;
+  > * {
+    margin: 3px 0;
+  }
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
 
   z-index: 999;
 
