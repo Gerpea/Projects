@@ -1,5 +1,5 @@
 <template>
-  <div class="date-time">{{ dt }}</div>
+  <span>{{ dt }}</span>
 </template>
 
 <script>
@@ -27,5 +27,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

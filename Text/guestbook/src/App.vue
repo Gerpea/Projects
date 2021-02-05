@@ -22,10 +22,10 @@ import gInput from '@/components/g-input.vue'
 import message from '@/components/message.vue'
 import { addMessage, getMessages } from '@/firebase'
 
+//TODO: refactor
 //TODO: fix issues with mobile devices
 // * - when many comments they shrink padding
 // * - when scroll comments first comments appears on top of input
-// * - date in wronk format
 // * - scroll in safari
 //TODO: animate
 
