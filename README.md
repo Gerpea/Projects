@@ -1,4 +1,4 @@
-# Mega Project List [**39**/100]
+# Mega Project List [**40**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -130,7 +130,7 @@ subgraph that is a tree, contains all the vertices, and the sum of its weights i
 
 **Quote Tracker (market symbols etc)** - A program which can go out and check the current value of stocks for a list of symbols entered by the user. The user can set how often the stocks are checked. For CLI, show whether the stock has moved up or down. _Optional: If GUI, the program can show green up and red down arrows to show which direction the stock value has moved._
 
-**Guestbook / Journal** - A simple application that allows people to add comments or write journal entries. It can allow comments or not and timestamps for all entries. Could also be made into a shout box. _Optional: Deploy it on Google App Engine or Heroku or any other PaaS (if possible, of course)._
+[**Guestbook / Journal**](https://github.com/Gerpea/Projects/tree/master/Text/Guestbook) - A simple application that allows people to add comments or write journal entries. It can allow comments or not and timestamps for all entries. Could also be made into a shout box. _Optional: Deploy it on Google App Engine or Heroku or any other PaaS (if possible, of course)._
 
 [**Vigenere / Vernam / Ceasar Ciphers**](https://github.com/Gerpea/Projects/tree/master/Text/Ciphers) - Functions for encrypting and decrypting data messages. Then send them to a friend.
 
