@@ -1,0 +1,19 @@
+@import './variables';
+
+$colors: (
+  primary: $color-primary,
+  primary-light: $color-primary-light,
+  primary-dark: $color-primary-dark,
+  secondary: $color-secondary,
+  secondary-light: $color-secondary-light,
+  secondary-dark: $color-secondary-dark,
+  tetrary: $color-tetrary,
+  tetrary-light: $color-tetrary-light,
+  tetrary-dark: $color-tetrary-dark,
+);
+
+@each $name, $hsl in $colors {
+  .color-#{$name} {
+    color: $hsl;
+  }
+}

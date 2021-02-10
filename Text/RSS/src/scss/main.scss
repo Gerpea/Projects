@@ -1,0 +1,23 @@
+@import './fonts';
+@import './colors';
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+
+  background: $color-secondary-dark;
+  color: $color-tetrary;
+
+  font-size: $font-size-base;
+  font-family: $font-family;
+
+  height: 100vh;
+}

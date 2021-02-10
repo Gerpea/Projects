@@ -1,4 +1,4 @@
-# Mega Project List [**40**/100]
+# Mega Project List [**41**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -126,7 +126,7 @@ subgraph that is a tree, contains all the vertices, and the sum of its weights i
 
 **Text Editor** - Notepad style application that can open, edit, and save text documents. _Optional: Add syntax highlighting and other features._
 
-**RSS Feed Creator** - Given a link to RSS/Atom Feed, get all posts and display them.
+[**RSS Feed Creator**](https://github.com/Gerpea/Projects/tree/master/Text/RSS) - Given a link to RSS/Atom Feed, get all posts and display them.
 
 **Quote Tracker (market symbols etc)** - A program which can go out and check the current value of stocks for a list of symbols entered by the user. The user can set how often the stocks are checked. For CLI, show whether the stock has moved up or down. _Optional: If GUI, the program can show green up and red down arrows to show which direction the stock value has moved._
 
