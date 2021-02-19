@@ -10,10 +10,15 @@ const theme = {
       light: 'hsl(0, 8%, 31%)',
       dark: 'hsl(0, 8%, 3%)',
     },
-    tetrary: {
+    tertiary: {
       base: 'hsl(0, 7%, 78%)',
       light: 'hsl(0, 100%, 98%)',
       dark: 'hsl(0, 2%, 49%)',
+    },
+    quartary: {
+      base: 'hsl(2, 87%, 48%)',
+      light: 'hsl(2, 98%, 53%)',
+      dark: 'hsl(2, 87%, 40%)',
     },
   },
   font: {

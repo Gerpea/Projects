@@ -15,12 +15,12 @@ export default createGlobalStyle`
 
   body {
     background: ${({ theme }) => theme.color.secondary.dark};
-    color: ${({ theme }) => theme.color.tetrary.base};
+    color: ${({ theme }) => theme.color.tertiary.base};
     
     fint-size: ${({ theme }) => theme.font.size.base};
     fint-family: ${({ theme }) => theme.font.family};
 
     overflow: hidden;
-    height: 100%;
+    height: 100vh;
   }
 `

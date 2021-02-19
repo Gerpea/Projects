@@ -35,12 +35,12 @@ export const getColor = function ({
     : secondaryDark
     ? theme.color.secondary.dark
     : tetrary
-    ? theme.color.tetrary.base
+    ? theme.color.tertiary.base
     : tetraryLight
-    ? theme.color.tetrary.light
+    ? theme.color.tertiary.light
     : tetraryDark
-    ? theme.color.tetrary.dark
-    : theme.color.tetrary.base
+    ? theme.color.tertiary.dark
+    : theme.color.tertiary.base
 }
 
 export const getBgColor = function ({

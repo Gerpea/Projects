@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import styled from 'styled-components'
 import { UnControlled as CodeMirror } from 'react-codemirror2'
@@ -12,6 +12,9 @@ require('codemirror/mode/javascript/javascript')
 const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
+
+  height: 100vh;
+
   row-gap: 10px;
   padding: 20px;
 `
@@ -19,14 +22,14 @@ const StyledApp = styled.div`
 const StyledEditor = styled(CodeMirror)`
   .CodeMirror {
     background: ${({ theme }) => theme.color.secondary.dark};
-    color: ${({ theme }) => theme.color.tetrary.base};
+    color: ${({ theme }) => theme.color.tertiary.base};
 
     font-size: ${({ theme }) => theme.font.size.m};
     font-family: ${({ theme }) => theme.font.family};
 
     padding: 10px;
 
-    border: 1px solid ${({ theme }) => theme.color.tetrary.base};
+    border: 1px solid ${({ theme }) => theme.color.tertiary.base};
     border-radius: 5px;
   }
 
@@ -45,11 +48,32 @@ const StyledEditorSingleLine = styled(StyledEditor)`
   }
 `
 
+const StyledEditorFillSpace = styled(StyledEditor)`
+  height: 100%;
+  .CodeMirror {
+    height: 100% !important;
+  }
+`
+
+const ErrorMessage = styled.div`
+  &:empty::before {
+    content: '\\200B';
+  }
+
+  width: 100%;
+  font-size: ${({ theme }) => theme.font.size.s};
+  font-family: ${({ theme }) => theme.font.family};
+
+  color: ${({ theme }) => theme.color.quartary.base};
+  text-align: center;
+`
+
 function App() {
   const [regexString, setRegexString] = useState('')
   const [testString, setTestString] = useState('')
   const [marks, setMarks] = useState([])
   const [testEditor, setTestEditor] = useState(null)
+  const [error, setError] = useState(null)
 
   let prevMarks = useRef([])
 
@@ -72,8 +96,11 @@ function App() {
   }
 
   useEffect(() => {
+    setError('')
     try {
-      const regexp = new XRegExp(regexString)
+      const flags = regexString.replace(/.*\/(.*)$/, '$1')
+      const pattern = regexString.replace(new RegExp('^/(.*?)/' + flags + '$'), '$1')
+      const regexp = new XRegExp(pattern, flags)
       const m = []
       testString.split('\n').forEach((value, index) => {
         XRegExp.forEach(value, regexp, (match) => {
@@ -87,7 +114,7 @@ function App() {
       })
       setMarks(m)
     } catch (e) {
-      // console.log(e)
+      setError(e.message)
     }
   }, [regexString, testString])
 
@@ -109,6 +136,7 @@ function App() {
 
   return (
     <StyledApp>
+      <ErrorMessage>{error}</ErrorMessage>
       <StyledEditorSingleLine
         options={{
           mode: 'text',
@@ -127,7 +155,7 @@ function App() {
         }}
       />
 
-      <StyledEditor
+      <StyledEditorFillSpace
         value={testString}
         options={{
           mode: 'text',
