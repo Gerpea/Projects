@@ -48,8 +48,10 @@ const StyledEditorSingleLine = styled(StyledEditor)`
 function App() {
   const [regexString, setRegexString] = useState('')
   const [testString, setTestString] = useState('')
-
+  const [marks, setMarks] = useState([])
   const [testEditor, setTestEditor] = useState(null)
+
+  let prevMarks = useRef([])
 
   const preventNL = (data) => {
     const typedNewLine =
@@ -70,25 +72,40 @@ function App() {
   }
 
   useEffect(() => {
-    console.log('call')
     try {
       const regexp = new XRegExp(regexString)
+      const m = []
       testString.split('\n').forEach((value, index) => {
         XRegExp.forEach(value, regexp, (match) => {
-          testEditor?.getDoc().markText(
-            { ch: match.index, line: index },
-            { ch: match.index + match[0].length, line: index },
-            {
-              className: 'cm-highlight',
-            }
-          )
-          console.log(`line: ${index}, from: ${match.index}, to: ${match.index + match[0].length}`)
+          if (match[0].length > 0) {
+            m.push({
+              from: { ch: match.index, line: index },
+              to: { ch: match.index + match[0].length, line: index },
+            })
+          }
         })
       })
+      setMarks(m)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
-  }, [regexString, testString, testEditor])
+  }, [regexString, testString])
+
+  useEffect(() => {
+    prevMarks.current.forEach(({ mark, textMarker }) => {
+      textMarker.clear(mark.from, mark.to)
+    })
+
+    prevMarks.current = []
+    marks.forEach((mark) => {
+      prevMarks.current.push({
+        mark,
+        textMarker: testEditor?.getDoc().markText(mark.from, mark.to, {
+          className: 'cm-highlight',
+        }),
+      })
+    })
+  }, [marks, testEditor])
 
   return (
     <StyledApp>
