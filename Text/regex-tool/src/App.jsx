@@ -30,6 +30,10 @@ const StyledEditor = styled(CodeMirror)`
     border-radius: 5px;
   }
 
+  .cm-highlight {
+    background: ${({ theme }) => theme.color.secondary.light};
+  }
+
   .CodeMirror-focused {
     border-color: ${({ theme }) => theme.color.primary.base};
   }
@@ -44,7 +48,8 @@ const StyledEditorSingleLine = styled(StyledEditor)`
 function App() {
   const [regexString, setRegexString] = useState('')
   const [testString, setTestString] = useState('')
-  const testEditor = useRef(null)
+
+  const [testEditor, setTestEditor] = useState(null)
 
   const preventNL = (data) => {
     const typedNewLine =
@@ -70,11 +75,20 @@ function App() {
       const regexp = new XRegExp(regexString)
       testString.split('\n').forEach((value, index) => {
         XRegExp.forEach(value, regexp, (match) => {
+          testEditor?.getDoc().markText(
+            { ch: match.index, line: index },
+            { ch: match.index + match[0].length, line: index },
+            {
+              className: 'cm-highlight',
+            }
+          )
           console.log(`line: ${index}, from: ${match.index}, to: ${match.index + match[0].length}`)
         })
       })
-    } catch (e) {}
-  }, [regexString, testString])
+    } catch (e) {
+      console.log(e)
+    }
+  }, [regexString, testString, testEditor])
 
   return (
     <StyledApp>
@@ -97,7 +111,6 @@ function App() {
       />
 
       <StyledEditor
-        ref={testEditor}
         value={testString}
         options={{
           mode: 'text',
@@ -105,6 +118,7 @@ function App() {
           lineNumbers: false,
           lineWrapping: true,
         }}
+        editorDidMount={(editor) => setTestEditor(editor)}
         onChange={(_, __, value) => setTestString(value)}
       />
     </StyledApp>
