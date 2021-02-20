@@ -32,6 +32,22 @@ const theme = {
     },
     family: "'Balsamiq Sans', cursive",
   },
+  space: {
+    h: {
+      m: '6.25%',
+      s: '3.75%',
+      xs: '2.18%',
+      l: '10.53%',
+      xl: '17.71%',
+    },
+    v: {
+      m: '3.73%',
+      s: '2.22%',
+      xs: '1.32%',
+      l: '6.27%',
+      xl: '10.54%',
+    },
+  },
 }
 
 export default theme

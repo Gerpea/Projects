@@ -1,4 +1,4 @@
-# Mega Project List [**41**/100]
+# Mega Project List [**42**/100]
 
 A list of practical projects that anyone can solve in any programming language (See [solutions](https://github.com/thekarangoel/Projects-Solutions)). These projects are divided in multiple categories, and each category has its own folder.
 
@@ -134,7 +134,7 @@ subgraph that is a tree, contains all the vertices, and the sum of its weights i
 
 [**Vigenere / Vernam / Ceasar Ciphers**](https://github.com/Gerpea/Projects/tree/master/Text/Ciphers) - Functions for encrypting and decrypting data messages. Then send them to a friend.
 
-**Regex Query Tool** - A tool that allows the user to enter a text string and then in a separate control enter a regex pattern. It will run the regular expression against the source text and return any matches or flag errors in the regular expression.
+[**Regex Query Tool**](https://github.com/Gerpea/Projects/tree/master/Text/RegexTool) - A tool that allows the user to enter a text string and then in a separate control enter a regex pattern. It will run the regular expression against the source text and return any matches or flag errors in the regular expression.
 
 ## Networking
 
