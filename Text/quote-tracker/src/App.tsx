@@ -6,7 +6,7 @@ import Chart from './chart/Chart'
 function App() {
   return (
     <div className='app'>
-      <Chart />
+      <Chart axis={{ h: 'h', v: 'v' }} />
     </div>
   )
 }
