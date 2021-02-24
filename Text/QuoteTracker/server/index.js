@@ -13,18 +13,23 @@ const redis = new Redis({
   host: process.env.REDIS_HOST || '127.0.0.1',
 })
 
-app.get('/api/:endpoint', async (req, res, next) => {
-  const key = buildKey(req)
-  let cacheEntry = await redis.get(key)
-  if (cacheEntry) {
-    cacheEntry = JSON.parse(cacheEntry)
+app.get('/api/:endpoint', async (req, res) => {
+  try {
+    const key = buildKey(req)
+    let cacheEntry = await redis.get(key)
+    if (cacheEntry) {
+      cacheEntry = JSON.parse(cacheEntry)
 
-    return res.json(cacheEntry)
-  } else {
-    const response = await axios.get(buildApiEndpoint(req))
-    redis.set(key, JSON.stringify(response.data), 'EX', getTime(req.query.function))
+      return res.json(cacheEntry)
+    } else {
+      const response = await axios.get(buildApiEndpoint(req))
+      redis.set(key, JSON.stringify(response.data), 'EX', getTime(req.query.function))
 
-    return res.json(response.data)
+      return res.json(response.data)
+    }
+  } catch (e) {
+    console.log(e)
+    return res.sendStatus(500)
   }
 })
 

@@ -63,3 +63,5 @@ You need to call
 `http://localhost/api/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=IBM&datatype=csv`
 
 It will response with the same data as if you call the api directly.
+
+In case of any server error it will response with 500 status code.
