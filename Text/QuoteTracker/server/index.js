@@ -25,7 +25,9 @@ app.get('/api/:endpoint', async (req, res) => {
       return res.json(cacheEntry)
     } else {
       const response = await axios.get(buildApiEndpoint(req))
-      redis.set(key, JSON.stringify(response.data), 'EX', getTime(req.query.function))
+      if (!response.data.Note) {
+        redis.set(key, JSON.stringify(response.data), 'EX', getTime(req.query.function))
+      }
 
       return res.json(response.data)
     }
