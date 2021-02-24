@@ -57,5 +57,5 @@ const buildApiEndpoint = (req) => {
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
-  console.log(`Api proxy server started at ${PORT}`)
+  console.log(`AlphaVantage API proxy server started at ${PORT}`)
 })
