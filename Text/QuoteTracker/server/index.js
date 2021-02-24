@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
@@ -7,6 +8,7 @@ import Redis from 'ioredis'
 dotenv.config()
 
 const app = express()
+app.use(cors())
 
 const redis = new Redis({
   port: process.env.REDIS_PORT || 6379,
