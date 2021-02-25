@@ -27,8 +27,8 @@ const fetchQuotes = debounce((dispatch, keywords) => {
       })
       .catch((e) => console.log(e))
   } else {
-    dispatch({ type: types.SEARCH_SYMBOL, payload: [] })
   }
 }, 300)
 
 export const searchQuotes = (keywords) => (dispatch) => fetchQuotes(dispatch, keywords)
+export const clearQuotes = () => (dispatch) => dispatch({ type: types.SEARCH_SYMBOL, payload: [] })

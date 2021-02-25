@@ -1,6 +1,8 @@
+import Link from 'next/link'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import Symbol from './Symbol'
+import SymbolCard from './SymbolCard'
 
 const SymbolList = () => {
   const symbols = useSelector((state) => state.quote.symbols)
@@ -8,7 +10,13 @@ const SymbolList = () => {
   return (
     <div className='symbol-list'>
       {symbols.map((symbol, i) => {
-        return <Symbol {...symbol} key={symbol.symbol} />
+        return (
+          <Link href={`/${symbol.symbol}`} key={symbol.symbol} passHref>
+            <a>
+              <SymbolCard {...symbol} />
+            </a>
+          </Link>
+        )
       })}
     </div>
   )

@@ -1,4 +1,4 @@
-const Symbol = ({ symbol, price, currency, name, change, ltd }) => {
+const SymbolCard = ({ symbol, price, currency, name, change, ltd }) => {
   return (
     <div key={symbol.symbol} className='symbol p-1'>
       <div className='symbol__left'>
@@ -28,4 +28,4 @@ const Symbol = ({ symbol, price, currency, name, change, ltd }) => {
   )
 }
 
-export default Symbol
+export default SymbolCard

@@ -2,7 +2,8 @@
 @import './fonts';
 @import './colors';
 @import './spaces';
-@import './misc';
+@import './misc/misc';
+@import './overrides/overrides';
 @import './components/components';
 
 * {
@@ -16,4 +17,9 @@ body {
   font-size: $font-size;
   color: $color-tertiary;
   background-color: $color-secondary-dark;
+}
+
+a {
+  text-decoration: none;
+  display: flex;
 }
