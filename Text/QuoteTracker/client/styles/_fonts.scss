@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Gugi&display=swap');
+@import './variables';
+
+$fonts: (
+  m: $font-size-m,
+  s: $font-size-s,
+  xs: $font-size-xs,
+  l: $font-size-l,
+  xl: $font-size-xl,
+);
+
+@each $name, $size in $fonts {
+  .fs-#{$name} {
+    font-size: $size;
+  }
+}
+
+$families: (
+  m: $font-family-m,
+  h: $font-family-h,
+);
+
+@each $name, $family in $families {
+  .f-#{$name} {
+    font-family: $family;
+  }
+}

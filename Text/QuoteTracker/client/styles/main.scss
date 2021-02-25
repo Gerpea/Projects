@@ -1,0 +1,18 @@
+@import './variables';
+@import './fonts';
+@import './colors';
+@import './spaces';
+@import './components/components';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: $font-family-m;
+  font-size: $font-size;
+  color: $color-tertiary;
+  background-color: $color-secondary-dark;
+}

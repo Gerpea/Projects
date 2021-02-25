@@ -1,0 +1,14 @@
+.symbol-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  align-items: stretch;
+  justify-content: center;
+
+  row-gap: $space-f-vs;
+  column-gap: $space-f-hs;
+
+  * {
+    flex-grow: 1;
+  }
+}

@@ -1,0 +1,19 @@
+.search {
+  background-color: $color-secondary-dark;
+  color: $color-tertiary;
+
+  outline: none;
+  border: 1px solid $color-tertiary;
+  border-radius: 5px;
+
+  padding: $space-f-vs;
+  width: 100%;
+
+  &:focus {
+    border-color: $color-primary;
+  }
+
+  &::placeholder {
+    color: $color-tertiary-dark;
+  }
+}

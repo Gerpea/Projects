@@ -1,0 +1,2 @@
+export const SEARCH_SYMBOL = 'SEARCH_SYMBOL'
+export const FETCH_SYMBOL = 'FETCH_SYMBOL'

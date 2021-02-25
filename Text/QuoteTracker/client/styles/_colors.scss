@@ -1,0 +1,25 @@
+@import './variables';
+
+$colors: (
+  p: $color-primary,
+  pl: $color-primary-light,
+  pd: $color-primary-dark,
+  s: $color-secondary,
+  sl: $color-secondary-light,
+  sd: $color-secondary-dark,
+  t: $color-tertiary,
+  tl: $color-tertiary-light,
+  td: $color-tertiary-dark,
+  q: $color-quartary,
+  ql: $color-quartary-light,
+  qd: $color-quartary-dark,
+);
+
+@each $name, $hsl in $colors {
+  .c-#{$name} {
+    color: $hsl;
+  }
+  .bg-#{$name} {
+    background: $hsl;
+  }
+}

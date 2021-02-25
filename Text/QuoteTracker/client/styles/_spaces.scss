@@ -1,0 +1,107 @@
+@import './variables';
+
+$spaces-r: (
+  h: (
+    1: $space-r-hxs,
+    2: $space-r-hs,
+    3: $space-r-hm,
+    4: $space-r-hl,
+    5: $space-r-hxl,
+  ),
+  v: (
+    1: $space-r-vxs,
+    2: $space-r-vs,
+    3: $space-r-vm,
+    4: $space-r-vl,
+    5: $space-r-vxl,
+  ),
+);
+
+$spaces-f: (
+  h: (
+    1: $space-f-hxs,
+    2: $space-f-hs,
+    3: $space-f-hm,
+    4: $space-f-hl,
+    5: $space-f-hxl,
+  ),
+  v: (
+    1: $space-f-vxs,
+    2: $space-f-vs,
+    3: $space-f-vm,
+    4: $space-f-vl,
+    5: $space-f-vxl,
+  ),
+);
+
+@each $name, $space in map-get($map: $spaces-r, $key: h) {
+  .pr-#{$name} {
+    padding-right: $space;
+  }
+  .pl-#{$name} {
+    padding-left: $space;
+  }
+  .mr-#{$name} {
+    margin-right: $space;
+  }
+  .ml-#{$name} {
+    margin-left: $space;
+  }
+}
+
+@each $name, $space in map-get($map: $spaces-r, $key: v) {
+  .p-#{$name} {
+    padding: $space;
+  }
+  .pt-#{$name} {
+    padding-top: $space;
+  }
+  .pb-#{$name} {
+    padding-bottom: $space;
+  }
+  .m-#{$name} {
+    margin: $space;
+  }
+  .mt-#{$name} {
+    margin-top: $space;
+  }
+  .mb-#{$name} {
+    margin-bottom: $space;
+  }
+}
+
+@each $name, $space in map-get($map: $spaces-f, $key: h) {
+  .prf-#{$name} {
+    padding-right: $space;
+  }
+  .plf-#{$name} {
+    padding-left: $space;
+  }
+  .mrf-#{$name} {
+    margin-right: $space;
+  }
+  .mlf-#{$name} {
+    margin-left: $space;
+  }
+}
+
+@each $name, $space in map-get($map: $spaces-f, $key: v) {
+  .pf-#{$name} {
+    padding: $space;
+  }
+  .ptf-#{$name} {
+    padding-top: $space;
+  }
+  .pbf-#{$name} {
+    padding-bottom: $space;
+  }
+  .mf-#{$name} {
+    margin: $space;
+  }
+  .mtf-#{$name} {
+    margin-top: $space;
+  }
+  .mbf-#{$name} {
+    margin-bottom: $space;
+  }
+}

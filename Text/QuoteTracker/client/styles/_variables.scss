@@ -1,0 +1,55 @@
+// Font
+// -- Size
+$font-size: 16px;
+$font-size-m: 1em;
+$font-size-s: 0.85em;
+$font-size-xs: 0.7em;
+$font-size-l: 1.15em;
+$font-size-xl: 1.3em;
+// -- Family
+$font-family-m: 'Balsamiq Sans', cursive;
+$font-family-h: 'Gugi', monospace;
+// Color
+// -- Primary
+$color-primary: hsl(113, 99%, 53%);
+$color-primary-light: hsl(113, 100%, 68%);
+$color-primary-dark: hsl(113, 88%, 27%);
+// -- Secondary
+$color-secondary: hsl(0, 7%, 19%);
+$color-secondary-light: hsl(0, 8%, 31%);
+$color-secondary-dark: hsl(0, 8%, 3%);
+// -- Tetrary
+$color-tertiary: hsl(0, 7%, 78%);
+$color-tertiary-light: hsl(0, 100%, 98%);
+$color-tertiary-dark: hsl(0, 2%, 49%);
+// -- Quartary
+$color-quartary: hsl(2, 87%, 48%);
+$color-quartary-light: hsl(2, 98%, 53%);
+$color-quartary-dark: hsl(2, 87%, 40%);
+// Space
+// -- Relatives
+// -- Horizontal
+$space-r-hm: 6.25%;
+$space-r-hs: 3.75%;
+$space-r-hxs: 2.18%;
+$space-r-hl: 10.53%;
+$space-r-hxl: 17.71%;
+// -- Vertical
+$space-r-vm: 3.73%;
+$space-r-vs: 2.22%;
+$space-r-vxs: 1.32%;
+$space-r-vl: 6.27%;
+$space-r-vxl: 10.54%;
+// -- Fixed
+// -- Horizontal
+$space-f-hm: 20px;
+$space-f-hs: 12px;
+$space-f-hxs: 7px;
+$space-f-hl: 49px;
+$space-f-hxl: 57px;
+// -- Vertical
+$space-f-vm: 20px;
+$space-f-vs: 12px;
+$space-f-vxs: 7px;
+$space-f-vl: 35px;
+$space-f-vxl: 60px;
