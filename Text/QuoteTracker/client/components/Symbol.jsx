@@ -10,12 +10,14 @@ const Symbol = ({ symbol, price, currency, name, change, ltd }) => {
             {price} {currency}
           </p>
         )}
-        <p className='fs-s c-t'>{name}</p>
+        <p className='fs-xs c-td'>{name}</p>
       </div>
       <div className='symbol__right'>
         {change && (
           <>
-            <p className={('fs-m', change > 0 ? 'c-p' : 'c-q')}>
+            {change > 0 && <span className='fs-xs c-pd'>&#x25B2;</span>}
+            {change < 0 && <span className='fs-xs c-qd'>&#x25BC;</span>}
+            <p className={('fs-m', change > 0 ? 'c-p' : change === 0 ? 'c-tl' : 'c-q')}>
               {change} {currency}
             </p>
             <p className='fs-xs c-td'>{ltd}</p>

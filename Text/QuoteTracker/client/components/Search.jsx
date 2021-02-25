@@ -15,7 +15,7 @@ const Search = ({ className }) => {
       type='text'
       placeholder='Input symbol'
       onChange={(e) => setSearch(e.target.value)}
-      className={`search ${className}`}
+      className={`search fs-xl ${className}`}
     />
   )
 }

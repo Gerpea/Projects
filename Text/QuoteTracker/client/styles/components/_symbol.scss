@@ -25,11 +25,16 @@
   &__center {
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: space-evenly;
+
     word-wrap: break-word;
     overflow-wrap: anywhere;
+
     text-align: center;
+    align-self: center;
+
     width: 50%;
   }
 
