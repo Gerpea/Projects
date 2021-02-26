@@ -17,7 +17,7 @@ const SymbolCard = ({ symbol, price, currency, name, change, ltd }) => {
           <>
             {change > 0 && <span className='fs-xs c-pd'>&#x25B2;</span>}
             {change < 0 && <span className='fs-xs c-qd'>&#x25BC;</span>}
-            <p className={('fs-m', change > 0 ? 'c-p' : change === 0 ? 'c-tl' : 'c-q')}>
+            <p className={('fs-m', change > 0 ? 'c-p' : parseFloat(change) === 0 ? 'c-tl' : 'c-q')}>
               {change} {currency}
             </p>
             <p className='fs-xs c-td'>{ltd}</p>

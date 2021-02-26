@@ -44,6 +44,10 @@ const buildKey = (req) => {
 const getTime = (f) => {
   switch (f) {
     case 'SYMBOL_SEARCH':
+      return 3600 * 24 * 90 // 90 days
+    case 'OVERVIEW':
+      return 3600 * 24 * 31 // 31 days
+    case 'TIME_SERIES_DAILY':
       return 3600 * 24 // 24 hours
     default:
       return 3600 // one hour

@@ -8,6 +8,10 @@ export const fetchSymbol = (symbol) => (dispatch) =>
         .then((data) => {
           if (data['Global Quote']) {
             dispatch({ type: types.FETCH_SYMBOL, payload: data['Global Quote'] })
+          } else {
+            if (data['Note']) {
+              setTimeout(() => dispatch(fetchSymbol(symbol)), 1000 * 60)
+            }
           }
         })
         .catch((e) => console.log(e))
@@ -21,12 +25,13 @@ const fetchQuotes = debounce((dispatch, keywords) => {
         if (data.bestMatches) {
           dispatch({ type: types.SEARCH_SYMBOL, payload: data.bestMatches || [] })
           data.bestMatches.forEach((match, i) =>
-            setTimeout(() => dispatch(fetchSymbol(match['1. symbol'])), ((1000 * 60) / 5) * i)
+            setTimeout(() => dispatch(fetchSymbol(match['1. symbol'])), 300)
           )
         }
       })
       .catch((e) => console.log(e))
   } else {
+    dispatch({ type: types.SEARCH_SYMBOL, payload: [] })
   }
 }, 300)
 

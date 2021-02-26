@@ -6,7 +6,7 @@ import { useResizeDetector } from 'react-resize-detector'
 import { clearQuotes } from '../redux/actions'
 
 const Symbol = ({ prices, symbol, name, currency, description, country, sector, industry }) => {
-  const { height: containerHeight, ref: containerRef } = useResizeDetector()
+  const { width, height: containerHeight, ref: containerRef } = useResizeDetector()
   const [height, setHeight] = useState(350)
   const dispatch = useDispatch()
 
@@ -33,11 +33,11 @@ const Symbol = ({ prices, symbol, name, currency, description, country, sector, 
       },
     },
     title: {
-      text: name && currency ? `${name}, ${currency}` : symbol,
+      text: currency ? `${symbol}, ${currency}` : symbol,
       align: 'center',
       offsetX: 0,
       offsetY: 0,
-      floating: false,
+      floating: true,
     },
     xaxis: {
       type: 'datetime',
@@ -73,25 +73,23 @@ const Symbol = ({ prices, symbol, name, currency, description, country, sector, 
   }, [])
 
   useEffect(() => {
-    let h = 350
-    if (!name && !description) {
-      try {
-        const style = window.getComputedStyle(containerRef.current, null)
-        h = parseInt(style.getPropertyValue('height'), 10)
-        h -= parseInt(style.getPropertyValue('margin-top'), 10)
-        h -= parseInt(style.getPropertyValue('margin-bottom'), 10)
-        h -= parseInt(style.getPropertyValue('padding-top'), 10)
-        h -= parseInt(style.getPropertyValue('padding-bottom'), 10)
-      } catch (e) {
-        h = parseInt(containerRef.current.currentStyle.height, 10)
-        h -= parseInt(containerRef.current.currentStyle.marginTop, 10)
-        h -= parseInt(containerRef.current.currentStyle.marginBottom, 10)
-        h -= parseInt(containerRef.current.currentStyle.paddingTop, 10)
-        h -= parseInt(containerRef.current.currentStyle.paddingBottom, 10)
-      }
+    let w = 350
+    try {
+      const style = window.getComputedStyle(containerRef.current, null)
+      w = parseInt(style.getPropertyValue('width'), 10)
+      w -= parseInt(style.getPropertyValue('margin-top'), 10)
+      w -= parseInt(style.getPropertyValue('margin-bottom'), 10)
+      w -= parseInt(style.getPropertyValue('padding-top'), 10)
+      w -= parseInt(style.getPropertyValue('padding-bottom'), 10)
+    } catch (e) {
+      w = parseInt(containerRef.current.currentStyle.width, 10)
+      w -= parseInt(containerRef.current.currentStyle.marginTop, 10)
+      w -= parseInt(containerRef.current.currentStyle.marginBottom, 10)
+      w -= parseInt(containerRef.current.currentStyle.paddingTop, 10)
+      w -= parseInt(containerRef.current.currentStyle.paddingBottom, 10)
     }
-    setHeight(h)
-  }, [name, description, containerRef.current, containerHeight])
+    setHeight(w / 1.618)
+  }, [containerRef.current, width, containerHeight])
   return (
     <div
       className={`p-3 ${!description && !name ? 'va-c' : ''}`}
@@ -145,7 +143,9 @@ export async function getServerSideProps(context) {
 
   if (
     (!overview && !prices) ||
-    (Object.keys(overview).length === 0 && Object.keys(prices).length === 0)
+    (Object.keys(overview).length === 0 && Object.keys(prices).length === 0) ||
+    !prices['Time Series (Daily)'] ||
+    prices['Time Series (Daily)']?.length < 1
   ) {
     return {
       notFound: true,
