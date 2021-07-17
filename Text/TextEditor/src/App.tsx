@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { getCaretCharacterOffsetWithin, proccessKey, setCurrentCursorPosition } from 'Utils';
+import { getCaretCharacterOffsetWithin, setCurrentCursorPosition } from 'Utils';
 
 function App(): React.ReactElement {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -25,11 +25,18 @@ function App(): React.ReactElement {
     const carretPosition = getCaretCharacterOffsetWithin(editorRef.current);
 
     setValue((value) => {
-      const newValue = value.slice(0, carretPosition) + e.key + value.slice(carretPosition);
+      let newValue: string = value;
 
-      setCarretPosition((cP) => {
-        return cP + 1;
-      });
+      if (e.key === 'Backspace') {
+        newValue = value.slice(0, carretPosition - 1) + value.slice(carretPosition);
+        setCarretPosition((cP) => Math.max(0, cP - 1));
+      } else if (e.key === 'Delete') {
+        newValue = value.slice(0, carretPosition) + value.slice(carretPosition + 1);
+        // setCarretPosition((cP) => cP - 1);
+      } else {
+        newValue = value.slice(0, carretPosition) + e.key + value.slice(carretPosition);
+        setCarretPosition((cP) => Math.min(cP + 1, newValue.length));
+      }
 
       return newValue;
     });
@@ -40,7 +47,7 @@ function App(): React.ReactElement {
     e.stopPropagation();
   }, []);
 
-  const handleMouseClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseClick = useCallback(() => {
     setCarretPosition(getCaretCharacterOffsetWithin(editorRef.current));
   }, []);
 
