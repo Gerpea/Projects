@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ModifierKeys } from 'Constants/keys';
 
 const ignoredKeys: string[] = new Array<string>(...ModifierKeys);
@@ -16,7 +18,6 @@ export function proccessKey(key: string): string {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getCaretCharacterOffsetWithin(element: any): number {
   let caretOffset = 0;
   const doc = element.ownerDocument || element.document;
