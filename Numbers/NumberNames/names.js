@@ -95,17 +95,4 @@ function convertManys(number) {
   return ''
 }
 
-function findOperators(number) {
-  const result = []
-  for (let i = 0; i < number.length; i++) {
-    if (operations[number[i]]) {
-      result.push({
-        operator: number[i],
-        position: i,
-      })
-    }
-  }
-  return result
-}
-
 module.exports = { convert }
