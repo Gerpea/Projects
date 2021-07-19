@@ -110,8 +110,14 @@ describe('names', function () {
     })
 
     describe('seven digits', function () {
-      it('should return one thousand thousand when value is 1000000', function () {
-        assert.strictEqual(convert('1000000'), 'one thousand thousand')
+      it('should return one million when value is 1000000', function () {
+        assert.strictEqual(convert('1000000'), 'one million')
+      })
+    })
+
+    describe('power of powers', function () {
+      it('should return one thousand million when value is 1000000', function () {
+        assert.strictEqual(convert('1000000000'), 'one thousand million')
       })
     })
   })
