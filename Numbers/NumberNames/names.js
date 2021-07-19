@@ -1,8 +1,29 @@
 const { ones, powers, operations } = require('./const')
 
 function convert(number) {
-  const cleanedNumber = removeLeadingZeros(number)
-  return startConversion(cleanedNumber)
+  let result = ''
+
+  const operatorsRegex = new RegExp(
+    Object.keys(operations).join('|').replace('.', '\\.').replace('+', '\\+').replace('*', '\\*')
+  )
+
+  let remainingNumber = number
+  while (remainingNumber.length > 0) {
+    const match = remainingNumber.match(operatorsRegex)
+
+    if (match) {
+      operatorIdx = match?.index
+      result +=
+        startConversion(cleanNumber(remainingNumber.substr(0, operatorIdx))) +
+        operations[remainingNumber[operatorIdx]]
+      remainingNumber = remainingNumber.substr(operatorIdx + 1)
+    } else {
+      result += startConversion(cleanNumber(remainingNumber))
+      remainingNumber = ''
+    }
+  }
+
+  return result.trim()
 }
 
 function startConversion(number) {
@@ -13,8 +34,16 @@ function startConversion(number) {
   }
 }
 
+function cleanNumber(number) {
+  return removeSpaces(removeLeadingZeros(number))
+}
+
 function removeLeadingZeros(number) {
   return number.replace(/^0+/, '')
+}
+
+function removeSpaces(number) {
+  return number.replace(/\s/g, '')
 }
 
 function convertOnes(number) {
@@ -35,11 +64,11 @@ function convertOnes(number) {
     }
     // add name of second digit
     if (ones.hasOwnProperty(secondDigit)) {
-      result += ' ' + ones[secondDigit]
+      result += ones[secondDigit]
     }
   }
 
-  return result.trim()
+  return result
 }
 
 // basically we split number by powers and proceed conversion
@@ -55,15 +84,28 @@ function convertManys(number) {
     // when we find defined power convert number that stand before that power and add power itself
     if (powers.hasOwnProperty(remainingPower)) {
       const nextDigitPos = firstDigits.length
-      return `${startConversion(firstDigits)} ${powers[remainingPower]} ${startConversion(
-        removeLeadingZeros(number.substr(nextDigitPos))
-      )}`.trim()
+      return (
+        startConversion(firstDigits) +
+        powers[remainingPower] +
+        startConversion(cleanNumber(number.substr(nextDigitPos)))
+      )
     }
   }
 
   return ''
 }
 
-function split(number) {}
+function findOperators(number) {
+  const result = []
+  for (let i = 0; i < number.length; i++) {
+    if (operations[number[i]]) {
+      result.push({
+        operator: number[i],
+        position: i,
+      })
+    }
+  }
+  return result
+}
 
-module.exports = { convert, split }
+module.exports = { convert }
