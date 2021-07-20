@@ -1,6 +1,16 @@
-const { ones, powers, operations } = require('./const')
+const vocabularies = require('./vocabularies')
 
-function convert(number) {
+let numberWords = vocabularies.en.numberWords
+let numberZeros = vocabularies.en.numberZeros
+let operations = vocabularies.en.operations
+
+function convert(number, lang) {
+  if (vocabularies.hasOwnProperty(lang)) {
+    numberWords = vocabularies[lang].numberWords
+    numberZeros = vocabularies[lang].numberZeros
+    operations = vocabularies[lang].operations
+  }
+
   let result = ''
 
   const operatorsRegex = new RegExp(
@@ -27,10 +37,45 @@ function convert(number) {
 }
 
 function startConversion(number) {
-  if (number.length <= 2) {
-    return convertOnes(number)
+  const numberWithoutZeros = removeLeadingZeros(number)
+  return getNumberWord(numberWithoutZeros) || convertPoweredNumber(numberWithoutZeros)
+}
+
+function convertPoweredNumber(number) {
+  let firstDigits = ''
+
+  for (let i = 0; i < number.length; i++) {
+    firstDigits += number[i]
+
+    const power = number.length - firstDigits.length
+    const powerWord = getPowerWord(power)
+
+    if (powerWord) {
+      const nextDigitPos = firstDigits.length
+      const numberWord = getNumberWord(firstDigits[0] + Array(power).fill('0').join(''))
+
+      return numberWord
+        ? numberWord + startConversion(number.substr(nextDigitPos))
+        : startConversion(firstDigits) + powerWord + startConversion(number.substr(nextDigitPos))
+    }
+  }
+
+  return ''
+}
+
+function getNumberWord(number) {
+  if (numberWords.hasOwnProperty(number)) {
+    return numberWords[number]
   } else {
-    return convertManys(number)
+    return false
+  }
+}
+
+function getPowerWord(power) {
+  if (numberZeros.hasOwnProperty(power)) {
+    return numberZeros[power]
+  } else {
+    return false
   }
 }
 
@@ -44,55 +89,6 @@ function removeLeadingZeros(number) {
 
 function removeSpaces(number) {
   return number.replace(/\s/g, '')
-}
-
-function convertOnes(number) {
-  let result = ''
-  if (ones.hasOwnProperty(number)) {
-    result += ones[number]
-  } else {
-    // take first digit
-    const firstDigit = number.substr(0, 1)
-    // add zero to digit so it becomes power of tens
-    const firstDigitTimes10 = firstDigit.length > 0 ? firstDigit + '0' : ''
-    // take second digit
-    const secondDigit = number.substr(1, 1)
-
-    // add name of one
-    if (ones.hasOwnProperty(firstDigitTimes10)) {
-      result += ones[firstDigitTimes10]
-    }
-    // add name of second digit
-    if (ones.hasOwnProperty(secondDigit)) {
-      result += ones[secondDigit]
-    }
-  }
-
-  return result
-}
-
-// basically we split number by powers and proceed conversion
-function convertManys(number) {
-  let firstDigits = ''
-
-  // traverse number by digit
-  for (let i = 0; i < number.length; i++) {
-    // concat number from digits
-    firstDigits += number[i]
-    // calculate power of number from i digit to end
-    const remainingPower = number.length - firstDigits.length // (i + 1)
-    // when we find defined power convert number that stand before that power and add power itself
-    if (powers.hasOwnProperty(remainingPower)) {
-      const nextDigitPos = firstDigits.length
-      return (
-        startConversion(firstDigits) +
-        powers[remainingPower] +
-        startConversion(cleanNumber(number.substr(nextDigitPos)))
-      )
-    }
-  }
-
-  return ''
 }
 
 module.exports = { convert }

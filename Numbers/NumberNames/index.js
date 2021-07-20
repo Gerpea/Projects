@@ -2,14 +2,17 @@ const program = require('commander')
 
 const { convert } = require('./names')
 
-program.requiredOption('-n, --number <digits>', 'Number to convert')
+program
+  .requiredOption('-n, --number <digits>', 'Number to convert')
+  .option('-l, --lang <string>', 'language for output')
 
 program.parse(process.argv)
 ;(() => {
   const number = program.number
+  const lang = program.lang
 
   const npstart = process.hrtime()
-  const numberInWords = convert(number)
+  const numberInWords = convert(number, lang)
   const npend = process.hrtime(npstart)
 
   console.log(numberInWords)
