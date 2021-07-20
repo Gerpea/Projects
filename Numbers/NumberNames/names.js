@@ -1,4 +1,5 @@
 const vocabularies = require('./vocabularies')
+const { cleanNumber, removeLeadingZeros } = require('./utils')
 
 let numberWords = vocabularies.en.numberWords
 let numberZeros = vocabularies.en.numberZeros
@@ -77,18 +78,6 @@ function getPowerWord(power) {
   } else {
     return false
   }
-}
-
-function cleanNumber(number) {
-  return removeSpaces(removeLeadingZeros(number))
-}
-
-function removeLeadingZeros(number) {
-  return number.replace(/^0+/, '')
-}
-
-function removeSpaces(number) {
-  return number.replace(/\s/g, '')
 }
 
 module.exports = { convert }
